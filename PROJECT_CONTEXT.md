@@ -650,9 +650,9 @@ If a design change is necessary, document it in CHANGELOG.
 
 ## PHASE 2 — Seller
 
-- [ ] Seller registration
-- [ ] Seller profile
-- [ ] Seller location
+- [x] Seller registration
+- [x] Seller profile
+- [x] Seller location
 - [ ] Seller verification
 - [ ] Product CRUD
 - [ ] Product image upload
@@ -888,6 +888,31 @@ Status: COMPLETED / IN PROGRESS / BLOCKED
 ```
 
 ### Project Changelog
+
+## 2026-08-25 — Phase 2: Seller Profile & Location
+
+Status: COMPLETED
+
+### Changed
+- Created Seller Registration flow (`/seller/register`) where buyers can upgrade their role.
+- Created Seller Profile Manager (`/seller/profile`) for managing store details and operating hours.
+- Integrated Leaflet map & OpenStreetMap (via AlpineJS) for pinpointing store coordinates.
+- Added Feature tests for Seller Registration and Profile Update.
+
+### Why
+- Core marketplace requirement: Sellers need a storefront and location for the "Nearby" feature to work.
+
+### Files
+- `resources/views/components/map-picker.blade.php`
+- `resources/views/livewire/pages/seller/register.blade.php`
+- `resources/views/livewire/pages/seller/profile.blade.php`
+- `routes/web.php`
+- `tests/Feature/SellerProfileTest.php`
+
+### Testing
+- `php artisan test --filter=SellerProfileTest` - 3 tests passed successfully.
+
+---
 
 ## 2026-08-25 — Phase 1 Foundation
 
