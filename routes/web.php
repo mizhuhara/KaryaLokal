@@ -118,6 +118,10 @@ Route::view('seller/dashboard', 'seller.dashboard')
     ->middleware(['auth', 'verified', 'role:admin'])
     ->name('admin.reports');
 
+\Livewire\Volt\Volt::route('admin/analytics', 'pages.admin.analytics')
+    ->middleware(['auth', 'verified', 'role:admin'])
+    ->name('admin.analytics');
+
 Route::view('profile', 'profile')
     ->middleware(['auth'])
     ->name('profile');
