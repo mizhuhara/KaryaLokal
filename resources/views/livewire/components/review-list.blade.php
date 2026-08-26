@@ -17,7 +17,7 @@ new class extends Component {
     public function with()
     {
         $reviews = Review::where('product_id', $this->product_id)
-            ->with('user')
+            ->with(['user', 'images'])
             ->orderBy('created_at', 'desc')
             ->paginate(5);
 
@@ -88,6 +88,13 @@ new class extends Component {
                     </div>
                     @if ($review->comment)
                         <p class="text-gray-700">{{ $review->comment }}</p>
+                    @endif
+                    @if ($review->images->count() > 0)
+                        <div class="grid grid-cols-3 gap-2 mt-3">
+                            @foreach ($review->images as $img)
+                                <img src="{{ asset('storage/' . $img->image_path) }}" class="w-full h-32 object-cover rounded-lg" />
+                            @endforeach
+                        </div>
                     @endif
                 </div>
             @endforeach

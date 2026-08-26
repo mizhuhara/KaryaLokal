@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Review extends Model
 {
@@ -14,6 +15,11 @@ class Review extends Model
         'rating',
         'comment',
     ];
+
+    public function images(): HasMany
+    {
+        return $this->hasMany(ReviewImage::class);
+    }
 
     protected $casts = [
         'rating' => 'integer',
