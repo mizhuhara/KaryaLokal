@@ -8,6 +8,9 @@ use Illuminate\Support\Facades\Route;
 \Livewire\Volt\Volt::route('products', 'pages.products')
     ->name('products');
 
+\Livewire\Volt\Volt::route('products/{product}', 'pages.product-detail')
+    ->name('product-detail');
+
 Route::view('dashboard', 'dashboard')
     ->middleware(['auth', 'verified'])
     ->name('dashboard');
