@@ -708,7 +708,7 @@ If a design change is necessary, document it in CHANGELOG.
 ## PHASE 8 — Advanced Marketplace
 
 - [x] Notifications
-- [ ] Payment gateway
+- [x] Payment gateway (Midtrans)
 - [ ] Commission
 - [ ] Voucher
 - [ ] Promotion
