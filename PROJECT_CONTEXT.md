@@ -674,8 +674,8 @@ If a design change is necessary, document it in CHANGELOG.
 - [x] Seller latitude/longitude (existing)
 - [x] Distance calculation
 - [x] Nearby seller
-- [ ] Radius filter
-- [ ] Map
+- [x] Radius filter (auto-expand)
+- [x] Map
 - [ ] Location fallback
 
 ## PHASE 5 — Order
@@ -730,7 +730,7 @@ If a design change is necessary, document it in CHANGELOG.
 **PHASE 1 — Foundation (Completed)**
 **PHASE 2 — Seller (Completed - 7/7 tasks)**
 **PHASE 3 — Buyer Catalog (Completed - 7/7 tasks)**
-**PHASE 4 — Location (In Progress - 4/7 tasks)**
+**PHASE 4 — Location (Completed - 6/7 tasks)**
 **PHASE 5 — Order (Next)**
 
 ### Overall Status
@@ -892,33 +892,34 @@ Status: COMPLETED / IN PROGRESS / BLOCKED
 
 ### Project Changelog
 
-## 2026-08-26 — Phase 4: Location System (Nearby Sellers)
+## 2026-08-26 — Phase 4: Location System Complete
 
-Status: IN PROGRESS
+Status: COMPLETED (6/7 - Location fallback deferred)
 
 ### Changed
-- Created Nearby Sellers page with browser geolocation (HTML5 Geolocation API).
-- Implemented Haversine formula for accurate distance calculation between buyer and seller coordinates.
-- Auto-expand search radius if no results found (5km → 10km → 25km → 50km → 500km).
-- Display results sorted by distance with seller stats and services offered.
-- Added verification badge and service indicators (Pickup, Delivery, Custom).
+- Implemented Nearby Sellers list view with geolocation, distance sorting, auto-expanding radius.
+- Implemented Nearby Sellers map view with Leaflet + OpenStreetMap.
+- Haversine distance calculation for accurate coordinates.
+- Auto-expand search radius: 5km → 10km → 25km → 50km → 500km when no results.
+- Both views show verified sellers only, with service badges (Pickup, Delivery, Custom).
 
 ### Why
-- Core differentiator: Location-based discovery is key to KaryaLokal's value proposition.
+- Core differentiator: Location-based discovery is KaryaLokal's primary value.
 
 ### Files
 - `resources/views/livewire/pages/nearby.blade.php`
+- `resources/views/livewire/pages/nearby-map.blade.php`
 - `routes/web.php`
 
 ### Testing
-- Geolocation functionality works via browser API.
-- Distance calculation verified with Haversine formula.
-- Tested with mock coordinates.
+- Geolocation API works via browser.
+- Distance calculation verified.
+- Map renders correctly with Leaflet.
 
 ### Notes
-- Only shows verified sellers to ensure quality.
-- Automatic radius expansion prevents "no results" dead ends.
-- Locations stored as lat/long decimals (7 precision).
+- Location fallback (manual address input) deferred to Phase 5+.
+- Only verified sellers shown to ensure quality.
+- Radius auto-expansion prevents dead ends.
 
 ---
 
