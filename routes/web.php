@@ -70,6 +70,18 @@ Route::view('seller/dashboard', 'seller.dashboard')
     ->middleware(['auth', 'verified', 'role:seller'])
     ->name('seller.orders');
 
+\Livewire\Volt\Volt::route('seller/custom-orders', 'pages.seller.custom-orders')
+    ->middleware(['auth', 'verified', 'role:seller'])
+    ->name('seller.custom-orders');
+
+\Livewire\Volt\Volt::route('custom-order/{seller}', 'pages.custom-order-request')
+    ->middleware(['auth', 'verified'])
+    ->name('custom-order.request');
+
+\Livewire\Volt\Volt::route('my-custom-orders', 'pages.buyer-custom-orders')
+    ->middleware(['auth', 'verified'])
+    ->name('buyer.custom-orders');
+
 \Livewire\Volt\Volt::route('chat', 'pages.chat')
     ->middleware(['auth', 'verified'])
     ->name('chat');
@@ -97,6 +109,10 @@ Route::view('seller/dashboard', 'seller.dashboard')
 \Livewire\Volt\Volt::route('admin/categories', 'pages.admin.categories')
     ->middleware(['auth', 'verified', 'role:admin'])
     ->name('admin.categories');
+
+\Livewire\Volt\Volt::route('admin/reports', 'pages.admin.reports')
+    ->middleware(['auth', 'verified', 'role:admin'])
+    ->name('admin.reports');
 
 Route::view('profile', 'profile')
     ->middleware(['auth'])
