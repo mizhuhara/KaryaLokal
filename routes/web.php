@@ -72,6 +72,26 @@ Route::view('seller/dashboard', 'seller.dashboard')
     ->name('chat.user')
     ->defaults(['startChat' => true]);
 
+\Livewire\Volt\Volt::route('admin/dashboard', 'pages.admin.dashboard')
+    ->middleware(['auth', 'verified', 'role:admin'])
+    ->name('admin.dashboard');
+
+\Livewire\Volt\Volt::route('admin/users', 'pages.admin.users')
+    ->middleware(['auth', 'verified', 'role:admin'])
+    ->name('admin.users');
+
+\Livewire\Volt\Volt::route('admin/sellers', 'pages.admin.sellers')
+    ->middleware(['auth', 'verified', 'role:admin'])
+    ->name('admin.sellers');
+
+\Livewire\Volt\Volt::route('admin/products', 'pages.admin.products')
+    ->middleware(['auth', 'verified', 'role:admin'])
+    ->name('admin.products');
+
+\Livewire\Volt\Volt::route('admin/categories', 'pages.admin.categories')
+    ->middleware(['auth', 'verified', 'role:admin'])
+    ->name('admin.categories');
+
 Route::view('admin/dashboard', 'admin.dashboard')
     ->middleware(['auth', 'verified', 'role:admin'])
     ->name('admin.dashboard');

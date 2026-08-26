@@ -689,10 +689,10 @@ If a design change is necessary, document it in CHANGELOG.
 
 ## PHASE 6 — Trust & Communication
 
-- [ ] Reviews
-- [ ] Rating
+- [x] Reviews
+- [x] Rating
 - [ ] Reports
-- [ ] Chat
+- [x] Chat
 - [ ] Notifications
 - [ ] Custom order
 
