@@ -134,6 +134,18 @@ new class extends Component {
                                 @endif
                             </div>
                         </div>
+
+                        <!-- Review Form for Completed Orders -->
+                        @if ($order->isCompleted())
+                            <div class="px-6 py-4 bg-gray-50 border-t">
+                                @foreach ($order->items as $item)
+                                    <div class="mb-4 last:mb-0">
+                                        <p class="font-semibold text-sm mb-3">{{ $item->product->name }}</p>
+                                        <livewire:components.review-form :orderId="$order->id" :productId="$item->product_id" />
+                                    </div>
+                                @endforeach
+                            </div>
+                        @endif
                     @endforeach
                 </div>
 

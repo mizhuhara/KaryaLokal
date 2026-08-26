@@ -202,6 +202,11 @@ new class extends Component {
                 </div>
             </div>
 
+            <!-- Reviews -->
+            <div class="mt-8">
+                <livewire:components.review-list :productId="$product->id" />
+            </div>
+
             <!-- Seller Info Full -->
             <div class="bg-white rounded-lg shadow p-6 mt-8">
                 <h3 class="text-2xl font-bold mb-6">Informasi Penjual</h3>
