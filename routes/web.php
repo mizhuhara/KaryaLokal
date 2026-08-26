@@ -18,6 +18,9 @@ use Illuminate\Support\Facades\Route;
     ->middleware(['auth', 'verified'])
     ->name('wishlist');
 
+\Livewire\Volt\Volt::route('nearby', 'pages.nearby')
+    ->name('nearby');
+
 Route::view('dashboard', 'dashboard')
     ->middleware(['auth', 'verified'])
     ->name('dashboard');

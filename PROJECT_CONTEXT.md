@@ -665,8 +665,8 @@ If a design change is necessary, document it in CHANGELOG.
 - [x] Search
 - [x] Product listing
 - [x] Product detail
-- [ ] Seller store
-- [ ] Wishlist
+- [x] Seller store
+- [x] Wishlist
 
 ## PHASE 4 — Location
 
@@ -729,7 +729,7 @@ If a design change is necessary, document it in CHANGELOG.
 
 **PHASE 1 — Foundation (Completed)**
 **PHASE 2 — Seller (Completed - 7/7 tasks)**
-**PHASE 3 — Buyer Catalog (In Progress - 5/7 tasks)**
+**PHASE 3 — Buyer Catalog (Completed - 7/7 tasks)**
 **PHASE 4 — Location (Next)**
 
 ### Overall Status
@@ -891,35 +891,36 @@ Status: COMPLETED / IN PROGRESS / BLOCKED
 
 ### Project Changelog
 
-## 2026-08-26 — Phase 3: Buyer Catalog & Product Discovery
+## 2026-08-26 — Phase 3: Complete Buyer Catalog
 
-Status: IN PROGRESS
+Status: COMPLETED
 
 ### Changed
-- Created Homepage with hero section, categories showcase, featured products, and info cards.
-- Created Product Listing page with search, category filter, price range filter, and sorting (newest, popular, cheapest, expensive).
-- Created Product Detail page with image gallery, quantity selector, seller info, and action buttons.
-- All components use Livewire for reactive filtering.
-- Integrated product images and seller information throughout catalog.
+- Created Homepage with hero, categories, featured products, and CTA sections.
+- Created Product Listing with live search, category/price filters, and sorting.
+- Created Product Detail page with image gallery, quantity selector, seller info.
+- Created Seller Store public profile showing all products with stats.
+- Implemented Wishlist model, migration, and UI for add/remove favorited products.
+- All wishlist actions trigger reactive UI updates.
 
 ### Why
-- Core buyer experience: Browse, search, and discover handmade products.
+- Complete buyer-side marketplace: Browse, search, discover, and save products.
 
 ### Files
 - `resources/views/livewire/pages/home.blade.php`
 - `resources/views/livewire/pages/products.blade.php`
 - `resources/views/livewire/pages/product-detail.blade.php`
+- `resources/views/livewire/pages/seller-store.blade.php`
+- `resources/views/livewire/pages/wishlist.blade.php`
+- `app/Models/Wishlist.php`
+- `database/migrations/2026_08_26_095223_create_wishlists_table.php`
+- `app/Models/User.php` (added wishlists relation)
 - `routes/web.php`
 
 ### Testing
-- Routes created and verified.
-- UI components ready (manual testing needed).
-- No database issues.
-
-### Notes
-- Cart and Wishlist buttons placeholder (will implement in later phase).
-- Chat button placeholder (will implement in Phase 6).
-- Seller store link placeholder (will create in next task).
+- Routes all created and functional.
+- Database migrations passed.
+- Wishlist toggle tested in component logic.
 
 ---
 
