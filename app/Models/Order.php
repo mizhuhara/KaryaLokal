@@ -34,6 +34,31 @@ class Order extends Model
                 $order->order_number = 'ORD-' . date('YmdHis') . '-' . rand(1000, 9999);
             }
         });
+
+        static::updated(function (Order $order) {
+            if ($order->wasChanged('status')) {
+                $buyer = $order->user;
+
+                $statusMessages = [
+                    'confirmed' => 'Pesanan dikonfirmasi penjual',
+                    'processing' => 'Pesanan sedang diproses',
+                    'ready' => 'Pesanan siap diambil/dikirim',
+                    'shipped' => 'Pesanan dalam perjalanan',
+                    'completed' => 'Pesanan selesai',
+                    'cancelled' => 'Pesanan dibatalkan',
+                    'rejected' => 'Pesanan ditolak penjual',
+                ];
+
+                if (isset($statusMessages[$order->status])) {
+                    $buyer->createNotification(
+                        'order',
+                        'Status Pesanan Diperbarui',
+                        $order->order_number . ': ' . $statusMessages[$order->status],
+                        $order
+                    );
+                }
+            }
+        });
     }
 
     public function user(): BelongsTo

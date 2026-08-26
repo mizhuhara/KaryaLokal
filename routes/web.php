@@ -35,6 +35,10 @@ use Illuminate\Support\Facades\Route;
     ->middleware(['auth', 'verified'])
     ->name('buyer.orders');
 
+\Livewire\Volt\Volt::route('notifications', 'pages.notifications')
+    ->middleware(['auth', 'verified'])
+    ->name('notifications');
+
 Route::view('dashboard', 'dashboard')
     ->middleware(['auth', 'verified'])
     ->name('dashboard');
@@ -69,8 +73,7 @@ Route::view('seller/dashboard', 'seller.dashboard')
 
 \Livewire\Volt\Volt::route('chat/{user}', 'pages.chat')
     ->middleware(['auth', 'verified'])
-    ->name('chat.user')
-    ->defaults(['startChat' => true]);
+    ->name('chat.user');
 
 \Livewire\Volt\Volt::route('admin/dashboard', 'pages.admin.dashboard')
     ->middleware(['auth', 'verified', 'role:admin'])
@@ -91,10 +94,6 @@ Route::view('seller/dashboard', 'seller.dashboard')
 \Livewire\Volt\Volt::route('admin/categories', 'pages.admin.categories')
     ->middleware(['auth', 'verified', 'role:admin'])
     ->name('admin.categories');
-
-Route::view('admin/dashboard', 'admin.dashboard')
-    ->middleware(['auth', 'verified', 'role:admin'])
-    ->name('admin.dashboard');
 
 Route::view('profile', 'profile')
     ->middleware(['auth'])

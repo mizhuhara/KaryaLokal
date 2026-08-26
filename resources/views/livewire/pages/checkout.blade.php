@@ -56,6 +56,17 @@ new class extends Component {
                     'subtotal' => $item['price'] * $item['quantity'],
                 ]);
             }
+
+            // Notify seller
+            $seller = \App\Models\SellerProfile::find($sellerId);
+            if ($seller && $seller->user) {
+                $seller->user->createNotification(
+                    'order',
+                    'Pesanan Baru!',
+                    auth()->user()->name . ' memesan produk senilai Rp ' . number_format($total, 0, ',', '.'),
+                    $order
+                );
+            }
         }
 
         session()->put('cart', []);
