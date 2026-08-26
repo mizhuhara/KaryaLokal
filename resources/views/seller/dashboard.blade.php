@@ -6,12 +6,108 @@
     </x-slot>
 
     <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white overflow-hidden shadow-card sm:rounded-lg">
-                <div class="p-6 text-neutral-900">
-                    Selamat datang di dashboard penjual KaryaLokal.
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
+            @php
+                $seller = auth()->user()->sellerProfile;
+                $totalProducts = $seller?->products()->count() ?? 0;
+                $totalProductsWithImages = $seller?->products()->whereHas('images')->count() ?? 0;
+            @endphp
+
+            @if (!$seller)
+                <div class="bg-white overflow-hidden shadow-card sm:rounded-lg p-6">
+                    <p class="text-neutral-600 mb-4">Anda belum mendaftar sebagai penjual.</p>
+                    <a href="{{ route('seller.register') }}" class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">
+                        Daftar Sebagai Penjual
+                    </a>
                 </div>
-            </div>
+            @else
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="bg-white overflow-hidden shadow-card sm:rounded-lg p-6">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-neutral-600 text-sm">Total Produk</p>
+                                <p class="text-3xl font-bold text-neutral-900">{{ $totalProducts }}</p>
+                            </div>
+                            <div class="text-4xl text-blue-500">📦</div>
+                        </div>
+                    </div>
+
+                    <div class="bg-white overflow-hidden shadow-card sm:rounded-lg p-6">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-neutral-600 text-sm">Produk Lengkap</p>
+                                <p class="text-3xl font-bold text-neutral-900">{{ $totalProductsWithImages }}</p>
+                            </div>
+                            <div class="text-4xl text-green-500">✓</div>
+                        </div>
+                    </div>
+
+                    <div class="bg-white overflow-hidden shadow-card sm:rounded-lg p-6">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-neutral-600 text-sm">Status Verifikasi</p>
+                                <p class="text-lg font-bold">
+                                    <span class="px-3 py-1 rounded-full text-sm {{ $seller->is_verified ? 'bg-green-100 text-green-800' : 'bg-yellow-100 text-yellow-800' }}">
+                                        {{ $seller->is_verified ? 'Terverifikasi ✓' : 'Menunggu' }}
+                                    </span>
+                                </p>
+                            </div>
+                            <div class="text-4xl">{{ $seller->is_verified ? '✅' : '⏳' }}</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="bg-white overflow-hidden shadow-card sm:rounded-lg p-6">
+                        <h3 class="text-lg font-semibold mb-4">Informasi Toko</h3>
+                        <div class="space-y-3 text-sm">
+                            <div>
+                                <p class="text-neutral-600">Nama Toko</p>
+                                <p class="font-medium">{{ $seller->shop_name }}</p>
+                            </div>
+                            <div>
+                                <p class="text-neutral-600">Lokasi</p>
+                                <p class="font-medium">{{ $seller->city }}, {{ $seller->province }}</p>
+                            </div>
+                            <div>
+                                <p class="text-neutral-600">Layanan</p>
+                                <p class="text-xs space-x-2">
+                                    @if ($seller->pickup_available)
+                                        <span class="inline-block px-2 py-1 bg-blue-100 text-blue-800 rounded">Pickup</span>
+                                    @endif
+                                    @if ($seller->delivery_available)
+                                        <span class="inline-block px-2 py-1 bg-blue-100 text-blue-800 rounded">Delivery</span>
+                                    @endif
+                                    @if ($seller->custom_order_available)
+                                        <span class="inline-block px-2 py-1 bg-purple-100 text-purple-800 rounded">Custom</span>
+                                    @endif
+                                </p>
+                            </div>
+                        </div>
+                        <a href="{{ route('seller.profile') }}" class="mt-4 inline-block px-4 py-2 bg-blue-600 text-white text-sm rounded-lg hover:bg-blue-700">
+                            Edit Profil
+                        </a>
+                    </div>
+
+                    <div class="bg-white overflow-hidden shadow-card sm:rounded-lg p-6">
+                        <h3 class="text-lg font-semibold mb-4">Manajemen Produk</h3>
+                        <p class="text-neutral-600 text-sm mb-4">Kelola katalog produk Anda di sini.</p>
+                        <a href="{{ route('seller.products') }}" class="inline-block px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700">
+                            Lihat Produk
+                        </a>
+                    </div>
+                </div>
+
+                @if ($totalProducts === 0)
+                    <div class="bg-blue-50 border border-blue-200 overflow-hidden shadow-card sm:rounded-lg p-6">
+                        <h3 class="font-semibold text-blue-900 mb-2">Mulai Berjualan</h3>
+                        <p class="text-blue-800 text-sm mb-4">Tambahkan produk pertama Anda untuk mulai berjualan.</p>
+                        <a href="{{ route('seller.products') }}" class="inline-block px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">
+                            Tambah Produk
+                        </a>
+                    </div>
+                @endif
+            @endif
         </div>
     </div>
 </x-app-layout>

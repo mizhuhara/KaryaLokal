@@ -45,7 +45,7 @@ class SellerProfile extends Model
 
     public function products(): HasMany
     {
-        return $this->hasMany(Product::class, 'seller_id');
+        return $this->hasMany(Product::class, 'seller_profile_id');
     }
 
     public function hasLocation(): bool
