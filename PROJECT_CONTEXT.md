@@ -707,6 +707,7 @@ If a design change is necessary, document it in CHANGELOG.
 
 ## PHASE 8 — Advanced Marketplace
 
+- [x] Notifications
 - [ ] Payment gateway
 - [ ] Commission
 - [ ] Voucher
@@ -733,6 +734,7 @@ If a design change is necessary, document it in CHANGELOG.
 **PHASE 5 — Order (Completed - 6/6 tasks)**
 **PHASE 6 — Trust & Communication (Completed - 3/6 tasks)**
 **PHASE 7 — Admin (Completed - 4/4 tasks)**
+**PHASE 8 — Advanced Marketplace (In Progress - 1/9 tasks)**
 
 ### Overall Status
 
