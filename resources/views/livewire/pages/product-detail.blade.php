@@ -6,10 +6,21 @@ use App\Models\Product;
 new class extends Component {
     public $product_id;
     public $quantity = 1;
+    public $isInWishlist = false;
 
     public function mount($product)
     {
         $this->product_id = $product->id;
+        $this->checkWishlist();
+    }
+
+    public function checkWishlist()
+    {
+        if (auth()->check()) {
+            $this->isInWishlist = auth()->user()->wishlists()
+                ->where('product_id', $this->product_id)
+                ->exists();
+        }
     }
 
     public function with()
@@ -26,7 +37,21 @@ new class extends Component {
 
     public function toggleWishlist()
     {
-        $this->dispatch('notify', message: 'Ditambahkan ke wishlist');
+        if (!auth()->check()) {
+            return redirect()->route('login');
+        }
+
+        $wishlist = auth()->user()->wishlists()->where('product_id', $this->product_id)->first();
+
+        if ($wishlist) {
+            $wishlist->delete();
+            $this->isInWishlist = false;
+            $this->dispatch('notify', message: 'Dihapus dari wishlist');
+        } else {
+            auth()->user()->wishlists()->create(['product_id' => $this->product_id]);
+            $this->isInWishlist = true;
+            $this->dispatch('notify', message: 'Ditambahkan ke wishlist');
+        }
     }
 };
 
@@ -137,9 +162,9 @@ new class extends Component {
                         </button>
                         <button
                             wire:click="toggleWishlist"
-                            class="px-6 py-3 border-2 border-orange-600 text-orange-600 rounded-lg hover:bg-orange-50 font-semibold"
+                            class="px-6 py-3 border-2 {{ $isInWishlist ? 'border-red-500 text-red-500 bg-red-50' : 'border-orange-600 text-orange-600' }} rounded-lg hover:bg-opacity-50 font-semibold"
                         >
-                            ♥ Wishlist
+                            {{ $isInWishlist ? '❤️ Dari Wishlist' : '♡ Wishlist' }}
                         </button>
                     </div>
 

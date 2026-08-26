@@ -14,6 +14,10 @@ use Illuminate\Support\Facades\Route;
 \Livewire\Volt\Volt::route('seller/{seller}', 'pages.seller-store')
     ->name('seller-store');
 
+\Livewire\Volt\Volt::route('wishlist', 'pages.wishlist')
+    ->middleware(['auth', 'verified'])
+    ->name('wishlist');
+
 Route::view('dashboard', 'dashboard')
     ->middleware(['auth', 'verified'])
     ->name('dashboard');
