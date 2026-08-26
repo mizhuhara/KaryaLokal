@@ -28,7 +28,7 @@ new class extends Component {
 
     public function with()
     {
-        $query = auth()->user()->orders()->with('seller', 'items.product');
+        $query = auth()->user()->orders()->with('seller', 'items.product', 'payments');
 
         if ($this->filter !== 'all') {
             $query->where('status', $this->filter);
@@ -97,6 +97,28 @@ new class extends Component {
                                     @endforeach
                                 </div>
                             </div>
+
+                            <!-- Payment Status -->
+                            @if ($order->payments->count() > 0)
+                                <div class="px-6 py-4 border-b bg-gray-50">
+                                    <p class="font-semibold text-sm mb-2">Status Pembayaran</p>
+                                    @foreach ($order->payments as $payment)
+                                        <div class="flex items-center gap-3 text-sm">
+                                            <span class="inline-block px-3 py-1 rounded-full text-xs font-semibold
+                                                {{ $payment->status === 'success' ? 'bg-green-100 text-green-800' : '' }}
+                                                {{ $payment->status === 'pending' ? 'bg-yellow-100 text-yellow-800' : '' }}
+                                                {{ $payment->status === 'failed' ? 'bg-red-100 text-red-800' : '' }}
+                                            ">
+                                                {{ ucfirst($payment->status) }}
+                                            </span>
+                                            @if ($payment->payment_method)
+                                                <span class="text-gray-600">{{ strtoupper($payment->payment_method) }}</span>
+                                            @endif
+                                            <span>Rp {{ number_format($payment->amount, 0, ',', '.') }}</span>
+                                        </div>
+                                    @endforeach
+                                </div>
+                            @endif
 
                             <!-- Delivery Info -->
                             <div class="px-6 py-4 border-b text-sm bg-gray-50">

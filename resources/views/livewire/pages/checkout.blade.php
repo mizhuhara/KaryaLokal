@@ -3,6 +3,7 @@
 use Livewire\Volt\Component;
 use App\Models\Order;
 use App\Models\OrderItem;
+use App\Services\PaymentService;
 
 new class extends Component {
     public $notes = '';
@@ -33,6 +34,8 @@ new class extends Component {
         }
 
         $groupedBySeller = collect($cart)->groupBy('seller_id');
+        $paymentService = new PaymentService();
+        $paymentUrl = null;
 
         foreach ($groupedBySeller as $sellerId => $items) {
             $total = $items->sum(fn($item) => $item['price'] * $item['quantity']);
@@ -67,11 +70,23 @@ new class extends Component {
                     $order
                 );
             }
+
+            // Create payment
+            $paymentResult = $paymentService->createTransaction($order);
+            if ($paymentResult['success'] && $paymentResult['payment_url']) {
+                $paymentUrl = $paymentResult['payment_url'];
+            }
         }
 
         session()->put('cart', []);
-        $this->dispatch('notify', message: 'Pesanan berhasil dibuat!');
-        return redirect()->route('buyer.orders');
+
+        if ($paymentUrl) {
+            $this->dispatch('notify', message: 'Pesanan dibuat! Silakan bayar.');
+            return redirect()->away($paymentUrl);
+        } else {
+            $this->dispatch('notify', message: 'Pesanan berhasil dibuat!');
+            return redirect()->route('buyer.orders');
+        }
     }
 
     public function with()

@@ -39,6 +39,9 @@ use Illuminate\Support\Facades\Route;
     ->middleware(['auth', 'verified'])
     ->name('notifications');
 
+Route::post('orders/{order}/payment/callback', [App\Http\Controllers\PaymentController::class, 'callback'])
+    ->name('payment.callback');
+
 Route::view('dashboard', 'dashboard')
     ->middleware(['auth', 'verified'])
     ->name('dashboard');
