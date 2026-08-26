@@ -74,6 +74,10 @@ Route::view('seller/dashboard', 'seller.dashboard')
     ->middleware(['auth', 'verified', 'role:seller'])
     ->name('seller.custom-orders');
 
+\Livewire\Volt\Volt::route('seller/subscription', 'pages.seller.subscription')
+    ->middleware(['auth', 'verified', 'role:seller'])
+    ->name('seller.subscription');
+
 \Livewire\Volt\Volt::route('custom-order/{seller}', 'pages.custom-order-request')
     ->middleware(['auth', 'verified'])
     ->name('custom-order.request');

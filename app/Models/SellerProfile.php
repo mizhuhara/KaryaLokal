@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Support\Str;
 
 #[Fillable([
@@ -46,6 +47,30 @@ class SellerProfile extends Model
     public function products(): HasMany
     {
         return $this->hasMany(Product::class, 'seller_profile_id');
+    }
+
+    public function subscription(): HasOne
+    {
+        return $this->hasOne(Subscription::class);
+    }
+
+    public function activeSubscription(): ?Subscription
+    {
+        return $this->subscription()->where('status', 'active')->where(function ($q) {
+            $q->whereNull('ends_at')->orWhere('ends_at', '>', now());
+        })->first();
+    }
+
+    public function getProductLimit(): int
+    {
+        $sub = $this->activeSubscription();
+        return $sub ? $sub->product_limit : 10;
+    }
+
+    public function hasPriorityListing(): bool
+    {
+        $sub = $this->activeSubscription();
+        return $sub ? $sub->priority_listing : false;
     }
 
     public function hasLocation(): bool
