@@ -690,10 +690,11 @@ If a design change is necessary, document it in CHANGELOG.
 
 - [x] Reviews
 - [x] Rating
-- [ ] Reports
+- [x] Reports
 - [x] Chat
-- [ ] Notifications
-- [ ] Custom order
+- [x] Notifications
+- [x] Custom order
+- [x] Review photo upload
 
 ## PHASE 7 — Admin
 
@@ -702,15 +703,15 @@ If a design change is necessary, document it in CHANGELOG.
 - [x] Seller management
 - [x] Product moderation
 - [x] Category management
-- [ ] Report management
-- [ ] Statistics
+- [x] Report management
+- [ ] Statistics (advanced)
 
 ## PHASE 8 — Advanced Marketplace
 
-- [x] Notifications
+- [x] Notifications (bell + page)
 - [x] Payment gateway (Midtrans)
-- [ ] Commission
-- [ ] Voucher
+- [x] Commission system
+- [x] Voucher & Promo
 - [ ] Promotion
 - [ ] Seller subscription
 - [ ] Delivery integration
