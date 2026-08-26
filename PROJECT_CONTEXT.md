@@ -660,11 +660,11 @@ If a design change is necessary, document it in CHANGELOG.
 
 ## PHASE 3 — Buyer Catalog
 
-- [ ] Homepage
-- [ ] Categories
-- [ ] Search
-- [ ] Product listing
-- [ ] Product detail
+- [x] Homepage
+- [x] Categories
+- [x] Search
+- [x] Product listing
+- [x] Product detail
 - [ ] Seller store
 - [ ] Wishlist
 
@@ -728,8 +728,9 @@ If a design change is necessary, document it in CHANGELOG.
 ### Current Phase
 
 **PHASE 1 — Foundation (Completed)**
-**PHASE 2 — Seller (In Progress - 6/7 tasks)**
-**PHASE 3 — Buyer Catalog (Next)**
+**PHASE 2 — Seller (Completed - 7/7 tasks)**
+**PHASE 3 — Buyer Catalog (In Progress - 5/7 tasks)**
+**PHASE 4 — Location (Next)**
 
 ### Overall Status
 
@@ -890,9 +891,41 @@ Status: COMPLETED / IN PROGRESS / BLOCKED
 
 ### Project Changelog
 
-## 2026-08-26 — Phase 2: Product Management & Dashboard
+## 2026-08-26 — Phase 3: Buyer Catalog & Product Discovery
 
 Status: IN PROGRESS
+
+### Changed
+- Created Homepage with hero section, categories showcase, featured products, and info cards.
+- Created Product Listing page with search, category filter, price range filter, and sorting (newest, popular, cheapest, expensive).
+- Created Product Detail page with image gallery, quantity selector, seller info, and action buttons.
+- All components use Livewire for reactive filtering.
+- Integrated product images and seller information throughout catalog.
+
+### Why
+- Core buyer experience: Browse, search, and discover handmade products.
+
+### Files
+- `resources/views/livewire/pages/home.blade.php`
+- `resources/views/livewire/pages/products.blade.php`
+- `resources/views/livewire/pages/product-detail.blade.php`
+- `routes/web.php`
+
+### Testing
+- Routes created and verified.
+- UI components ready (manual testing needed).
+- No database issues.
+
+### Notes
+- Cart and Wishlist buttons placeholder (will implement in later phase).
+- Chat button placeholder (will implement in Phase 6).
+- Seller store link placeholder (will create in next task).
+
+---
+
+## 2026-08-26 — Phase 2: Product Management & Dashboard
+
+Status: COMPLETED
 
 ### Changed
 - Created Product CRUD Livewire component (`seller/products`) with create, edit, delete.

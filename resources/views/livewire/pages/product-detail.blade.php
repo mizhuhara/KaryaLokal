@@ -98,7 +98,7 @@ new class extends Component {
                     <!-- Seller Info -->
                     <div class="border-b pb-4 mb-4">
                         <h3 class="text-sm font-semibold text-gray-500 mb-3">Dari Toko</h3>
-                        <a href="#" class="flex items-center justify-between hover:bg-gray-50 p-3 rounded-lg">
+                        <a href="{{ route('seller-store', $product->sellerProfile->id) }}" class="flex items-center justify-between hover:bg-gray-50 p-3 rounded-lg">
                             <div>
                                 <p class="font-semibold">{{ $product->sellerProfile->shop_name }}</p>
                                 <p class="text-sm text-gray-600">{{ $product->sellerProfile->city }}, {{ $product->sellerProfile->province }}</p>
@@ -194,7 +194,7 @@ new class extends Component {
                             </div>
                         @endif
 
-                        <a href="#" class="px-6 py-3 bg-orange-600 text-white rounded-lg hover:bg-orange-700 font-semibold text-center">
+                        <a href="{{ route('seller-store', $product->sellerProfile->id) }}" class="px-6 py-3 bg-orange-600 text-white rounded-lg hover:bg-orange-700 font-semibold text-center">
                             Kunjungi Toko
                         </a>
                     </div>
