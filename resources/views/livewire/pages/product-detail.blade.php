@@ -32,6 +32,25 @@ new class extends Component {
 
     public function addToCart()
     {
+        $cart = session()->get('cart', []);
+        $key = "product_{$this->product_id}";
+
+        $product = Product::findOrFail($this->product_id);
+
+        if (isset($cart[$key])) {
+            $cart[$key]['quantity'] += $this->quantity;
+        } else {
+            $cart[$key] = [
+                'product_id' => $this->product_id,
+                'seller_id' => $product->seller_profile_id,
+                'name' => $product->name,
+                'price' => $product->price,
+                'quantity' => $this->quantity,
+                'image' => $product->primaryImage?->image_path,
+            ];
+        }
+
+        session()->put('cart', $cart);
         $this->dispatch('notify', message: 'Produk ditambahkan ke keranjang');
     }
 

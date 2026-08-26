@@ -24,6 +24,17 @@ use Illuminate\Support\Facades\Route;
 \Livewire\Volt\Volt::route('nearby/map', 'pages.nearby-map')
     ->name('nearby-map');
 
+\Livewire\Volt\Volt::route('cart', 'pages.cart')
+    ->name('cart');
+
+\Livewire\Volt\Volt::route('checkout', 'pages.checkout')
+    ->middleware(['auth', 'verified'])
+    ->name('checkout');
+
+\Livewire\Volt\Volt::route('orders', 'pages.buyer-orders')
+    ->middleware(['auth', 'verified'])
+    ->name('buyer.orders');
+
 Route::view('dashboard', 'dashboard')
     ->middleware(['auth', 'verified'])
     ->name('dashboard');
