@@ -712,7 +712,7 @@ If a design change is necessary, document it in CHANGELOG.
 - [x] Payment gateway (Midtrans)
 - [x] Commission system
 - [x] Voucher & Promo
-- [ ] Promotion
+- [x] Email notifications
 - [ ] Seller subscription
 - [ ] Delivery integration
 - [ ] Recommendation system
