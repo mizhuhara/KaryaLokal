@@ -63,6 +63,15 @@ Route::view('seller/dashboard', 'seller.dashboard')
     ->middleware(['auth', 'verified', 'role:seller'])
     ->name('seller.orders');
 
+\Livewire\Volt\Volt::route('chat', 'pages.chat')
+    ->middleware(['auth', 'verified'])
+    ->name('chat');
+
+\Livewire\Volt\Volt::route('chat/{user}', 'pages.chat')
+    ->middleware(['auth', 'verified'])
+    ->name('chat.user')
+    ->defaults(['startChat' => true]);
+
 Route::view('admin/dashboard', 'admin.dashboard')
     ->middleware(['auth', 'verified', 'role:admin'])
     ->name('admin.dashboard');

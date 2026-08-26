@@ -113,7 +113,7 @@ new class extends Component {
 
                             <!-- Actions -->
                             <div class="px-6 py-4 flex gap-3 justify-end">
-                                <a href="#" class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 text-sm">
+                                <a href="{{ route('chat.user', $order->seller->user_id) }}" class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 text-sm">
                                     💬 Chat Penjual
                                 </a>
 

@@ -259,7 +259,7 @@ new class extends Component {
                                     </button>
                                 @endif
 
-                                <a href="#" class="px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 text-sm font-semibold">
+                                <a href="{{ route('chat.user', $order->user_id) }}" class="px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 text-sm font-semibold">
                                     💬 Chat
                                 </a>
                             </div>

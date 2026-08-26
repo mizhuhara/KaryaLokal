@@ -188,9 +188,12 @@ new class extends Component {
                     </div>
 
                     <!-- Chat Button -->
-                    <button class="w-full mt-3 px-6 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 font-semibold">
+                    <a
+                        href="{{ route('chat.user', $product->sellerProfile->user_id) }}"
+                        class="w-full mt-3 px-6 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 font-semibold text-center block"
+                    >
                         💬 Chat Penjual
-                    </button>
+                    </a>
                 </div>
             </div>
 
