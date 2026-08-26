@@ -3,6 +3,7 @@
 use Livewire\Volt\Component;
 use App\Models\Product;
 use App\Models\Category;
+use App\Services\RecommendationService;
 
 new class extends Component {
     public function with()
@@ -14,11 +15,7 @@ new class extends Component {
                 ->orderBy('created_at', 'desc')
                 ->limit(6)
                 ->get(),
-            'trendingProducts' => Product::where('is_active', true)
-                ->with('primaryImage')
-                ->orderBy('created_at', 'desc')
-                ->limit(6)
-                ->get(),
+            'trendingProducts' => RecommendationService::getTrendingProducts(6),
         ];
     }
 };
@@ -118,6 +115,29 @@ new class extends Component {
                                         <span class="inline-block px-2 py-1 bg-green-100 text-green-800 text-xs rounded">Stok Siap</span>
                                     @endif
                                 </div>
+                            </div>
+                        </a>
+                    @endforeach
+                </div>
+            </div>
+        @endif
+
+        <!-- Trending Products -->
+        @if ($trendingProducts->count() > 0)
+            <div class="max-w-7xl mx-auto px-6 py-12">
+                <h2 class="text-3xl font-bold mb-8">🔥 Trending</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    @foreach ($trendingProducts as $product)
+                        <a href="{{ route('product-detail', $product->id) }}" class="bg-white rounded-lg shadow hover:shadow-lg transition overflow-hidden">
+                            @if ($product->primaryImage)
+                                <img src="{{ asset('storage/' . $product->primaryImage->image_path) }}" class="w-full h-48 object-cover" />
+                            @else
+                                <div class="w-full h-48 bg-gray-200 flex items-center justify-center text-gray-400">Tidak ada gambar</div>
+                            @endif
+                            <div class="p-4">
+                                <h3 class="font-semibold text-lg mb-2 line-clamp-2">{{ $product->name }}</h3>
+                                <p class="text-orange-600 font-bold text-lg">Rp {{ number_format($product->price, 0, ',', '.') }}</p>
+                                <p class="text-sm text-gray-600 mt-2">{{ $product->sellerProfile->shop_name ?? 'Toko' }}</p>
                             </div>
                         </a>
                     @endforeach

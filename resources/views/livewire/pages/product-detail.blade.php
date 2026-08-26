@@ -2,6 +2,7 @@
 
 use Livewire\Volt\Component;
 use App\Models\Product;
+use App\Services\RecommendationService;
 
 new class extends Component {
     public $product_id;
@@ -25,8 +26,12 @@ new class extends Component {
 
     public function with()
     {
+        $product = Product::with('images', 'sellerProfile', 'category')->findOrFail($this->product_id);
+
         return [
-            'product' => Product::with('images', 'sellerProfile', 'category')->findOrFail($this->product_id),
+            'product' => $product,
+            'similarProducts' => RecommendationService::getSimilarProducts($product, 4),
+            'sameSellerProducts' => RecommendationService::getFromSameSeller($product, 4),
         ];
     }
 
@@ -253,5 +258,50 @@ new class extends Component {
                 </div>
             </div>
         </div>
+
+        <!-- Same Seller Products -->
+        @if ($sameSellerProducts->count() > 0)
+            <div class="max-w-7xl mx-auto px-6 py-8">
+                <h3 class="text-2xl font-bold mb-6">Produk Lain dari Toko Ini</h3>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                    @foreach ($sameSellerProducts as $item)
+                        <a href="{{ route('product-detail', $item->id) }}" class="bg-white rounded-lg shadow hover:shadow-lg transition overflow-hidden">
+                            @if ($item->primaryImage)
+                                <img src="{{ asset('storage/' . $item->primaryImage->image_path) }}" class="w-full h-32 object-cover" />
+                            @else
+                                <div class="w-full h-32 bg-gray-200 flex items-center justify-center text-gray-400">📦</div>
+                            @endif
+                            <div class="p-3">
+                                <p class="text-sm font-semibold line-clamp-2">{{ $item->name }}</p>
+                                <p class="text-orange-600 font-bold text-sm">Rp {{ number_format($item->price, 0, ',', '.') }}</p>
+                            </div>
+                        </a>
+                    @endforeach
+                </div>
+            </div>
+        @endif
+
+        <!-- Similar Products -->
+        @if ($similarProducts->count() > 0)
+            <div class="max-w-7xl mx-auto px-6 py-8">
+                <h3 class="text-2xl font-bold mb-6">Produk Serupa</h3>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                    @foreach ($similarProducts as $item)
+                        <a href="{{ route('product-detail', $item->id) }}" class="bg-white rounded-lg shadow hover:shadow-lg transition overflow-hidden">
+                            @if ($item->primaryImage)
+                                <img src="{{ asset('storage/' . $item->primaryImage->image_path) }}" class="w-full h-32 object-cover" />
+                            @else
+                                <div class="w-full h-32 bg-gray-200 flex items-center justify-center text-gray-400">📦</div>
+                            @endif
+                            <div class="p-3">
+                                <p class="text-xs text-gray-500">{{ $item->sellerProfile->shop_name ?? '' }}</p>
+                                <p class="text-sm font-semibold line-clamp-2">{{ $item->name }}</p>
+                                <p class="text-orange-600 font-bold text-sm">Rp {{ number_format($item->price, 0, ',', '.') }}</p>
+                            </div>
+                        </a>
+                    @endforeach
+                </div>
+            </div>
+        @endif
     </div>
 </x-app-layout>
