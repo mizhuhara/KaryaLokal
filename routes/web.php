@@ -2,7 +2,11 @@
 
 use Illuminate\Support\Facades\Route;
 
-Route::view('/', 'welcome');
+\Livewire\Volt\Volt::route('/', 'pages.home')
+    ->name('home');
+
+\Livewire\Volt\Volt::route('products', 'pages.products')
+    ->name('products');
 
 Route::view('dashboard', 'dashboard')
     ->middleware(['auth', 'verified'])
