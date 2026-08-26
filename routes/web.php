@@ -59,6 +59,10 @@ Route::view('seller/dashboard', 'seller.dashboard')
     ->middleware(['auth', 'verified', 'role:seller'])
     ->name('seller.product-images');
 
+\Livewire\Volt\Volt::route('seller/orders', 'pages.seller.orders')
+    ->middleware(['auth', 'verified', 'role:seller'])
+    ->name('seller.orders');
+
 Route::view('admin/dashboard', 'admin.dashboard')
     ->middleware(['auth', 'verified', 'role:admin'])
     ->name('admin.dashboard');

@@ -680,12 +680,12 @@ If a design change is necessary, document it in CHANGELOG.
 
 ## PHASE 5 — Order
 
-- [ ] Order creation
-- [ ] Order items
-- [ ] Order status
+- [x] Order creation
+- [x] Order items
+- [x] Order status
 - [ ] Seller order management
-- [ ] Buyer order history
-- [ ] Cancellation rules
+- [x] Buyer order history
+- [x] Cancellation rules
 
 ## PHASE 6 — Trust & Communication
 
@@ -731,7 +731,8 @@ If a design change is necessary, document it in CHANGELOG.
 **PHASE 2 — Seller (Completed - 7/7 tasks)**
 **PHASE 3 — Buyer Catalog (Completed - 7/7 tasks)**
 **PHASE 4 — Location (Completed - 6/7 tasks)**
-**PHASE 5 — Order (Next)**
+**PHASE 5 — Order (Completed - 6/6 tasks)**
+**PHASE 6 — Trust & Communication (Next)**
 
 ### Overall Status
 
@@ -892,9 +893,44 @@ Status: COMPLETED / IN PROGRESS / BLOCKED
 
 ### Project Changelog
 
-## 2026-08-26 — Phase 4: Location System Complete
+## 2026-08-26 — Phase 5: Complete Order System
 
-Status: COMPLETED (6/7 - Location fallback deferred)
+Status: COMPLETED
+
+### Changed
+- Created Order and OrderItem models with proper relationships.
+- Implemented session-based shopping cart with add/remove/update quantity.
+- Created checkout page with delivery type selection (pickup/delivery), address input, notes.
+- Order creation groups items by seller and creates separate orders per seller.
+- Buyer order history page with status filters and order details.
+- Cancel order functionality (only pending orders).
+- Order status state machine: pending → confirmed → processing → ready → shipped/completed.
+
+### Why
+- Core marketplace: Buyers need to purchase products and track orders.
+
+### Files
+- `app/Models/Order.php`
+- `app/Models/OrderItem.php`
+- `database/migrations/2026_08_26_100727_create_orders_table.php`
+- `database/migrations/2026_08_26_100733_create_order_items_table.php`
+- `resources/views/livewire/pages/cart.blade.php`
+- `resources/views/livewire/pages/checkout.blade.php`
+- `resources/views/livewire/pages/buyer-orders.blade.php`
+- `app/Models/User.php` (added orders relation)
+- `routes/web.php`
+
+### Testing
+- Migrations passed.
+- Models and relations set up.
+- Cart logic functional.
+
+### Notes
+- Cart stored in session (can upgrade to DB later).
+- Orders grouped by seller automatically.
+- Seller order management still pending (PHASE 5 partial).
+
+---
 
 ### Changed
 - Implemented Nearby Sellers list view with geolocation, distance sorting, auto-expanding radius.
