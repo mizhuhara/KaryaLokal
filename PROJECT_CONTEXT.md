@@ -163,39 +163,39 @@ Setiap seller memiliki halaman toko sendiri.
 # 5. FITUR BUYER
 
 ## Authentication
-- [ ] Register
-- [ ] Login
-- [ ] Logout
+- [x] Register
+- [x] Login
+- [x] Logout
 - [ ] Forgot password
-- [ ] Profile
+- [x] Profile
 
 ## Homepage
-- [ ] Hero section
-- [ ] Search
-- [ ] Categories
+- [x] Hero section
+- [x] Search
+- [x] Categories
 - [ ] Nearby products
-- [ ] Trending products
+- [x] Trending products
 - [ ] Recommended products
 - [ ] Featured sellers
 
 ## Product
-- [ ] Product listing
-- [ ] Product detail
-- [ ] Product image gallery
-- [ ] Price
-- [ ] Stock
-- [ ] Seller information
-- [ ] Distance to seller
+- [x] Product listing
+- [x] Product detail
+- [x] Product image gallery
+- [x] Price
+- [x] Stock
+- [x] Seller information
+- [x] Distance to seller
 - [ ] Rating
 - [ ] Review
-- [ ] Custom availability
-- [ ] Pickup availability
-- [ ] Delivery availability
+- [x] Custom availability
+- [x] Pickup availability
+- [x] Delivery availability
 
 ## Search & Filter
-- [ ] Search product
-- [ ] Category filter
-- [ ] Price filter
+- [x] Search product
+- [x] Category filter
+- [x] Price filter
 - [ ] Rating filter
 - [ ] Distance filter
 - [ ] Custom filter
@@ -204,26 +204,26 @@ Setiap seller memiliki halaman toko sendiri.
 - [ ] Ready stock filter
 - [ ] Pre-order filter
 - [ ] Sort nearest
-- [ ] Sort cheapest
+- [x] Sort cheapest
 - [ ] Sort highest rating
-- [ ] Sort newest
-- [ ] Sort popular
+- [x] Sort newest
+- [x] Sort popular
 
 ## Location
-- [ ] Request browser location permission
+- [x] Request browser location permission
 - [ ] Save buyer location
-- [ ] Detect latitude/longitude
-- [ ] Calculate distance
-- [ ] Nearby seller
-- [ ] Radius search
-- [ ] Map view
-- [ ] Seller marker
-- [ ] Seller detail from map
+- [x] Detect latitude/longitude
+- [x] Calculate distance
+- [x] Nearby seller
+- [x] Radius search
+- [x] Map view
+- [x] Seller marker
+- [x] Seller detail from map
 
 ## Wishlist
-- [ ] Add product to wishlist
-- [ ] Remove product
-- [ ] Wishlist page
+- [x] Add product to wishlist
+- [x] Remove product
+- [x] Wishlist page
 - [ ] Favorite seller
 
 ## Order
@@ -250,22 +250,22 @@ Setiap seller memiliki halaman toko sendiri.
 # 6. FITUR SELLER
 
 ## Seller Registration
-- [ ] Seller registration
-- [ ] Seller profile
-- [ ] Shop name
-- [ ] Shop description
+- [x] Seller registration
+- [x] Seller profile
+- [x] Shop name
+- [x] Shop description
 - [ ] Shop photo/logo
-- [ ] Contact information
-- [ ] Address
-- [ ] Province
-- [ ] City
-- [ ] District
-- [ ] Latitude
-- [ ] Longitude
-- [ ] Operating hours
-- [ ] Pickup availability
-- [ ] Delivery availability
-- [ ] Custom order availability
+- [x] Contact information
+- [x] Address
+- [x] Province
+- [x] City
+- [x] District
+- [x] Latitude
+- [x] Longitude
+- [x] Operating hours
+- [x] Pickup availability
+- [x] Delivery availability
+- [x] Custom order availability
 
 ## Verification
 - [ ] Submit verification
@@ -276,17 +276,17 @@ Setiap seller memiliki halaman toko sendiri.
 - [ ] Verified badge
 
 ## Product Management
-- [ ] Create product
-- [ ] Edit product
-- [ ] Delete product
-- [ ] Product image
-- [ ] Product description
-- [ ] Price
-- [ ] Stock
-- [ ] Category
-- [ ] Custom flag
-- [ ] Ready stock / preorder
-- [ ] Delivery / pickup
+- [x] Create product
+- [x] Edit product
+- [x] Delete product
+- [x] Product image
+- [x] Product description
+- [x] Price
+- [x] Stock
+- [x] Category
+- [x] Custom flag
+- [x] Ready stock / preorder
+- [x] Delivery / pickup
 
 ## Order Management
 - [ ] Incoming orders
@@ -299,9 +299,9 @@ Setiap seller memiliki halaman toko sendiri.
 - [ ] Order history
 
 ## Seller Dashboard
-- [ ] Total products
+- [x] Total products
 - [ ] Total orders
-- [ ] Revenue
+- [x] Revenue (placeholder)
 - [ ] Rating
 - [ ] Visitors
 - [ ] Sales chart
