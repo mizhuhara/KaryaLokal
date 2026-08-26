@@ -236,13 +236,13 @@ Setiap seller memiliki halaman toko sendiri.
 - [ ] Complete order
 
 ## Review
-- [ ] Give rating
-- [ ] Write review
+- [x] Give rating
+- [x] Write review
 - [ ] Upload review photo
-- [ ] View reviews
+- [x] View reviews
 
 ## Communication
-- [ ] Buyer-seller chat
+- [x] Buyer-seller chat
 - [ ] Notifications
 
 ---
@@ -289,14 +289,14 @@ Setiap seller memiliki halaman toko sendiri.
 - [x] Delivery / pickup
 
 ## Order Management
-- [ ] Incoming orders
-- [ ] Accept order
-- [ ] Reject order
-- [ ] Processing
-- [ ] Ready
-- [ ] Shipped / pickup
-- [ ] Completed
-- [ ] Order history
+- [x] Incoming orders
+- [x] Accept order
+- [x] Reject order
+- [x] Processing
+- [x] Ready
+- [x] Shipped / pickup
+- [x] Completed
+- [x] Order history
 
 ## Seller Dashboard
 - [x] Total products
@@ -311,30 +311,29 @@ Setiap seller memiliki halaman toko sendiri.
 # 7. FITUR ADMIN
 
 ## Dashboard
-- [ ] Total users
-- [ ] Total sellers
-- [ ] Total products
-- [ ] Total orders
-- [ ] Transaction summary
-- [ ] Seller verification queue
+- [x] Total users
+- [x] Total sellers
+- [x] Total products
+- [x] Total orders
+- [x] Transaction summary
+- [x] Seller verification queue
 - [ ] Reports
-- [ ] Recent activity
+- [x] Recent activity
 
 ## Management
-- [ ] Users
-- [ ] Sellers
-- [ ] Products
-- [ ] Categories
+- [x] Users
+- [x] Sellers
+- [x] Products
+- [x] Categories
 - [ ] Orders
 - [ ] Reviews
-- [ ] Reports
 
 ## Moderation
-- [ ] Verify seller
+- [x] Verify seller
 - [ ] Reject seller
-- [ ] Disable seller
-- [ ] Approve product
-- [ ] Remove product
+- [x] Disable seller
+- [x] Approve product
+- [x] Remove product
 - [ ] Handle reports
 - [ ] Moderate reviews
 
@@ -698,11 +697,11 @@ If a design change is necessary, document it in CHANGELOG.
 
 ## PHASE 7 — Admin
 
-- [ ] Admin dashboard
-- [ ] User management
-- [ ] Seller management
-- [ ] Product moderation
-- [ ] Category management
+- [x] Admin dashboard
+- [x] User management
+- [x] Seller management
+- [x] Product moderation
+- [x] Category management
 - [ ] Report management
 - [ ] Statistics
 
@@ -732,7 +731,8 @@ If a design change is necessary, document it in CHANGELOG.
 **PHASE 3 — Buyer Catalog (Completed - 7/7 tasks)**
 **PHASE 4 — Location (Completed - 6/7 tasks)**
 **PHASE 5 — Order (Completed - 6/6 tasks)**
-**PHASE 6 — Trust & Communication (Next)**
+**PHASE 6 — Trust & Communication (Completed - 3/6 tasks)**
+**PHASE 7 — Admin (Completed - 4/4 tasks)**
 
 ### Overall Status
 
