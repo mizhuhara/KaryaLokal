@@ -69,6 +69,7 @@ new class extends Component {
                     auth()->user()->name . ' memesan produk senilai Rp ' . number_format($total, 0, ',', '.'),
                     $order
                 );
+                $seller->user->notify(new \App\Notifications\NewOrderForSeller($order));
             }
 
             // Create payment

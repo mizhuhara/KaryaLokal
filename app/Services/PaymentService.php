@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Models\Order;
 use App\Models\Payment;
+use App\Notifications\PaymentSuccess;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Str;
 
@@ -115,6 +116,7 @@ class PaymentService
 
         if ($paymentStatus === 'success') {
             $order->update(['status' => 'confirmed']);
+            $order->user->notify(new PaymentSuccess($order));
         }
     }
 

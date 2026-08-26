@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Notifications\OrderStatusChanged;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -56,6 +57,9 @@ class Order extends Model
                         $order->order_number . ': ' . $statusMessages[$order->status],
                         $order
                     );
+
+                    // Send email notification
+                    $buyer->notify(new OrderStatusChanged($order));
                 }
             }
         });
