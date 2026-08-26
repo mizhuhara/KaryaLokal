@@ -713,10 +713,10 @@ If a design change is necessary, document it in CHANGELOG.
 - [x] Commission system
 - [x] Voucher & Promo
 - [x] Email notifications
-- [ ] Seller subscription
-- [ ] Delivery integration
+- [x] Seller subscription tiers
+- [x] Delivery integration (service layer)
 - [ ] Recommendation system
-- [ ] Advanced analytics
+- [x] Advanced analytics
 
 ---
 
@@ -733,9 +733,9 @@ If a design change is necessary, document it in CHANGELOG.
 **PHASE 3 — Buyer Catalog (Completed - 7/7 tasks)**
 **PHASE 4 — Location (Completed - 6/7 tasks)**
 **PHASE 5 — Order (Completed - 6/6 tasks)**
-**PHASE 6 — Trust & Communication (Completed - 3/6 tasks)**
-**PHASE 7 — Admin (Completed - 4/4 tasks)**
-**PHASE 8 — Advanced Marketplace (In Progress - 1/9 tasks)**
+**PHASE 6 — Trust & Communication (Completed - 7/7 tasks)**
+**PHASE 7 — Admin (Completed - 6/7 tasks)**
+**PHASE 8 — Advanced Marketplace (Completed - 8/9 tasks)
 
 ### Overall Status
 
