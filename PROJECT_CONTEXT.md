@@ -670,10 +670,10 @@ If a design change is necessary, document it in CHANGELOG.
 
 ## PHASE 4 — Location
 
-- [ ] Browser geolocation
-- [ ] Seller latitude/longitude
-- [ ] Distance calculation
-- [ ] Nearby seller
+- [x] Browser geolocation
+- [x] Seller latitude/longitude (existing)
+- [x] Distance calculation
+- [x] Nearby seller
 - [ ] Radius filter
 - [ ] Map
 - [ ] Location fallback
@@ -730,7 +730,8 @@ If a design change is necessary, document it in CHANGELOG.
 **PHASE 1 — Foundation (Completed)**
 **PHASE 2 — Seller (Completed - 7/7 tasks)**
 **PHASE 3 — Buyer Catalog (Completed - 7/7 tasks)**
-**PHASE 4 — Location (Next)**
+**PHASE 4 — Location (In Progress - 4/7 tasks)**
+**PHASE 5 — Order (Next)**
 
 ### Overall Status
 
@@ -891,9 +892,35 @@ Status: COMPLETED / IN PROGRESS / BLOCKED
 
 ### Project Changelog
 
-## 2026-08-26 — Phase 3: Complete Buyer Catalog
+## 2026-08-26 — Phase 4: Location System (Nearby Sellers)
 
-Status: COMPLETED
+Status: IN PROGRESS
+
+### Changed
+- Created Nearby Sellers page with browser geolocation (HTML5 Geolocation API).
+- Implemented Haversine formula for accurate distance calculation between buyer and seller coordinates.
+- Auto-expand search radius if no results found (5km → 10km → 25km → 50km → 500km).
+- Display results sorted by distance with seller stats and services offered.
+- Added verification badge and service indicators (Pickup, Delivery, Custom).
+
+### Why
+- Core differentiator: Location-based discovery is key to KaryaLokal's value proposition.
+
+### Files
+- `resources/views/livewire/pages/nearby.blade.php`
+- `routes/web.php`
+
+### Testing
+- Geolocation functionality works via browser API.
+- Distance calculation verified with Haversine formula.
+- Tested with mock coordinates.
+
+### Notes
+- Only shows verified sellers to ensure quality.
+- Automatic radius expansion prevents "no results" dead ends.
+- Locations stored as lat/long decimals (7 precision).
+
+---
 
 ### Changed
 - Created Homepage with hero, categories, featured products, and CTA sections.

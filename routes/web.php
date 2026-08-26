@@ -21,6 +21,9 @@ use Illuminate\Support\Facades\Route;
 \Livewire\Volt\Volt::route('nearby', 'pages.nearby')
     ->name('nearby');
 
+\Livewire\Volt\Volt::route('nearby/map', 'pages.nearby-map')
+    ->name('nearby-map');
+
 Route::view('dashboard', 'dashboard')
     ->middleware(['auth', 'verified'])
     ->name('dashboard');
