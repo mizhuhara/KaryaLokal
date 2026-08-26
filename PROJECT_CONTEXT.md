@@ -683,7 +683,7 @@ If a design change is necessary, document it in CHANGELOG.
 - [x] Order creation
 - [x] Order items
 - [x] Order status
-- [ ] Seller order management
+- [x] Seller order management
 - [x] Buyer order history
 - [x] Cancellation rules
 
