@@ -153,6 +153,7 @@ new class extends Component
                 <a href="{{ route('login') }}" class="px-4 py-2 text-gray-700 hover:text-gray-900">Masuk</a>
                 <a href="{{ route('register') }}" class="px-4 py-2 bg-orange-600 text-white rounded-lg hover:bg-orange-700">Daftar</a>
             @endif
+            </div>
         </div>
     </div>
 
