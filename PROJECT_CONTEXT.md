@@ -317,7 +317,7 @@ Setiap seller memiliki halaman toko sendiri.
 - [x] Total orders
 - [x] Transaction summary
 - [x] Seller verification queue
-- [ ] Reports
+- [x] Reports
 - [x] Recent activity
 
 ## Management
@@ -325,17 +325,17 @@ Setiap seller memiliki halaman toko sendiri.
 - [x] Sellers
 - [x] Products
 - [x] Categories
-- [ ] Orders
-- [ ] Reviews
+- [x] Orders
+- [x] Reviews
 
 ## Moderation
 - [x] Verify seller
-- [ ] Reject seller
+- [x] Reject seller
 - [x] Disable seller
 - [x] Approve product
 - [x] Remove product
-- [ ] Handle reports
-- [ ] Moderate reviews
+- [x] Handle reports
+- [x] Moderate reviews
 
 ---
 
@@ -704,7 +704,9 @@ If a design change is necessary, document it in CHANGELOG.
 - [x] Product moderation
 - [x] Category management
 - [x] Report management
-- [ ] Statistics (advanced)
+- [x] Orders management
+- [x] Reviews management
+- [x] Statistics (basic)
 
 ## PHASE 8 — Advanced Marketplace
 

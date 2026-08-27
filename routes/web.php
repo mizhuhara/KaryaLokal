@@ -122,6 +122,14 @@ Route::view('seller/dashboard', 'seller.dashboard')
     ->middleware(['auth', 'verified', 'role:admin'])
     ->name('admin.reports');
 
+\Livewire\Volt\Volt::route('admin/orders', 'pages.admin.orders')
+    ->middleware(['auth', 'verified', 'role:admin'])
+    ->name('admin.orders');
+
+\Livewire\Volt\Volt::route('admin/reviews', 'pages.admin.reviews')
+    ->middleware(['auth', 'verified', 'role:admin'])
+    ->name('admin.reviews');
+
 \Livewire\Volt\Volt::route('admin/analytics', 'pages.admin.analytics')
     ->middleware(['auth', 'verified', 'role:admin'])
     ->name('admin.analytics');
