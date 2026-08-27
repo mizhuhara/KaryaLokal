@@ -51,9 +51,15 @@ new class extends Component {
         <div class="bg-gradient-to-r from-orange-400 to-red-400 text-white py-12">
             <div class="max-w-7xl mx-auto px-6">
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                    <div>
-                        <h1 class="text-4xl font-bold mb-2">{{ $seller->shop_name }}</h1>
-                        <p class="text-lg opacity-90">{{ $seller->city }}, {{ $seller->province }}</p>
+                    <div class="flex items-center gap-4">
+                        @if ($seller->shop_logo)
+                            <img src="{{ asset('storage/' . $seller->shop_logo) }}" class="w-20 h-20 object-cover rounded-lg shadow" alt="Logo Toko">
+                        @else
+                            <div class="w-20 h-20 bg-white/20 rounded-lg flex items-center justify-center text-3xl">🏪</div>
+                        @endif
+                        <div>
+                            <h1 class="text-4xl font-bold mb-2">{{ $seller->shop_name }}</h1>
+                            <p class="text-lg opacity-90">{{ $seller->city }}, {{ $seller->province }}</p>
                         @if ($seller->is_verified)
                             <div class="flex items-center gap-2 mt-3">
                                 <span class="text-2xl">✅</span>

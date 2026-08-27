@@ -14,7 +14,7 @@ use Illuminate\Support\Str;
     'user_id', 'shop_name', 'slug', 'description', 'address',
     'province', 'city', 'district', 'latitude', 'longitude',
     'operating_hours', 'pickup_available', 'delivery_available',
-    'custom_order_available', 'is_verified', 'verified_at',
+    'custom_order_available', 'is_verified', 'verified_at', 'shop_logo',
 ])]
 class SellerProfile extends Model
 {
@@ -52,6 +52,11 @@ class SellerProfile extends Model
     public function subscription(): HasOne
     {
         return $this->hasOne(Subscription::class);
+    }
+
+    public function verification(): HasOne
+    {
+        return $this->hasOne(SellerVerification::class);
     }
 
     public function activeSubscription(): ?Subscription

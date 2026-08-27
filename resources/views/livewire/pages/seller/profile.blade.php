@@ -3,9 +3,12 @@
 use App\Models\SellerProfile;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Attributes\Layout;
+use Livewire\Features\SupportFileUploads\WithFileUploads;
 use Livewire\Volt\Component;
 
 new #[Layout('layouts.app')] class extends Component {
+    use WithFileUploads;
+
     public ?SellerProfile $profile;
 
     public string $shop_name = '';
@@ -20,6 +23,7 @@ new #[Layout('layouts.app')] class extends Component {
     public bool $pickup_available = false;
     public bool $delivery_available = false;
     public bool $custom_order_available = false;
+    public $shop_logo;
 
     public function mount()
     {
@@ -39,6 +43,18 @@ new #[Layout('layouts.app')] class extends Component {
             $this->delivery_available = $this->profile->delivery_available;
             $this->custom_order_available = $this->profile->custom_order_available;
         }
+    }
+
+    public function uploadLogo()
+    {
+        $this->validate([
+            'shop_logo' => ['required', 'image', 'max:2048'],
+        ]);
+
+        $path = $this->shop_logo->store('shop-logos', 'public');
+        $this->profile->update(['shop_logo' => $path]);
+        $this->shop_logo = null;
+        $this->dispatch('profile-updated');
     }
 
     public function updateProfile()
@@ -73,6 +89,41 @@ new #[Layout('layouts.app')] class extends Component {
 <div class="py-12">
     <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
         
+        <div class="p-4 sm:p-8 bg-white shadow-card sm:rounded-lg">
+            <header>
+                <h2 class="text-lg font-medium text-neutral-900">
+                    Logo Toko
+                </h2>
+                <p class="mt-1 text-sm text-neutral-500">
+                    Upload logo atau foto profil toko Anda.
+                </p>
+            </header>
+
+            <div class="mt-6 space-y-4 max-w-xl">
+                @if ($this->profile && $this->profile->shop_logo)
+                    <div class="flex items-center gap-4">
+                        <img src="{{ asset('storage/' . $this->profile->shop_logo) }}" class="w-24 h-24 object-cover rounded-lg shadow" alt="Logo Toko">
+                        <div>
+                            <p class="text-sm text-gray-600">Logo saat ini</p>
+                        </div>
+                    </div>
+                @endif
+
+                <form wire:submit="uploadLogo" class="space-y-4">
+                    <div>
+                        <input type="file" wire:model="shop_logo" accept="image/*" class="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-orange-50 file:text-orange-700 hover:file:bg-orange-100"/>
+                        @error('shop_logo') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
+                    </div>
+                    @if ($shop_logo)
+                        <div class="mt-2">
+                            <img src="{{ $shop_logo->temporaryUrl() }}" class="w-24 h-24 object-cover rounded-lg shadow" alt="Preview">
+                        </div>
+                    @endif
+                    <x-primary-button>{{ __('Upload Logo') }}</x-primary-button>
+                </form>
+            </div>
+        </div>
+
         <div class="p-4 sm:p-8 bg-white shadow-card sm:rounded-lg">
             <header>
                 <h2 class="text-lg font-medium text-neutral-900">

@@ -14,7 +14,33 @@ new class extends Component {
         $seller = SellerProfile::findOrFail($sellerId);
         $seller->update(['is_verified' => true, 'verified_at' => now()]);
         $seller->user->update(['role' => 'seller']);
+
+        $verification = $seller->verification;
+        if ($verification) {
+            $verification->update([
+                'status' => 'approved',
+                'reviewed_at' => now(),
+            ]);
+        }
+
         $this->dispatch('notify', message: 'Seller diverifikasi');
+    }
+
+    public function rejectSeller($sellerId)
+    {
+        $seller = SellerProfile::findOrFail($sellerId);
+        $seller->update(['is_verified' => false, 'verified_at' => null]);
+
+        $verification = $seller->verification;
+        if ($verification) {
+            $verification->update([
+                'status' => 'rejected',
+                'reviewed_at' => now(),
+                'rejection_reason' => 'Dokumen tidak valid atau tidak memenuhi syarat',
+            ]);
+        }
+
+        $this->dispatch('notify', message: 'Seller ditolak');
     }
 
     public function unverifySeller($sellerId)
@@ -106,6 +132,13 @@ new class extends Component {
                                         class="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 text-sm font-semibold"
                                     >
                                         ✓ Verifikasi
+                                    </button>
+                                    <button
+                                        wire:click="rejectSeller({{ $seller->id }})"
+                                        wire:confirm="Tolak seller ini?"
+                                        class="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 text-sm"
+                                    >
+                                        Tolak
                                     </button>
                                 @else
                                     <button

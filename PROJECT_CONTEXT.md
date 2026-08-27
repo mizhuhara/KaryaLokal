@@ -166,17 +166,17 @@ Setiap seller memiliki halaman toko sendiri.
 - [x] Register
 - [x] Login
 - [x] Logout
-- [ ] Forgot password
+- [x] Forgot password
 - [x] Profile
 
 ## Homepage
 - [x] Hero section
 - [x] Search
 - [x] Categories
-- [ ] Nearby products
+- [x] Nearby products
 - [x] Trending products
-- [ ] Recommended products
-- [ ] Featured sellers
+- [x] Recommended products
+- [x] Featured sellers
 
 ## Product
 - [x] Product listing
@@ -186,8 +186,8 @@ Setiap seller memiliki halaman toko sendiri.
 - [x] Stock
 - [x] Seller information
 - [x] Distance to seller
-- [ ] Rating
-- [ ] Review
+- [x] Rating
+- [x] Review
 - [x] Custom availability
 - [x] Pickup availability
 - [x] Delivery availability
@@ -196,16 +196,16 @@ Setiap seller memiliki halaman toko sendiri.
 - [x] Search product
 - [x] Category filter
 - [x] Price filter
-- [ ] Rating filter
-- [ ] Distance filter
-- [ ] Custom filter
-- [ ] Pickup filter
-- [ ] Delivery filter
-- [ ] Ready stock filter
-- [ ] Pre-order filter
-- [ ] Sort nearest
+- [x] Rating filter
+- [x] Distance filter
+- [x] Custom filter
+- [x] Pickup filter
+- [x] Delivery filter
+- [x] Ready stock filter
+- [x] Pre-order filter
+- [x] Sort nearest
 - [x] Sort cheapest
-- [ ] Sort highest rating
+- [x] Sort highest rating
 - [x] Sort newest
 - [x] Sort popular
 
@@ -224,16 +224,16 @@ Setiap seller memiliki halaman toko sendiri.
 - [x] Add product to wishlist
 - [x] Remove product
 - [x] Wishlist page
-- [ ] Favorite seller
+- [x] Favorite seller
 
 ## Order
-- [ ] Add to order/cart strategy
-- [ ] Create order
-- [ ] Order detail
-- [ ] Order status
-- [ ] Order history
-- [ ] Cancel order where allowed
-- [ ] Complete order
+- [x] Add to order/cart strategy
+- [x] Create order
+- [x] Order detail
+- [x] Order status
+- [x] Order history
+- [x] Cancel order where allowed
+- [x] Complete order
 
 ## Review
 - [x] Give rating
@@ -254,7 +254,7 @@ Setiap seller memiliki halaman toko sendiri.
 - [x] Seller profile
 - [x] Shop name
 - [x] Shop description
-- [ ] Shop photo/logo
+- [x] Shop photo/logo
 - [x] Contact information
 - [x] Address
 - [x] Province
@@ -268,12 +268,12 @@ Setiap seller memiliki halaman toko sendiri.
 - [x] Custom order availability
 
 ## Verification
-- [ ] Submit verification
-- [ ] Verification status
-- [ ] Admin review
-- [ ] Approved
-- [ ] Rejected
-- [ ] Verified badge
+- [x] Submit verification
+- [x] Verification status
+- [x] Admin review
+- [x] Approved
+- [x] Rejected
+- [x] Verified badge
 
 ## Product Management
 - [x] Create product
@@ -300,9 +300,9 @@ Setiap seller memiliki halaman toko sendiri.
 
 ## Seller Dashboard
 - [x] Total products
-- [ ] Total orders
+- [x] Total orders
 - [x] Revenue (placeholder)
-- [ ] Rating
+- [x] Rating
 - [ ] Visitors
 - [ ] Sales chart
 

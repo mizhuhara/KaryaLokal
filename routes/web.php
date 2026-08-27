@@ -58,6 +58,10 @@ Route::view('seller/dashboard', 'seller.dashboard')
     ->middleware(['auth', 'verified', 'role:seller'])
     ->name('seller.profile');
 
+\Livewire\Volt\Volt::route('seller/verification', 'pages.seller.verification')
+    ->middleware(['auth', 'verified', 'role:seller'])
+    ->name('seller.verification');
+
 \Livewire\Volt\Volt::route('seller/products', 'pages.seller.products')
     ->middleware(['auth', 'verified', 'role:seller'])
     ->name('seller.products');

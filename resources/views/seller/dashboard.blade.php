@@ -11,6 +11,8 @@
                 $seller = auth()->user()->sellerProfile;
                 $totalProducts = $seller?->products()->count() ?? 0;
                 $totalProductsWithImages = $seller?->products()->whereHas('images')->count() ?? 0;
+                $totalOrders = $seller?->products()->with('orderItems')->get()->sum(fn($p) => $p->orderItems->count()) ?? 0;
+                $avgRating = $seller?->products()->with('reviews')->get()->flatMap(fn($p) => $p->reviews)->avg('rating') ?? 0;
             @endphp
 
             @if (!$seller)
@@ -21,7 +23,7 @@
                     </a>
                 </div>
             @else
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
                     <div class="bg-white overflow-hidden shadow-card sm:rounded-lg p-6">
                         <div class="flex items-center justify-between">
                             <div>
@@ -35,10 +37,25 @@
                     <div class="bg-white overflow-hidden shadow-card sm:rounded-lg p-6">
                         <div class="flex items-center justify-between">
                             <div>
-                                <p class="text-neutral-600 text-sm">Produk Lengkap</p>
-                                <p class="text-3xl font-bold text-neutral-900">{{ $totalProductsWithImages }}</p>
+                                <p class="text-neutral-600 text-sm">Total Pesanan</p>
+                                <p class="text-3xl font-bold text-neutral-900">{{ $totalOrders }}</p>
                             </div>
-                            <div class="text-4xl text-green-500">✓</div>
+                            <div class="text-4xl text-green-500">📊</div>
+                        </div>
+                    </div>
+
+                    <div class="bg-white overflow-hidden shadow-card sm:rounded-lg p-6">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-neutral-600 text-sm">Rating Rata-rata</p>
+                                <p class="text-3xl font-bold text-neutral-900">{{ number_format($avgRating, 1) }}</p>
+                                <div class="flex gap-1 mt-1">
+                                    @for ($i = 1; $i <= 5; $i++)
+                                        <span class="text-sm {{ $i <= round($avgRating) ? '⭐' : '☆' }}"></span>
+                                    @endfor
+                                </div>
+                            </div>
+                            <div class="text-4xl">⭐</div>
                         </div>
                     </div>
 
@@ -90,11 +107,18 @@
                     </div>
 
                     <div class="bg-white overflow-hidden shadow-card sm:rounded-lg p-6">
-                        <h3 class="text-lg font-semibold mb-4">Manajemen Produk</h3>
-                        <p class="text-neutral-600 text-sm mb-4">Kelola katalog produk Anda di sini.</p>
-                        <a href="{{ route('seller.products') }}" class="inline-block px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700">
-                            Lihat Produk
-                        </a>
+                        <h3 class="text-lg font-semibold mb-4">Manajemen</h3>
+                        <div class="space-y-3">
+                            <a href="{{ route('seller.products') }}" class="block px-4 py-2 bg-green-600 text-white text-sm rounded-lg hover:bg-green-700 text-center">
+                                📦 Produk
+                            </a>
+                            <a href="{{ route('seller.orders') }}" class="block px-4 py-2 bg-blue-600 text-white text-sm rounded-lg hover:bg-blue-700 text-center">
+                                📋 Pesanan
+                            </a>
+                            <a href="{{ route('seller.verification') }}" class="block px-4 py-2 bg-orange-600 text-white text-sm rounded-lg hover:bg-orange-700 text-center">
+                                ✓ Verifikasi
+                            </a>
+                        </div>
                     </div>
                 </div>
 

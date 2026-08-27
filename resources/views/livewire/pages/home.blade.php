@@ -3,9 +3,53 @@
 use Livewire\Volt\Component;
 use App\Models\Product;
 use App\Models\Category;
+use App\Models\SellerProfile;
 use App\Services\RecommendationService;
+use Illuminate\Support\Facades\DB;
 
 new class extends Component {
+    public $buyerLat = null;
+    public $buyerLng = null;
+    public $nearbyProducts = [];
+    public $locationRequested = false;
+
+    public function setBuyerLocation($lat, $lng)
+    {
+        $this->buyerLat = $lat;
+        $this->buyerLng = $lng;
+        $this->locationRequested = true;
+        $this->loadNearbyProducts();
+    }
+
+    public function locationDenied()
+    {
+        $this->locationRequested = true;
+    }
+
+    public function loadNearbyProducts()
+    {
+        if (!$this->buyerLat || !$this->buyerLng) return;
+
+        $lat = $this->buyerLat;
+        $lng = $this->buyerLng;
+
+        $this->nearbyProducts = Product::where('is_active', true)
+            ->join('seller_profiles as sp', 'products.seller_profile_id', '=', 'sp.id')
+            ->selectRaw('products.*, (
+                6371 * acos(
+                    cos(radians(?)) * cos(radians(sp.latitude)) *
+                    cos(radians(sp.longitude) - radians(?)) +
+                    sin(radians(?)) * sin(radians(sp.latitude))
+                )
+            ) as distance', [$lat, $lng, $lat])
+            ->whereNotNull('sp.latitude')
+            ->whereNotNull('sp.longitude')
+            ->with('primaryImage', 'sellerProfile')
+            ->orderBy('distance', 'asc')
+            ->limit(6)
+            ->get();
+    }
+
     public function with()
     {
         return [
@@ -16,6 +60,13 @@ new class extends Component {
                 ->limit(6)
                 ->get(),
             'trendingProducts' => RecommendationService::getTrendingProducts(6),
+            'recommendedProducts' => RecommendationService::getTrendingProducts(8),
+            'featuredSellers' => SellerProfile::where('is_verified', true)
+                ->whereNotNull('latitude')
+                ->whereNotNull('longitude')
+                ->with('products')
+                ->limit(6)
+                ->get(),
         ];
     }
 };
@@ -138,6 +189,127 @@ new class extends Component {
                                 <h3 class="font-semibold text-lg mb-2 line-clamp-2">{{ $product->name }}</h3>
                                 <p class="text-orange-600 font-bold text-lg">Rp {{ number_format($product->price, 0, ',', '.') }}</p>
                                 <p class="text-sm text-gray-600 mt-2">{{ $product->sellerProfile->shop_name ?? 'Toko' }}</p>
+                            </div>
+                        </a>
+                    @endforeach
+                </div>
+            </div>
+        @endif
+
+        <!-- Featured Sellers -->
+        @if ($featuredSellers->count() > 0)
+            <div class="max-w-7xl mx-auto px-6 py-12">
+                <h2 class="text-3xl font-bold mb-8">⭐ Pengrajin Unggulan</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    @foreach ($featuredSellers as $seller)
+                        <a href="{{ route('seller-store', $seller->id) }}" class="bg-white rounded-lg shadow hover:shadow-lg transition p-6">
+                            <div class="flex items-start justify-between mb-3">
+                                <div>
+                                    <h3 class="text-lg font-semibold">{{ $seller->shop_name }}</h3>
+                                    <p class="text-sm text-gray-600">{{ $seller->city }}</p>
+                                </div>
+                                <span class="text-2xl">✅</span>
+                            </div>
+                            <p class="text-sm text-gray-700 mb-4 line-clamp-2">{{ $seller->description ?? 'Pengrajin handmade lokal' }}</p>
+                            <div class="flex gap-2 flex-wrap mb-4">
+                                @if ($seller->pickup_available)
+                                    <span class="px-2 py-1 bg-blue-100 text-blue-800 text-xs rounded-full">Pickup</span>
+                                @endif
+                                @if ($seller->delivery_available)
+                                    <span class="px-2 py-1 bg-blue-100 text-blue-800 text-xs rounded-full">Delivery</span>
+                                @endif
+                                @if ($seller->custom_order_available)
+                                    <span class="px-2 py-1 bg-purple-100 text-purple-800 text-xs rounded-full">Custom</span>
+                                @endif
+                            </div>
+                            <p class="text-xs text-gray-500">{{ $seller->products->count() }} Produk</p>
+                        </a>
+                    @endforeach
+                </div>
+            </div>
+        @endif
+
+        <!-- Nearby Products -->
+        <div class="max-w-7xl mx-auto px-6 py-12">
+            <div class="flex items-center justify-between mb-8">
+                <h2 class="text-3xl font-bold">📍 Produk Terdekat</h2>
+                @if (!$locationRequested)
+                    <button
+                        onclick="navigator.geolocation.getCurrentPosition(
+                            pos => {
+                                @this.setBuyerLocation(pos.coords.latitude, pos.coords.longitude);
+                            },
+                            () => @this.locationDenied()
+                        )"
+                        class="px-4 py-2 bg-orange-600 text-white rounded-lg hover:bg-orange-700 font-semibold text-sm"
+                    >
+                        Aktifkan Lokasi
+                    </button>
+                @endif
+            </div>
+
+            @if ($locationRequested && empty($nearbyProducts))
+                <div class="bg-white rounded-lg shadow p-8 text-center">
+                    <div class="text-4xl mb-4">📍</div>
+                    <h3 class="text-xl font-semibold mb-2">Produk terdekat tidak ditemukan</h3>
+                    <p class="text-gray-600">Coba aktifkan lokasi atau jelajahi produk lainnya</p>
+                </div>
+            @elseif (!empty($nearbyProducts))
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    @foreach ($nearbyProducts as $product)
+                        <a href="{{ route('product-detail', $product->id) }}" class="bg-white rounded-lg shadow hover:shadow-lg transition overflow-hidden">
+                            @if ($product->primaryImage)
+                                <img src="{{ asset('storage/' . $product->primaryImage->image_path) }}" class="w-full h-48 object-cover" />
+                            @else
+                                <div class="w-full h-48 bg-gray-200 flex items-center justify-center text-gray-400">Tidak ada gambar</div>
+                            @endif
+                            <div class="p-4">
+                                <h3 class="font-semibold text-lg mb-2 line-clamp-2">{{ $product->name }}</h3>
+                                <p class="text-orange-600 font-bold text-lg">Rp {{ number_format($product->price, 0, ',', '.') }}</p>
+                                <div class="flex items-center justify-between mt-2">
+                                    <p class="text-sm text-gray-600">{{ $product->sellerProfile->shop_name ?? 'Toko' }}</p>
+                                    <span class="text-xs text-gray-500">{{ number_format($product->distance, 1) }} km</span>
+                                </div>
+                            </div>
+                        </a>
+                    @endforeach
+                </div>
+            @else
+                <div class="bg-white rounded-lg shadow p-8 text-center">
+                    <div class="text-4xl mb-4">📍</div>
+                    <h3 class="text-xl font-semibold mb-2">Temukan Produk Terdekat</h3>
+                    <p class="text-gray-600 mb-4">Aktifkan lokasi untuk melihat produk di sekitar Anda</p>
+                    <button
+                        onclick="navigator.geolocation.getCurrentPosition(
+                            pos => {
+                                @this.setBuyerLocation(pos.coords.latitude, pos.coords.longitude);
+                            },
+                            () => @this.locationDenied()
+                        )"
+                        class="px-6 py-3 bg-orange-600 text-white rounded-lg hover:bg-orange-700 font-semibold"
+                    >
+                        📍 Aktifkan Lokasi
+                    </button>
+                </div>
+            @endif
+        </div>
+
+        <!-- Recommended Products -->
+        @if ($recommendedProducts->count() > 0)
+            <div class="max-w-7xl mx-auto px-6 py-12">
+                <h2 class="text-3xl font-bold mb-8">💡 Rekomendasi Untuk Anda</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                    @foreach ($recommendedProducts as $product)
+                        <a href="{{ route('product-detail', $product->id) }}" class="bg-white rounded-lg shadow hover:shadow-lg transition overflow-hidden">
+                            @if ($product->primaryImage)
+                                <img src="{{ asset('storage/' . $product->primaryImage->image_path) }}" class="w-full h-40 object-cover" />
+                            @else
+                                <div class="w-full h-40 bg-gray-200 flex items-center justify-center text-gray-400">Tidak ada gambar</div>
+                            @endif
+                            <div class="p-4">
+                                <h3 class="font-semibold text-sm mb-2 line-clamp-2">{{ $product->name }}</h3>
+                                <p class="text-orange-600 font-bold">Rp {{ number_format($product->price, 0, ',', '.') }}</p>
+                                <p class="text-xs text-gray-500 mt-1">{{ $product->sellerProfile->shop_name ?? 'Toko' }}</p>
                             </div>
                         </a>
                     @endforeach

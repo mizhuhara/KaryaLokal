@@ -8,11 +8,46 @@ new class extends Component {
     public $product_id;
     public $quantity = 1;
     public $isInWishlist = false;
+    public $isFavorited = false;
+    private $product;
 
     public function mount($product)
     {
         $this->product_id = $product->id;
+        $this->product = $product;
         $this->checkWishlist();
+        $this->checkFavorite();
+    }
+
+    public function checkFavorite()
+    {
+        if (auth()->check() && $this->product) {
+            $this->isFavorited = auth()->user()->favoriteSellers()
+                ->where('seller_profile_id', $this->product->seller_profile_id)
+                ->exists();
+        }
+    }
+
+    public function toggleFavorite()
+    {
+        if (!auth()->check()) {
+            return redirect()->route('login');
+        }
+
+        $product = Product::findOrFail($this->product_id);
+        $fav = auth()->user()->favoriteSellers()
+            ->where('seller_profile_id', $product->seller_profile_id)
+            ->first();
+
+        if ($fav) {
+            $fav->delete();
+            $this->isFavorited = false;
+            $this->dispatch('notify', message: 'Dihapus dari favorit');
+        } else {
+            auth()->user()->favoriteSellers()->create(['seller_profile_id' => $product->seller_profile_id]);
+            $this->isFavorited = true;
+            $this->dispatch('notify', message: 'Ditambahkan ke favorit');
+        }
     }
 
     public function checkWishlist()
@@ -193,12 +228,20 @@ new class extends Component {
                     </div>
 
                     <!-- Chat Button -->
-                    <a
-                        href="{{ route('chat.user', $product->sellerProfile->user_id) }}"
-                        class="w-full mt-3 px-6 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 font-semibold text-center block"
-                    >
-                        💬 Chat Penjual
-                    </a>
+                <button
+                    wire:click="toggleFavorite"
+                    class="w-full mt-3 px-6 py-3 {{ $isFavorited ? 'bg-red-500' : 'bg-orange-600' }} text-white rounded-lg hover:opacity-90 font-semibold"
+                >
+                    {{ $isFavorited ? '💖 Toko Favorit' : '♡ Tambah ke Favorit' }}
+                </button>
+
+                <!-- Chat Button -->
+                <a
+                    href="{{ route('chat.user', $product->sellerProfile->user_id) }}"
+                    class="w-full mt-3 px-6 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 font-semibold text-center block"
+                >
+                    💬 Chat Penjual
+                </a>
                 </div>
             </div>
 
