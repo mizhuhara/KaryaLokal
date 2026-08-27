@@ -211,7 +211,7 @@ Setiap seller memiliki halaman toko sendiri.
 
 ## Location
 - [x] Request browser location permission
-- [ ] Save buyer location
+- [x] Save buyer location
 - [x] Detect latitude/longitude
 - [x] Calculate distance
 - [x] Nearby seller

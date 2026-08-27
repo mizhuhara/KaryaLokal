@@ -13,6 +13,17 @@ new class extends Component {
     public $nearbyProducts = [];
     public $locationRequested = false;
 
+    public function mount()
+    {
+        $user = auth()->user();
+        if ($user && $user->latitude && $user->longitude) {
+            $this->buyerLat = $user->latitude;
+            $this->buyerLng = $user->longitude;
+            $this->locationRequested = true;
+            $this->loadNearbyProducts();
+        }
+    }
+
     public function setBuyerLocation($lat, $lng)
     {
         $this->buyerLat = $lat;
