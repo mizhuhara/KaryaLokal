@@ -243,7 +243,7 @@ Setiap seller memiliki halaman toko sendiri.
 
 ## Communication
 - [x] Buyer-seller chat
-- [ ] Notifications
+- [x] Notifications
 
 ---
 
