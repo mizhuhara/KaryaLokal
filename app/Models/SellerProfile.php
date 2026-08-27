@@ -59,6 +59,11 @@ class SellerProfile extends Model
         return $this->hasOne(SellerVerification::class);
     }
 
+    public function visits(): HasMany
+    {
+        return $this->hasMany(SellerVisit::class);
+    }
+
     public function activeSubscription(): ?Subscription
     {
         return $this->subscription()->where('status', 'active')->where(function ($q) {

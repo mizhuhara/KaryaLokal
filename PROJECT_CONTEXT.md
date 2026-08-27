@@ -303,8 +303,8 @@ Setiap seller memiliki halaman toko sendiri.
 - [x] Total orders
 - [x] Revenue (placeholder)
 - [x] Rating
-- [ ] Visitors
-- [ ] Sales chart
+- [x] Visitors
+- [x] Sales chart
 
 ---
 

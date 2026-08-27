@@ -13,6 +13,13 @@
                 $totalProductsWithImages = $seller?->products()->whereHas('images')->count() ?? 0;
                 $totalOrders = $seller?->products()->with('orderItems')->get()->sum(fn($p) => $p->orderItems->count()) ?? 0;
                 $avgRating = $seller?->products()->with('reviews')->get()->flatMap(fn($p) => $p->reviews)->avg('rating') ?? 0;
+                $totalVisitors = $seller?->visits()->count() ?? 0;
+                $monthlyVisitors = $seller?->visits()->where('created_at', '>=', now()->subDays(30))->count() ?? 0;
+                $dailyVisitors = $seller?->visits()->where('created_at', '>=', now()->subDays(7))
+                    ->selectRaw('DATE(created_at) as date, COUNT(*) as count')
+                    ->groupBy('date')
+                    ->orderBy('date')
+                    ->get() ?? collect();
             @endphp
 
             @if (!$seller)
@@ -62,14 +69,11 @@
                     <div class="bg-white overflow-hidden shadow-card sm:rounded-lg p-6">
                         <div class="flex items-center justify-between">
                             <div>
-                                <p class="text-neutral-600 text-sm">Status Verifikasi</p>
-                                <p class="text-lg font-bold">
-                                    <span class="px-3 py-1 rounded-full text-sm {{ $seller->is_verified ? 'bg-green-100 text-green-800' : 'bg-yellow-100 text-yellow-800' }}">
-                                        {{ $seller->is_verified ? 'Terverifikasi ✓' : 'Menunggu' }}
-                                    </span>
-                                </p>
+                                <p class="text-neutral-600 text-sm">Pengunjung</p>
+                                <p class="text-3xl font-bold text-neutral-900">{{ $totalVisitors }}</p>
+                                <p class="text-xs text-gray-500 mt-1">30 hari: {{ $monthlyVisitors }}</p>
                             </div>
-                            <div class="text-4xl">{{ $seller->is_verified ? '✅' : '⏳' }}</div>
+                            <div class="text-4xl text-purple-500">👁️</div>
                         </div>
                     </div>
                 </div>
@@ -107,18 +111,38 @@
                     </div>
 
                     <div class="bg-white overflow-hidden shadow-card sm:rounded-lg p-6">
-                        <h3 class="text-lg font-semibold mb-4">Manajemen</h3>
-                        <div class="space-y-3">
-                            <a href="{{ route('seller.products') }}" class="block px-4 py-2 bg-green-600 text-white text-sm rounded-lg hover:bg-green-700 text-center">
-                                📦 Produk
-                            </a>
-                            <a href="{{ route('seller.orders') }}" class="block px-4 py-2 bg-blue-600 text-white text-sm rounded-lg hover:bg-blue-700 text-center">
-                                📋 Pesanan
-                            </a>
-                            <a href="{{ route('seller.verification') }}" class="block px-4 py-2 bg-orange-600 text-white text-sm rounded-lg hover:bg-orange-700 text-center">
-                                ✓ Verifikasi
-                            </a>
-                        </div>
+                        <h3 class="text-lg font-semibold mb-4">📊 Pengunjung 7 Hari</h3>
+                        @if ($dailyVisitors->count() > 0)
+                            <div class="space-y-2">
+                                @foreach ($dailyVisitors as $day)
+                                    <div class="flex items-center gap-2">
+                                        <span class="text-xs text-gray-500 w-16">{{ \Carbon\Carbon::parse($day->date)->format('d/m') }}</span>
+                                        <div class="flex-1 bg-gray-200 rounded-full h-4 overflow-hidden">
+                                            <div class="bg-orange-500 h-full rounded-full" style="width: {{ min(($day->count / max($dailyVisitors->max('count'), 1)) * 100, 100) }}%"></div>
+                                        </div>
+                                        <span class="text-xs font-semibold w-8 text-right">{{ $day->count }}</span>
+                                    </div>
+                                @endforeach
+                            </div>
+                        @else
+                            <p class="text-gray-500 text-sm">Belum ada data pengunjung</p>
+                        @endif
+                    </div>
+                </div>
+
+                <!-- Manajemen -->
+                <div class="bg-white overflow-hidden shadow-card sm:rounded-lg p-6">
+                    <h3 class="text-lg font-semibold mb-4">Manajemen</h3>
+                    <div class="grid grid-cols-3 gap-4">
+                        <a href="{{ route('seller.products') }}" class="block px-4 py-3 bg-green-600 text-white text-sm rounded-lg hover:bg-green-700 text-center font-semibold">
+                            📦 Produk
+                        </a>
+                        <a href="{{ route('seller.orders') }}" class="block px-4 py-3 bg-blue-600 text-white text-sm rounded-lg hover:bg-blue-700 text-center font-semibold">
+                            📋 Pesanan
+                        </a>
+                        <a href="{{ route('seller.verification') }}" class="block px-4 py-3 bg-orange-600 text-white text-sm rounded-lg hover:bg-orange-700 text-center font-semibold">
+                            ✓ Verifikasi
+                        </a>
                     </div>
                 </div>
 

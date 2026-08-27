@@ -3,6 +3,7 @@
 use Livewire\Volt\Component;
 use Livewire\WithPagination;
 use App\Models\SellerProfile;
+use App\Models\SellerVisit;
 
 new class extends Component {
     use WithPagination;
@@ -13,6 +14,18 @@ new class extends Component {
     public function mount($seller)
     {
         $this->seller_id = $seller->id;
+        $this->trackVisit();
+    }
+
+    public function trackVisit()
+    {
+        SellerVisit::create([
+            'seller_profile_id' => $this->seller_id,
+            'user_id' => auth()->id(),
+            'ip_address' => request()->ip(),
+            'user_agent' => request()->userAgent(),
+            'page' => 'store',
+        ]);
     }
 
     public function with()
