@@ -4,29 +4,34 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="csrf-token" content="{{ csrf_token() }}">
+        <meta name="description" content="KaryaLokal — Platform marketplace kerajinan handmade Indonesia.">
 
-        <title>{{ config('app.name', 'Laravel') }}</title>
-
-        <link rel="preconnect" href="https://fonts.bunny.net">
-        <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
+        <title>{{ config('app.name', 'KaryaLokal') }}</title>
 
         @vite(['resources/css/app.css', 'resources/js/app.js'])
-    </head>
-    <body class="font-sans antialiased">
-        <div class="min-h-screen bg-gray-100">
-            <livewire:layout.navigation />
 
-            @if (isset($header))
-                <header class="bg-white shadow">
-                    <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-                        {{ $header }}
-                    </div>
-                </header>
-            @endif
+        <style>
+            [x-cloak] { display: none !important; }
+        </style>
+    </head>
+    <body class="font-sans antialiased bg-kl-warm">
+        <div class="min-h-screen">
+            <livewire:layout.navigation />
 
             <main>
                 {{ $slot }}
             </main>
+
+            <div
+                x-data="{ toast: '', show: false }"
+                x-on:notify.window="toast = $event.detail.message; show = true; setTimeout(() => show = false, 3000)"
+                x-show="show"
+                x-transition
+                x-cloak
+                class="fixed top-4 inset-x-0 flex justify-center z-[100] pointer-events-none"
+            >
+                <p class="px-5 py-3 rounded-xl bg-gray-900 text-white text-sm font-semibold shadow-xl" x-text="toast"></p>
+            </div>
         </div>
     </body>
 </html>

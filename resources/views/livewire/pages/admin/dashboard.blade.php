@@ -29,98 +29,105 @@ new class extends Component {
 
 ?>
 
-<x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-serif font-semibold text-xl text-neutral-900 leading-tight">
-            Admin Dashboard
-        </h2>
-    </x-slot>
+    <div>
+<div class="min-h-screen bg-kl-warm">
+        <!-- Header -->
+        <div class="bg-white border-b border-kl">
+            <div class="max-w-7xl mx-auto px-6 py-6">
+                <h1 class="kl-section-title mb-1">⚙️ Admin Dashboard</h1>
+                <p class="text-gray-600 text-sm">Pantau dan kelola seluruh aktivitas platform</p>
+            </div>
+        </div>
 
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
-
+        <div class="max-w-7xl mx-auto px-6 py-8">
             <!-- Stats Cards -->
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
-                <div class="bg-white overflow-hidden shadow-card sm:rounded-lg p-6">
+            <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8 kl-stagger">
+                <div class="kl-card p-5 animate-fade-in-up">
                     <div class="flex items-center justify-between">
                         <div>
-                            <p class="text-gray-600 text-sm">Total Users</p>
-                            <p class="text-3xl font-bold">{{ $totalUsers }}</p>
+                            <p class="text-xs font-semibold text-gray-500 uppercase tracking-wide">Total Users</p>
+                            <p class="text-2xl font-bold mt-1 font-jakarta">{{ $totalUsers }}</p>
                         </div>
-                        <span class="text-4xl">👥</span>
+                        <div class="w-12 h-12 rounded-2xl flex items-center justify-center text-xl" style="background: linear-gradient(135deg, var(--kl-primary), var(--kl-primary-light))">👥</div>
                     </div>
                 </div>
-                <div class="bg-white overflow-hidden shadow-card sm:rounded-lg p-6">
+                <div class="kl-card p-5 animate-fade-in-up">
                     <div class="flex items-center justify-between">
                         <div>
-                            <p class="text-gray-600 text-sm">Total Sellers</p>
-                            <p class="text-3xl font-bold">{{ $totalSellers }}</p>
+                            <p class="text-xs font-semibold text-gray-500 uppercase tracking-wide">Total Sellers</p>
+                            <p class="text-2xl font-bold mt-1 font-jakarta">{{ $totalSellers }}</p>
                         </div>
-                        <span class="text-4xl">🏪</span>
+                        <div class="w-12 h-12 rounded-2xl flex items-center justify-center text-xl" style="background: linear-gradient(135deg, var(--kl-secondary), #40916C)">🏪</div>
                     </div>
                 </div>
-                <div class="bg-white overflow-hidden shadow-card sm:rounded-lg p-6">
+                <div class="kl-card p-5 animate-fade-in-up">
                     <div class="flex items-center justify-between">
                         <div>
-                            <p class="text-gray-600 text-sm">Total Produk</p>
-                            <p class="text-3xl font-bold">{{ $totalProducts }}</p>
+                            <p class="text-xs font-semibold text-gray-500 uppercase tracking-wide">Total Produk</p>
+                            <p class="text-2xl font-bold mt-1 font-jakarta">{{ $totalProducts }}</p>
                         </div>
-                        <span class="text-4xl">📦</span>
+                        <div class="w-12 h-12 rounded-2xl flex items-center justify-center text-xl" style="background: linear-gradient(135deg, #F4A261, #FFD166)">📦</div>
                     </div>
                 </div>
-                <div class="bg-white overflow-hidden shadow-card sm:rounded-lg p-6">
+                <div class="kl-card p-5 animate-fade-in-up">
                     <div class="flex items-center justify-between">
                         <div>
-                            <p class="text-gray-600 text-sm">Total Pesanan</p>
-                            <p class="text-3xl font-bold">{{ $totalOrders }}</p>
+                            <p class="text-xs font-semibold text-gray-500 uppercase tracking-wide">Total Pesanan</p>
+                            <p class="text-2xl font-bold mt-1 font-jakarta">{{ $totalOrders }}</p>
                         </div>
-                        <span class="text-4xl">🛒</span>
+                        <div class="w-12 h-12 rounded-2xl flex items-center justify-center text-xl" style="background: linear-gradient(135deg, #5B21B6, #7C3AED)">🛒</div>
                     </div>
                 </div>
             </div>
 
             <!-- Revenue & Alerts -->
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <div class="bg-white overflow-hidden shadow-card sm:rounded-lg p-6">
-                    <h3 class="text-lg font-bold mb-2">Total Pendapatan</h3>
-                    <p class="text-3xl font-bold text-green-600">Rp {{ number_format($revenue, 0, ',', '.') }}</p>
-                    <p class="text-sm text-gray-500 mt-1">30 hari terakhir: Rp {{ number_format($monthlyRevenue, 0, ',', '.') }}</p>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+                <div class="kl-card p-5">
+                    <p class="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-1">Total Pendapatan</p>
+                    <p class="text-2xl font-bold" style="color: var(--kl-secondary)">Rp {{ number_format($revenue, 0, ',', '.') }}</p>
+                    <p class="text-xs text-gray-500 mt-1">30 hari: Rp {{ number_format($monthlyRevenue, 0, ',', '.') }}</p>
                 </div>
-                <div class="bg-white overflow-hidden shadow-card sm:rounded-lg p-6">
-                    <h3 class="text-lg font-bold mb-2">Verifikasi Tertunda</h3>
-                    <p class="text-3xl font-bold text-orange-600">{{ $pendingVerification }}</p>
+                <div class="kl-card p-5">
+                    <p class="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-1">Verifikasi Tertunda</p>
+                    <p class="text-2xl font-bold" style="color: var(--kl-primary)">{{ $pendingVerification }}</p>
                     @if ($pendingVerification > 0)
-                        <a href="{{ route('admin.sellers') }}" class="text-orange-600 hover:text-orange-700 text-sm mt-2 inline-block">Lihat Semua →</a>
+                        <a href="{{ route('admin.sellers') }}" wire:navigate class="text-xs font-semibold mt-1 inline-block" style="color: var(--kl-primary)">Lihat Semua →</a>
                     @endif
                 </div>
-                <div class="bg-white overflow-hidden shadow-card sm:rounded-lg p-6">
-                    <h3 class="text-lg font-bold mb-2">Laporan Pending</h3>
-                    <p class="text-3xl font-bold text-red-600">{{ $totalReports }}</p>
+                <div class="kl-card p-5">
+                    <p class="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-1">Laporan Pending</p>
+                    <p class="text-2xl font-bold text-red-600">{{ $totalReports }}</p>
                     @if ($totalReports > 0)
-                        <a href="{{ route('admin.reports') }}" class="text-red-600 hover:text-red-700 text-sm mt-2 inline-block">Lihat Semua →</a>
+                        <a href="{{ route('admin.reports') }}" wire:navigate class="text-xs font-semibold text-red-600 mt-1 inline-block">Lihat Semua →</a>
                     @endif
                 </div>
             </div>
 
             <!-- Recent Orders -->
-            <div class="bg-white overflow-hidden shadow-card sm:rounded-lg">
-                <div class="p-6 border-b">
-                    <h3 class="text-lg font-bold">Pesanan Terbaru</h3>
+            <div class="kl-card mb-8">
+                <div class="px-6 py-4 border-b border-kl">
+                    <h3 class="text-lg font-bold font-jakarta">📋 Pesanan Terbaru</h3>
                 </div>
                 @if ($recentOrders->count() > 0)
-                    <div class="divide-y">
+                    <div class="divide-y divide-kl">
                         @foreach ($recentOrders as $order)
-                            <div class="p-4 flex justify-between items-center">
-                                <div>
-                                    <p class="font-semibold">{{ $order->order_number }}</p>
-                                    <p class="text-sm text-gray-600">{{ $order->user->name }} → {{ $order->seller->shop_name }}</p>
+                            <div class="px-6 py-4 flex justify-between items-center hover:bg-gray-50 transition">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-10 h-10 rounded-xl flex items-center justify-center text-sm font-bold text-white shrink-0"
+                                         style="background: linear-gradient(135deg, var(--kl-primary), var(--kl-primary-light))">
+                                        {{ strtoupper(substr($order->user->name, 0, 1)) }}
+                                    </div>
+                                    <div>
+                                        <p class="font-semibold text-sm font-jakarta">{{ $order->order_number }}</p>
+                                        <p class="text-xs text-gray-500">{{ $order->user->name }} → {{ $order->seller->shop_name }}</p>
+                                    </div>
                                 </div>
                                 <div class="text-right">
-                                    <p class="font-bold">Rp {{ number_format($order->total_amount, 0, ',', '.') }}</p>
-                                    <span class="inline-block px-2 py-1 text-xs rounded-full
-                                        @if ($order->status === 'completed') bg-green-100 text-green-800
-                                        @elseif ($order->status === 'pending') bg-yellow-100 text-yellow-800
-                                        @else bg-gray-100 text-gray-800 @endif">
+                                    <p class="font-bold text-sm" style="color: var(--kl-primary)">Rp {{ number_format($order->total_amount, 0, ',', '.') }}</p>
+                                    <span class="inline-flex px-2 py-0.5 rounded-full text-[10px] font-bold
+                                        @if ($order->status === 'completed') bg-emerald-100 text-emerald-800 border border-emerald-200
+                                        @elseif ($order->status === 'pending') bg-yellow-100 text-yellow-800 border border-yellow-200
+                                        @else bg-gray-100 text-gray-800 border border-gray-200 @endif">
                                         {{ ucfirst($order->status) }}
                                     </span>
                                 </div>
@@ -128,40 +135,41 @@ new class extends Component {
                         @endforeach
                     </div>
                 @else
-                    <div class="p-6 text-center text-gray-500">Belum ada pesanan</div>
+                    <div class="px-6 py-8 text-center text-gray-500 text-sm">Belum ada pesanan</div>
                 @endif
             </div>
 
-            <!-- Quick Links -->
-            <div class="bg-white overflow-hidden shadow-card sm:rounded-lg p-6">
-                <h3 class="text-lg font-bold mb-4">Menu Admin</h3>
-                <div class="grid grid-cols-2 md:grid-cols-6 gap-4">
-                    <a href="{{ route('admin.users') }}" class="p-4 border rounded-lg hover:bg-gray-50 text-center">
+            <!-- Admin Menu -->
+            <div class="kl-card p-6">
+                <h3 class="text-lg font-bold font-jakarta mb-4">⚡ Menu Admin</h3>
+                <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
+                    <a href="{{ route('admin.users') }}" wire:navigate class="kl-card p-4 text-center kl-hover-lift group">
                         <span class="text-2xl block mb-2">👥</span>
-                        <span class="font-semibold text-sm">Users</span>
+                        <span class="font-semibold text-sm text-gray-700 group-hover:text-kl-primary transition">Users</span>
                     </a>
-                    <a href="{{ route('admin.sellers') }}" class="p-4 border rounded-lg hover:bg-gray-50 text-center">
+                    <a href="{{ route('admin.sellers') }}" wire:navigate class="kl-card p-4 text-center kl-hover-lift group">
                         <span class="text-2xl block mb-2">🏪</span>
-                        <span class="font-semibold text-sm">Sellers</span>
+                        <span class="font-semibold text-sm text-gray-700 group-hover:text-kl-primary transition">Sellers</span>
                     </a>
-                    <a href="{{ route('admin.products') }}" class="p-4 border rounded-lg hover:bg-gray-50 text-center">
+                    <a href="{{ route('admin.products') }}" wire:navigate class="kl-card p-4 text-center kl-hover-lift group">
                         <span class="text-2xl block mb-2">📦</span>
-                        <span class="font-semibold text-sm">Produk</span>
+                        <span class="font-semibold text-sm text-gray-700 group-hover:text-kl-primary transition">Produk</span>
                     </a>
-                    <a href="{{ route('admin.orders') }}" class="p-4 border rounded-lg hover:bg-gray-50 text-center">
+                    <a href="{{ route('admin.orders') }}" wire:navigate class="kl-card p-4 text-center kl-hover-lift group">
                         <span class="text-2xl block mb-2">🛒</span>
-                        <span class="font-semibold text-sm">Pesanan</span>
+                        <span class="font-semibold text-sm text-gray-700 group-hover:text-kl-primary transition">Pesanan</span>
                     </a>
-                    <a href="{{ route('admin.reviews') }}" class="p-4 border rounded-lg hover:bg-gray-50 text-center">
+                    <a href="{{ route('admin.reviews') }}" wire:navigate class="kl-card p-4 text-center kl-hover-lift group">
                         <span class="text-2xl block mb-2">⭐</span>
-                        <span class="font-semibold text-sm">Review</span>
+                        <span class="font-semibold text-sm text-gray-700 group-hover:text-kl-primary transition">Review</span>
                     </a>
-                    <a href="{{ route('admin.reports') }}" class="p-4 border rounded-lg hover:bg-gray-50 text-center">
+                    <a href="{{ route('admin.reports') }}" wire:navigate class="kl-card p-4 text-center kl-hover-lift group">
                         <span class="text-2xl block mb-2">🚨</span>
-                        <span class="font-semibold text-sm">Laporan</span>
+                        <span class="font-semibold text-sm text-gray-700 group-hover:text-kl-primary transition">Laporan</span>
                     </a>
                 </div>
             </div>
         </div>
     </div>
-</x-app-layout>
+
+</div>

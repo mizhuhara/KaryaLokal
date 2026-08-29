@@ -51,72 +51,73 @@ new class extends Component {
 
 ?>
 
-<x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-serif font-semibold text-xl text-neutral-900 leading-tight">
-            Manajemen Pesanan
-        </h2>
-    </x-slot>
+    <div>
+<div class="min-h-screen bg-kl-warm">
+        <div class="bg-white border-b border-kl">
+            <div class="max-w-7xl mx-auto px-6 py-6">
+                <h1 class="kl-section-title mb-1">🛒 Manajemen Pesanan</h1>
+                <p class="text-gray-600 text-sm">Total {{ $orders->total() }} pesanan</p>
+            </div>
+        </div>
 
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
-
+        <div class="max-w-7xl mx-auto px-6 py-8 space-y-6">
             <!-- Stats -->
-            <div class="grid grid-cols-2 md:grid-cols-5 gap-4">
-                @foreach (['pending' => 'Menunggu', 'confirmed' => 'Dikonfirmasi', 'processing' => 'Diproses', 'completed' => 'Selesai', 'cancelled' => 'Dibatalkan'] as $key => $label)
-                    <div class="bg-white overflow-hidden shadow-card sm:rounded-lg p-4 text-center cursor-pointer hover:shadow-lg transition"
+            <div class="grid grid-cols-2 sm:grid-cols-5 gap-4">
+                @foreach (['all' => 'Semua', 'pending' => 'Menunggu', 'confirmed' => 'Dikonfirmasi', 'completed' => 'Selesai', 'cancelled' => 'Dibatalkan'] as $key => $label)
+                    <div class="kl-card p-4 text-center cursor-pointer kl-hover-lift transition"
                          wire:click="$set('filter', '{{ $key }}')">
-                        <p class="text-2xl font-bold {{ $filter === $key ? 'text-orange-600' : 'text-neutral-900' }}">{{ $statusCounts[$key] }}</p>
-                        <p class="text-xs text-neutral-600">{{ $label }}</p>
+                        <p class="text-2xl font-bold font-jakarta {{ $filter === $key ? 'text-kl-primary' : 'text-neutral-900' }}">{{ $statusCounts[$key] }}</p>
+                        <p class="text-xs text-neutral-600 font-medium">{{ $label }}</p>
                     </div>
                 @endforeach
             </div>
 
             <!-- Search -->
-            <div class="bg-white overflow-hidden shadow-card sm:rounded-lg p-6">
-                <input type="text" wire:model.live="search" placeholder="Cari nomor pesanan atau nama pembeli..." class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-400"/>
+            <div class="kl-card p-6">
+                <input type="text" wire:model.live="search" placeholder="Cari nomor pesanan atau nama pembeli..." class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-kl-primary"/>
             </div>
 
             <!-- Orders List -->
             <div class="space-y-4">
                 @forelse ($orders as $order)
-                    <div class="bg-white overflow-hidden shadow-card sm:rounded-lg p-6">
+                    <div class="kl-card p-6">
                         <div class="flex justify-between items-start mb-4">
                             <div>
-                                <p class="font-bold text-lg">{{ $order->order_number }}</p>
-                                <p class="text-sm text-gray-600">{{ $order->user->name }} • {{ $order->created_at->format('d M Y H:i') }}</p>
+                                <p class="font-bold text-lg font-jakarta text-gray-900">{{ $order->order_number }}</p>
+                                <p class="text-sm text-gray-500 mt-0.5">{{ $order->user->name }} • {{ $order->created_at->format('d M Y H:i') }}</p>
                             </div>
                             <div class="flex items-center gap-2">
-                                <span class="px-3 py-1 rounded-full text-xs font-semibold
-                                    @if ($order->status === 'pending') bg-yellow-100 text-yellow-800
-                                    @elseif ($order->status === 'confirmed') bg-blue-100 text-blue-800
-                                    @elseif ($order->status === 'completed') bg-green-100 text-green-800
-                                    @elseif ($order->status === 'cancelled') bg-red-100 text-red-800
-                                    @else bg-gray-100 text-gray-800 @endif">
+                                <span class="px-3 py-1 rounded-full text-xs font-bold
+                                    @if ($order->status === 'pending') bg-yellow-100 text-yellow-700
+                                    @elseif ($order->status === 'confirmed') bg-blue-100 text-blue-700
+                                    @elseif ($order->status === 'completed') bg-green-100 text-green-700
+                                    @elseif ($order->status === 'cancelled') bg-red-100 text-red-700
+                                    @else bg-gray-100 text-gray-700 @endif">
                                     {{ ucfirst($order->status) }}
                                 </span>
                             </div>
                         </div>
 
-                        <div class="flex items-center justify-between">
+                        <div class="flex items-center justify-between flex-wrap gap-3">
                             <div class="text-sm text-gray-600">
-                                <span>Toko: <strong>{{ $order->seller->shop_name }}</strong></span>
+                                <span>Toko: <strong class="text-gray-800">{{ $order->seller->shop_name }}</strong></span>
                                 <span class="mx-2">•</span>
                                 <span>{{ $order->items->count() }} item</span>
                                 <span class="mx-2">•</span>
-                                <span class="font-bold text-orange-600">Rp {{ number_format($order->total_amount, 0, ',', '.') }}</span>
+                                <span class="font-bold text-kl-primary">Rp {{ number_format($order->total_amount, 0, ',', '.') }}</span>
                             </div>
 
                             @if ($order->status === 'pending')
                                 <div class="flex gap-2">
-                                    <button wire:click="updateStatus({{ $order->id }}, 'confirmed')" class="px-3 py-1 bg-green-600 text-white rounded text-sm hover:bg-green-700">Konfirmasi</button>
-                                    <button wire:click="updateStatus({{ $order->id }}, 'cancelled')" class="px-3 py-1 bg-red-600 text-white rounded text-sm hover:bg-red-700">Tolak</button>
+                                    <button wire:click="updateStatus({{ $order->id }}, 'confirmed')" class="px-4 py-1.5 bg-emerald-600 text-white rounded-lg text-sm font-semibold hover:bg-emerald-700 transition">Konfirmasi</button>
+                                    <button wire:click="updateStatus({{ $order->id }}, 'cancelled')" class="px-4 py-1.5 bg-red-600 text-white rounded-lg text-sm font-semibold hover:bg-red-700 transition">Tolak</button>
                                 </div>
                             @endif
                         </div>
                     </div>
                 @empty
-                    <div class="bg-white overflow-hidden shadow-card sm:rounded-lg p-12 text-center">
+                    <div class="kl-card p-12 text-center">
+                        <div class="text-4xl mb-3">🔍</div>
                         <p class="text-gray-500">Tidak ada pesanan ditemukan</p>
                     </div>
                 @endforelse
@@ -127,4 +128,5 @@ new class extends Component {
             </div>
         </div>
     </div>
-</x-app-layout>
+
+</div>

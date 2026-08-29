@@ -32,6 +32,7 @@ new class extends Component {
         }
 
         session()->put('cart', $cart);
+        $this->dispatch('cart-updated');
         $this->dispatch('notify', message: 'Produk ditambahkan ke keranjang');
     }
 
@@ -42,6 +43,7 @@ new class extends Component {
 
         unset($cart[$key]);
         session()->put('cart', $cart);
+        $this->dispatch('cart-updated');
         $this->dispatch('notify', message: 'Produk dihapus dari keranjang');
     }
 
@@ -58,12 +60,14 @@ new class extends Component {
         if (isset($cart[$key])) {
             $cart[$key]['quantity'] = $quantity;
             session()->put('cart', $cart);
+            $this->dispatch('cart-updated');
         }
     }
 
     public function clearCart()
     {
         session()->put('cart', []);
+        $this->dispatch('cart-updated');
         $this->dispatch('notify', message: 'Keranjang dikosongkan');
     }
 
@@ -86,52 +90,65 @@ new class extends Component {
 
 ?>
 
-<x-app-layout>
-    <div class="min-h-screen bg-gray-50">
-        <div class="max-w-7xl mx-auto px-6 py-8">
-            <h1 class="text-3xl font-bold mb-8">Keranjang Belanja</h1>
+    <div>
+<div class="min-h-screen bg-kl-warm">
+        <!-- Header -->
+        <div class="bg-white border-b border-kl">
+            <div class="max-w-7xl mx-auto px-6 py-6">
+                <h1 class="kl-section-title mb-1">🛒 Keranjang Belanja</h1>
+                <p class="text-gray-600 text-sm">{{ $cartCount }} item di keranjang</p>
+            </div>
+        </div>
 
+        <div class="max-w-7xl mx-auto px-6 py-8">
             @if ($cartCount > 0)
                 <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                    <!-- Items -->
-                    <div class="lg:col-span-2 space-y-6">
+                    <!-- Cart Items -->
+                    <div class="lg:col-span-2 space-y-5">
                         @foreach ($groupedByStore as $sellerId => $items)
-                            <div class="bg-white rounded-lg shadow overflow-hidden">
-                                <div class="bg-gray-100 px-6 py-3 border-b font-semibold">
-                                    Toko ({{ $items->count() }} produk)
+                            <div class="kl-card overflow-hidden">
+                                <!-- Store Header -->
+                                <div class="px-5 py-3 flex items-center gap-2 border-b border-kl" style="background: #FFF8F5">
+                                    <span class="text-sm">🏪</span>
+                                    <span class="text-sm font-semibold font-jakarta text-gray-700">Toko ({{ $items->count() }} produk)</span>
                                 </div>
 
-                                <div class="divide-y">
+                                <div class="divide-y divide-kl">
                                     @foreach ($items as $key => $item)
-                                        <div class="p-6 flex gap-4">
-                                            @if ($item['image'])
-                                                <img
-                                                    src="{{ asset('storage/' . $item['image']) }}"
-                                                    alt="{{ $item['name'] }}"
-                                                    class="w-20 h-20 object-cover rounded-lg"
-                                                />
-                                            @else
-                                                <div class="w-20 h-20 bg-gray-200 rounded-lg flex items-center justify-center text-gray-400">
-                                                    📦
-                                                </div>
-                                            @endif
+                                        <div class="p-5 flex gap-4 items-start group">
+                                            <!-- Product Image -->
+                                            <a href="{{ route('product-detail', $item['product_id']) }}" wire:navigate class="shrink-0">
+                                                @if ($item['image'])
+                                                    <img
+                                                        src="{{ asset('storage/' . $item['image']) }}"
+                                                        alt="{{ $item['name'] }}"
+                                                        class="w-20 h-20 object-cover rounded-xl"
+                                                    />
+                                                @else
+                                                    <div class="w-20 h-20 bg-gradient-to-br from-orange-50 to-amber-50 rounded-xl flex items-center justify-center text-3xl opacity-30">🎨</div>
+                                                @endif
+                                            </a>
 
-                                            <div class="flex-1">
-                                                <h3 class="font-semibold mb-2">{{ $item['name'] }}</h3>
-                                                <p class="text-orange-600 font-bold mb-4">Rp {{ number_format($item['price'], 0, ',', '.') }}</p>
+                                            <!-- Product Info -->
+                                            <div class="flex-1 min-w-0">
+                                                <a href="{{ route('product-detail', $item['product_id']) }}" wire:navigate>
+                                                    <h3 class="font-semibold text-sm text-gray-800 mb-1 line-clamp-2 group-hover:text-kl-primary transition font-jakarta">{{ $item['name'] }}</h3>
+                                                </a>
+                                                <p class="text-base font-bold mb-3" style="color: var(--kl-primary)">Rp {{ number_format($item['price'], 0, ',', '.') }}</p>
 
                                                 <div class="flex items-center justify-between">
-                                                    <div class="flex items-center gap-2 border rounded-lg w-fit">
+                                                    <!-- Quantity Controls -->
+                                                    <div class="flex items-center gap-1 bg-gray-100 rounded-xl p-1">
                                                         <button
                                                             wire:click="updateQuantity({{ $item['product_id'] }}, {{ $item['quantity'] - 1 }})"
-                                                            class="px-3 py-1 hover:bg-gray-100"
+                                                            class="kl-btn-ghost px-2.5 py-1 text-sm"
                                                         >
                                                             −
                                                         </button>
-                                                        <span class="px-4 py-1 border-l border-r">{{ $item['quantity'] }}</span>
+                                                        <span class="text-sm font-bold w-8 text-center">{{ $item['quantity'] }}</span>
                                                         <button
                                                             wire:click="updateQuantity({{ $item['product_id'] }}, {{ $item['quantity'] + 1 }})"
-                                                            class="px-3 py-1 hover:bg-gray-100"
+                                                            class="kl-btn-ghost px-2.5 py-1 text-sm"
                                                         >
                                                             +
                                                         </button>
@@ -139,15 +156,18 @@ new class extends Component {
 
                                                     <button
                                                         wire:click="removeFromCart({{ $item['product_id'] }})"
-                                                        class="text-red-600 hover:text-red-800 font-semibold"
+                                                        class="text-xs font-semibold text-red-500 hover:text-red-700 transition px-2 py-1 rounded-lg hover:bg-red-50"
                                                     >
                                                         Hapus
                                                     </button>
                                                 </div>
                                             </div>
 
-                                            <div class="text-right">
-                                                <p class="text-lg font-bold">Rp {{ number_format($item['price'] * $item['quantity'], 0, ',', '.') }}</p>
+                                            <!-- Subtotal -->
+                                            <div class="text-right shrink-0">
+                                                <p class="text-sm font-bold" style="color: var(--kl-primary)">
+                                                    Rp {{ number_format($item['price'] * $item['quantity'], 0, ',', '.') }}
+                                                </p>
                                             </div>
                                         </div>
                                     @endforeach
@@ -156,53 +176,56 @@ new class extends Component {
                         @endforeach
                     </div>
 
-                    <!-- Summary -->
-                    <div class="bg-white rounded-lg shadow p-6 h-fit">
-                        <h3 class="text-lg font-bold mb-6">Ringkasan Pesanan</h3>
+                    <!-- Order Summary Sidebar -->
+                    <div class="lg:col-span-1">
+                        <div class="kl-card p-6 sticky top-24">
+                            <h3 class="text-lg font-bold mb-6 font-jakarta">Ringkasan Pesanan</h3>
 
-                        <div class="space-y-3 mb-6 pb-6 border-b">
-                            <div class="flex justify-between">
-                                <span>Subtotal</span>
-                                <span>Rp {{ number_format($total, 0, ',', '.') }}</span>
+                            <div class="space-y-3 mb-6 pb-6 border-b border-kl">
+                                <div class="flex justify-between text-sm">
+                                    <span class="text-gray-600">Subtotal</span>
+                                    <span class="font-semibold">Rp {{ number_format($total, 0, ',', '.') }}</span>
+                                </div>
+                                <div class="flex justify-between text-sm text-gray-500">
+                                    <span>Ongkos Kirim</span>
+                                    <span>Dihitung saat checkout</span>
+                                </div>
                             </div>
-                            <div class="flex justify-between text-gray-600">
-                                <span>Ongkos Kirim</span>
-                                <span>-</span>
+
+                            <div class="flex justify-between text-lg font-bold mb-6 pt-2">
+                                <span>Total</span>
+                                <span style="color: var(--kl-primary)">Rp {{ number_format($total, 0, ',', '.') }}</span>
                             </div>
+
+                            <a href="{{ route('checkout') }}" wire:navigate class="kl-btn-primary w-full py-3 justify-center text-center mb-3">
+                                Lanjut ke Checkout →
+                            </a>
+
+                            <button
+                                wire:click="clearCart"
+                                wire:confirm="Kosongkan seluruh keranjang?"
+                                class="w-full py-2.5 rounded-xl font-semibold text-sm transition text-red-600 hover:bg-red-50 border border-red-200"
+                            >
+                                Kosongkan Keranjang
+                            </button>
+
+                            <a href="{{ route('products') }}" wire:navigate class="block text-center mt-4 text-sm font-medium hover:underline" style="color: var(--kl-primary)">
+                                ← Lanjut Belanja
+                            </a>
                         </div>
-
-                        <div class="flex justify-between text-lg font-bold mb-6">
-                            <span>Total</span>
-                            <span class="text-orange-600">Rp {{ number_format($total, 0, ',', '.') }}</span>
-                        </div>
-
-                        <a href="{{ route('checkout') }}" class="w-full block px-6 py-3 bg-orange-600 text-white rounded-lg hover:bg-orange-700 font-semibold text-center mb-2">
-                            Lanjut ke Checkout
-                        </a>
-
-                        <button
-                            wire:click="clearCart"
-                            wire:confirm="Kosongkan keranjang?"
-                            class="w-full px-6 py-3 bg-gray-200 text-gray-800 rounded-lg hover:bg-gray-300 font-semibold"
-                        >
-                            Kosongkan Keranjang
-                        </button>
-
-                        <a href="{{ route('products') }}" class="block text-center mt-4 text-orange-600 hover:text-orange-700">
-                            ← Lanjut Belanja
-                        </a>
                     </div>
                 </div>
             @else
-                <div class="bg-white rounded-lg shadow p-12 text-center">
-                    <div class="text-4xl mb-4">🛒</div>
-                    <h3 class="text-xl font-semibold mb-2">Keranjang Kosong</h3>
-                    <p class="text-gray-600 mb-6">Mulai berbelanja untuk menambahkan produk ke keranjang</p>
-                    <a href="{{ route('products') }}" class="inline-block px-8 py-3 bg-orange-600 text-white rounded-lg hover:bg-orange-700 font-semibold">
+                <div class="kl-card p-12 text-center">
+                    <div class="text-6xl mb-4">🛒</div>
+                    <h3 class="kl-section-title">Keranjang Kosong</h3>
+                    <p class="text-gray-500 text-sm mb-6">Mulai berbelanja untuk menambahkan produk ke keranjang</p>
+                    <a href="{{ route('products') }}" wire:navigate class="kl-btn-primary text-sm py-2.5">
                         Jelajahi Produk
                     </a>
                 </div>
             @endif
         </div>
     </div>
-</x-app-layout>
+
+</div>

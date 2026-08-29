@@ -46,68 +46,82 @@ new class extends Component {
 
 ?>
 
-<x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-serif font-semibold text-xl text-neutral-900 leading-tight">Laporan</h2>
-    </x-slot>
+    <div>
+<div class="min-h-screen bg-kl-warm">
+        <div class="bg-white border-b border-kl">
+            <div class="max-w-7xl mx-auto px-6 py-6">
+                <h1 class="kl-section-title mb-1">🚨 Laporan</h1>
+                <p class="text-gray-600 text-sm">Tinjau laporan dari pengguna</p>
+            </div>
+        </div>
 
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+        <div class="max-w-7xl mx-auto px-6 py-8">
             <!-- Stats -->
-            <div class="grid grid-cols-3 gap-6 mb-6">
-                <div class="bg-white p-6 rounded-lg shadow text-center">
-                    <p class="text-3xl font-bold text-yellow-600">{{ $stats['pending'] }}</p>
-                    <p class="text-sm text-gray-600">Menunggu</p>
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
+                <div class="kl-card p-5 flex items-center justify-between">
+                    <div>
+                        <p class="text-3xl font-bold font-jakarta text-yellow-600">{{ $stats['pending'] }}</p>
+                        <p class="text-sm text-gray-600 font-medium">Menunggu</p>
+                    </div>
+                    <div class="w-12 h-12 rounded-2xl flex items-center justify-center bg-yellow-100 text-2xl">⏳</div>
                 </div>
-                <div class="bg-white p-6 rounded-lg shadow text-center">
-                    <p class="text-3xl font-bold text-blue-600">{{ $stats['reviewed'] }}</p>
-                    <p class="text-sm text-gray-600">Ditinjau</p>
+                <div class="kl-card p-5 flex items-center justify-between">
+                    <div>
+                        <p class="text-3xl font-bold font-jakarta text-blue-600">{{ $stats['reviewed'] }}</p>
+                        <p class="text-sm text-gray-600 font-medium">Ditinjau</p>
+                    </div>
+                    <div class="w-12 h-12 rounded-2xl flex items-center justify-center bg-blue-100 text-2xl">📋</div>
                 </div>
-                <div class="bg-white p-6 rounded-lg shadow text-center">
-                    <p class="text-3xl font-bold text-green-600">{{ $stats['action_taken'] }}</p>
-                    <p class="text-sm text-gray-600">Tindakan Diambil</p>
+                <div class="kl-card p-5 flex items-center justify-between">
+                    <div>
+                        <p class="text-3xl font-bold font-jakarta text-green-600">{{ $stats['action_taken'] }}</p>
+                        <p class="text-sm text-gray-600 font-medium">Tindakan Diambil</p>
+                    </div>
+                    <div class="w-12 h-12 rounded-2xl flex items-center justify-center bg-green-100 text-2xl">✅</div>
                 </div>
             </div>
 
             <!-- Filter -->
-            <div class="flex gap-2 mb-6">
-                @foreach (['all' => 'Semua', 'pending' => 'Menunggu', 'reviewed' => 'Ditinjau', 'action_taken' => 'Tindakan', 'dismissed' => 'Ditolak'] as $val => $label)
-                    <button wire:click="$set('filter', '{{ $val }}')" class="px-4 py-2 rounded-lg text-sm {{ $filter === $val ? 'bg-orange-600 text-white' : 'bg-white text-gray-700 shadow hover:bg-gray-50' }}">{{ $label }}</button>
-                @endforeach
+            <div class="kl-card p-4 mb-6">
+                <div class="flex flex-wrap gap-3">
+                    @foreach (['all' => 'Semua', 'pending' => 'Menunggu', 'reviewed' => 'Ditinjau', 'action_taken' => 'Tindakan', 'dismissed' => 'Ditolak'] as $val => $label)
+                        <button wire:click="$set('filter', '{{ $val }}')" class="px-4 py-2 rounded-lg text-sm font-semibold transition {{ $filter === $val ? 'bg-kl-primary text-white shadow' : 'bg-gray-100 text-gray-700 hover:bg-gray-200' }}">{{ $label }}</button>
+                    @endforeach
+                </div>
             </div>
 
             <!-- Reports -->
             @if ($reports->count() > 0)
                 <div class="space-y-4">
                     @foreach ($reports as $report)
-                        <div class="bg-white rounded-lg shadow p-6">
-                            <div class="flex justify-between items-start mb-3">
+                        <div class="kl-card p-6">
+                            <div class="flex justify-between items-start mb-3 flex-wrap gap-2">
                                 <div>
-                                    <div class="flex items-center gap-2">
-                                        <span class="px-2 py-0.5 bg-red-100 text-red-800 rounded text-xs font-semibold">{{ $report->reason }}</span>
-                                        <span class="px-2 py-0.5 {{ $report->status === 'pending' ? 'bg-yellow-100 text-yellow-800' : 'bg-gray-100 text-gray-800' }} rounded text-xs">{{ $report->status }}</span>
+                                    <div class="flex items-center gap-2 flex-wrap">
+                                        <span class="px-2.5 py-1 bg-red-100 text-red-700 rounded-lg text-xs font-bold">{{ $report->reason }}</span>
+                                        <span class="px-2.5 py-1 rounded-lg text-xs font-bold {{ $report->status === 'pending' ? 'bg-yellow-100 text-yellow-700' : 'bg-gray-100 text-gray-700' }}">{{ $report->status }}</span>
                                     </div>
-                                    <p class="text-sm text-gray-600 mt-2">Dilaporkan oleh: {{ $report->user->name }}</p>
+                                    <p class="text-sm text-gray-600 mt-2">Dilaporkan oleh: <strong class="text-gray-800">{{ $report->user->name }}</strong></p>
                                 </div>
                                 <span class="text-xs text-gray-400">{{ $report->created_at->diffForHumans() }}</span>
                             </div>
 
                             @if ($report->description)
-                                <p class="text-gray-700 mb-3">{{ $report->description }}</p>
+                                <p class="text-gray-700 mb-3 bg-kl-warm p-4 rounded-lg text-sm">{{ $report->description }}</p>
                             @endif
 
                             <div class="text-sm text-gray-600 mb-4">
-                                <p><strong>Tipe:</strong> {{ class_basename($report->reportable_type) }}</p>
+                                <p><strong class="text-gray-800">Tipe:</strong> {{ class_basename($report->reportable_type) }}</p>
                                 @if ($report->reportable)
-                                    <p><strong>Nama:</strong> {{ $report->reportable->name ?? $report->reportable->shop_name ?? $report->reportable->title ?? '-' }}</p>
+                                    <p><strong class="text-gray-800">Nama:</strong> {{ $report->reportable->name ?? $report->reportable->shop_name ?? $report->reportable->title ?? '-' }}</p>
                                 @endif
                             </div>
 
                             @if ($report->status === 'pending')
-                                <div class="flex gap-2">
-                                    <button wire:click="markReviewed({{ $report->id }})" class="px-3 py-1 bg-blue-600 text-white rounded text-sm">Ditinjau</button>
-                                    <button wire:click="markActionTaken({{ $report->id }})" class="px-3 py-1 bg-green-600 text-white rounded text-sm">Tindakan</button>
-                                    <button wire:click="markDismissed({{ $report->id }})" class="px-3 py-1 bg-gray-400 text-white rounded text-sm">Tolak</button>
+                                <div class="flex gap-2 flex-wrap">
+                                    <button wire:click="markReviewed({{ $report->id }})" class="px-4 py-1.5 bg-sky-600 text-white rounded-lg text-sm font-semibold hover:bg-sky-700 transition">Ditinjau</button>
+                                    <button wire:click="markActionTaken({{ $report->id }})" class="px-4 py-1.5 bg-emerald-600 text-white rounded-lg text-sm font-semibold hover:bg-emerald-700 transition">Tindakan</button>
+                                    <button wire:click="markDismissed({{ $report->id }})" class="px-4 py-1.5 bg-gray-400 text-white rounded-lg text-sm font-semibold hover:bg-gray-500 transition">Tolak</button>
                                 </div>
                             @endif
                         </div>
@@ -116,11 +130,12 @@ new class extends Component {
 
                 <div class="mt-6 flex justify-center">{{ $reports->links() }}</div>
             @else
-                <div class="bg-white rounded-lg shadow p-12 text-center">
-                    <div class="text-4xl mb-4">✅</div>
+                <div class="kl-card p-12 text-center">
+                    <div class="text-4xl mb-4">🎉</div>
                     <p class="text-gray-600">Tidak ada laporan</p>
                 </div>
             @endif
         </div>
     </div>
-</x-app-layout>
+
+</div>

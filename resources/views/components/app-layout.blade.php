@@ -1,17 +1,17 @@
+@props(['header' => null])
+
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="csrf-token" content="{{ csrf_token() }}">
-        <meta name="description" content="KaryaLokal — Temukan kerajinan tangan lokal berkualitas dari pengrajin Indonesia. Dukung UMKM handmade di sekitar Anda.">
+        <meta name="description" content="KaryaLokal — Dashboard pembeli">
 
-        <title>{{ config('app.name', 'KaryaLokal') }} — Temukan Kerajinan Tangan Lokal</title>
+        <title>{{ config('app.name', 'KaryaLokal') }}</title>
 
-        <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
 
-        <!-- Alpine.js cloak -->
         <style>
             [x-cloak] { display: none !important; }
         </style>
@@ -20,8 +20,7 @@
         <div class="min-h-screen">
             <livewire:layout.navigation />
 
-            <!-- Page Heading (optional) -->
-            @if (isset($header))
+            @if ($header)
                 <header class="bg-white shadow-sm border-b border-kl">
                     <div class="max-w-7xl mx-auto py-5 px-4 sm:px-6 lg:px-8">
                         {{ $header }}
@@ -29,7 +28,6 @@
                 </header>
             @endif
 
-            <!-- Page Content -->
             <main>
                 {{ $slot }}
             </main>

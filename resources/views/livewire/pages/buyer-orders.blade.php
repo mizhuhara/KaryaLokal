@@ -42,69 +42,77 @@ new class extends Component {
 
 ?>
 
-<x-app-layout>
-    <div class="min-h-screen bg-gray-50">
-        <div class="max-w-7xl mx-auto px-6 py-8">
-            <h1 class="text-3xl font-bold mb-8">Pesanan Saya</h1>
+    <div>
+<div class="min-h-screen bg-kl-warm">
+        <!-- Header -->
+        <div class="bg-white border-b border-kl">
+            <div class="max-w-7xl mx-auto px-6 py-6">
+                <h1 class="kl-section-title mb-1">📦 Pesanan Saya</h1>
+                <p class="text-gray-600 text-sm">Kelola dan lacak semua pesanan Anda</p>
+            </div>
+        </div>
 
+        <div class="max-w-7xl mx-auto px-6 py-8">
             <!-- Filter Tabs -->
-            <div class="flex gap-2 mb-8 border-b">
-                @foreach (['all' => 'Semua', 'pending' => 'Menunggu', 'confirmed' => 'Dikonfirmasi', 'processing' => 'Diproses', 'ready' => 'Siap', 'completed' => 'Selesai', 'cancelled' => 'Dibatalkan'] as $status => $label)
+            <div class="flex gap-2 mb-8 overflow-x-auto pb-2 kl-scroll -mx-2 px-2">
+                @foreach (['all' => '🛒 Semua', 'pending' => '⏳ Menunggu', 'confirmed' => '✅ Dikonfirmasi', 'processing' => '🔄 Diproses', 'ready' => '📦 Siap', 'completed' => '🎉 Selesai', 'cancelled' => '❌ Dibatalkan'] as $status => $label)
                     <button
                         wire:click="$set('filter', '{{ $status }}')"
-                        class="px-4 py-3 font-medium border-b-2 transition {{ $filter === $status ? 'border-orange-600 text-orange-600' : 'border-transparent text-gray-600 hover:text-gray-800' }}"
+                        class="shrink-0 px-4 py-2 rounded-xl text-sm font-semibold transition-all duration-200 border {{ $filter === $status ? 'border-kl-primary bg-orange-50 text-kl-primary' : 'border-kl bg-white text-gray-600 hover:border-gray-300' }}"
                     >
                         {{ $label }}
                     </button>
                 @endforeach
             </div>
 
-            <!-- Orders List -->
             @if ($orders->count() > 0)
-                <div class="space-y-6">
+                <div class="space-y-5">
                     @foreach ($orders as $order)
-                        <div class="bg-white rounded-lg shadow overflow-hidden">
-                            <!-- Header -->
-                            <div class="bg-gray-50 px-6 py-4 flex justify-between items-center border-b">
+                        <div class="kl-card overflow-hidden animate-fade-in-up">
+                            <!-- Order Header -->
+                            <div class="px-6 py-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-kl" style="background: #FFF8F5">
                                 <div>
-                                    <p class="font-semibold text-lg">{{ $order->order_number }}</p>
-                                    <p class="text-sm text-gray-600">{{ $order->created_at->format('d M Y H:i') }}</p>
+                                    <p class="font-bold text-base font-jakarta">{{ $order->order_number }}</p>
+                                    <p class="text-xs text-gray-500 mt-0.5">{{ $order->created_at->format('d M Y H:i') }}</p>
                                 </div>
-                                <div class="text-right">
-                                    <p class="text-2xl font-bold text-orange-600">Rp {{ number_format($order->total_amount, 0, ',', '.') }}</p>
-                                    <span class="inline-block mt-2 px-3 py-1 rounded-full text-sm font-semibold
-                                        {{ $order->status === 'pending' ? 'bg-yellow-100 text-yellow-800' : '' }}
-                                        {{ $order->status === 'confirmed' ? 'bg-blue-100 text-blue-800' : '' }}
-                                        {{ $order->status === 'processing' ? 'bg-purple-100 text-purple-800' : '' }}
-                                        {{ $order->status === 'ready' ? 'bg-green-100 text-green-800' : '' }}
-                                        {{ $order->status === 'completed' ? 'bg-green-100 text-green-800' : '' }}
-                                        {{ $order->status === 'cancelled' ? 'bg-red-100 text-red-800' : '' }}
+                                <div class="flex items-center gap-3">
+                                    <span class="inline-flex px-3 py-1 rounded-full text-xs font-bold
+                                        {{ $order->status === 'pending' ? 'bg-yellow-100 text-yellow-800 border border-yellow-200' : '' }}
+                                        {{ $order->status === 'confirmed' ? 'bg-blue-100 text-blue-800 border border-blue-200' : '' }}
+                                        {{ $order->status === 'processing' ? 'bg-purple-100 text-purple-800 border border-purple-200' : '' }}
+                                        {{ $order->status === 'ready' ? 'bg-green-100 text-green-800 border border-green-200' : '' }}
+                                        {{ $order->status === 'completed' ? 'bg-emerald-100 text-emerald-800 border border-emerald-200' : '' }}
+                                        {{ $order->status === 'cancelled' ? 'bg-red-100 text-red-800 border border-red-200' : '' }}
                                     ">
                                         {{ ucfirst($order->status) }}
                                     </span>
+                                    <p class="text-xl font-bold" style="color: var(--kl-primary)">Rp {{ number_format($order->total_amount, 0, ',', '.') }}</p>
                                 </div>
                             </div>
 
-                            <!-- Items -->
-                            <div class="px-6 py-4 border-b">
-                                <p class="font-semibold mb-3">Toko: {{ $order->seller->shop_name }}</p>
+                            <!-- Order Items -->
+                            <div class="px-6 py-4 border-b border-kl">
+                                <div class="flex items-center gap-2 mb-3">
+                                    <span class="text-sm">🏪</span>
+                                    <p class="font-semibold text-sm font-jakarta">{{ $order->seller->shop_name }}</p>
+                                </div>
                                 <div class="space-y-2">
                                     @foreach ($order->items as $item)
-                                        <div class="flex justify-between text-sm">
-                                            <span>{{ $item->product->name }} x{{ $item->quantity }}</span>
-                                            <span>Rp {{ number_format($item->subtotal, 0, ',', '.') }}</span>
+                                        <div class="flex items-center justify-between text-sm">
+                                            <span class="text-gray-700">{{ $item->product->name }} <span class="text-gray-400">×{{ $item->quantity }}</span></span>
+                                            <span class="font-semibold" style="color: var(--kl-primary)">Rp {{ number_format($item->subtotal, 0, ',', '.') }}</span>
                                         </div>
                                     @endforeach
                                 </div>
                             </div>
 
-                            <!-- Payment Status -->
-                            @if ($order->payments->count() > 0)
-                                <div class="px-6 py-4 border-b bg-gray-50">
-                                    <p class="font-semibold text-sm mb-2">Status Pembayaran</p>
-                                    @foreach ($order->payments as $payment)
-                                        <div class="flex items-center gap-3 text-sm">
-                                            <span class="inline-block px-3 py-1 rounded-full text-xs font-semibold
+                            <!-- Payment & Delivery Info -->
+                            <div class="px-6 py-4 border-b border-kl grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm bg-gray-50">
+                                <div>
+                                    <p class="font-semibold mb-1 text-gray-600">💳 Pembayaran</p>
+                                    @if ($order->payments->count() > 0)
+                                        @foreach ($order->payments as $payment)
+                                            <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-semibold
                                                 {{ $payment->status === 'success' ? 'bg-green-100 text-green-800' : '' }}
                                                 {{ $payment->status === 'pending' ? 'bg-yellow-100 text-yellow-800' : '' }}
                                                 {{ $payment->status === 'failed' ? 'bg-red-100 text-red-800' : '' }}
@@ -112,30 +120,32 @@ new class extends Component {
                                                 {{ ucfirst($payment->status) }}
                                             </span>
                                             @if ($payment->payment_method)
-                                                <span class="text-gray-600">{{ strtoupper($payment->payment_method) }}</span>
+                                                <span class="text-gray-600 ml-1">{{ strtoupper($payment->payment_method) }}</span>
                                             @endif
-                                            <span>Rp {{ number_format($payment->amount, 0, ',', '.') }}</span>
-                                        </div>
-                                    @endforeach
+                                        @endforeach
+                                    @else
+                                        <p class="text-gray-500 text-xs">Belum ada pembayaran</p>
+                                    @endif
+                                </div>
+                                <div>
+                                    <p class="font-semibold mb-1 text-gray-600">🚚 Pengiriman</p>
+                                    <p class="text-xs">{{ $order->delivery_type === 'pickup' ? '🏠 Ambil di Toko' : '📦 Dikirim ke alamat' }}</p>
+                                    @if ($order->delivery_type === 'delivery' && $order->delivery_address)
+                                        <p class="text-xs text-gray-500 mt-0.5 line-clamp-2">{{ $order->delivery_address }}</p>
+                                    @endif
+                                </div>
+                            </div>
+
+                            @if ($order->notes)
+                                <div class="px-6 py-3 border-b border-kl bg-gray-50 text-xs">
+                                    <span class="font-semibold">📝 Catatan:</span> <span class="text-gray-600">{{ $order->notes }}</span>
                                 </div>
                             @endif
 
-                            <!-- Delivery Info -->
-                            <div class="px-6 py-4 border-b text-sm bg-gray-50">
-                                <p class="font-semibold mb-2">
-                                    🚚 {{ $order->delivery_type === 'pickup' ? 'Ambil di Toko' : 'Pengiriman ke Alamat' }}
-                                </p>
-                                @if ($order->delivery_type === 'delivery' && $order->delivery_address)
-                                    <p class="text-gray-600">{{ $order->delivery_address }}</p>
-                                @endif
-                                @if ($order->notes)
-                                    <p class="text-gray-600 mt-2"><strong>Catatan:</strong> {{ $order->notes }}</p>
-                                @endif
-                            </div>
-
                             <!-- Actions -->
-                            <div class="px-6 py-4 flex gap-3 justify-end">
-                                <a href="{{ route('chat.user', $order->seller->user_id) }}" class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 text-sm">
+                            <div class="px-6 py-4 flex flex-wrap gap-2 justify-end">
+                                <a href="{{ route('chat.user', $order->seller->user_id) }}" wire:navigate
+                                   class="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-semibold transition border border-kl-primary text-kl-primary hover:bg-orange-50">
                                     💬 Chat Penjual
                                 </a>
 
@@ -143,48 +153,49 @@ new class extends Component {
                                     <button
                                         wire:click="cancelOrder({{ $order->id }})"
                                         wire:confirm="Batalkan pesanan ini?"
-                                        class="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 text-sm"
+                                        class="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-semibold transition border border-red-300 text-red-600 hover:bg-red-50"
                                     >
-                                        Batalkan
+                                        ✕ Batalkan
                                     </button>
                                 @endif
 
                                 @if ($order->isCompleted())
-                                    <a href="#" class="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 text-sm">
-                                        ⭐ Beri Rating
-                                    </a>
+                                    <span class="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-semibold transition" style="background: var(--kl-secondary); color: white">
+                                        ⭐ Selesai
+                                    </span>
                                 @endif
                             </div>
-                        </div>
 
-                        <!-- Review Form for Completed Orders -->
-                        @if ($order->isCompleted())
-                            <div class="px-6 py-4 bg-gray-50 border-t">
-                                @foreach ($order->items as $item)
-                                    <div class="mb-4 last:mb-0">
-                                        <p class="font-semibold text-sm mb-3">{{ $item->product->name }}</p>
-                                        <livewire:components.review-form :orderId="$order->id" :productId="$item->product_id" />
-                                    </div>
-                                @endforeach
-                            </div>
-                        @endif
+                            <!-- Review Form -->
+                            @if ($order->isCompleted())
+                                <div class="px-6 py-5 border-t border-kl" style="background: #FFF8F5">
+                                    <p class="text-sm font-bold font-jakarta mb-3">Beri Rating Produk:</p>
+                                    @foreach ($order->items as $item)
+                                        <div class="mb-4 last:mb-0">
+                                            <p class="text-xs font-semibold text-gray-600 mb-2">{{ $item->product->name }}</p>
+                                            <livewire:components.review-form :orderId="$order->id" :productId="$item->product_id" />
+                                        </div>
+                                    @endforeach
+                                </div>
+                            @endif
+                        </div>
                     @endforeach
                 </div>
 
-                <!-- Pagination -->
                 <div class="mt-8 flex justify-center">
                     {{ $orders->links() }}
                 </div>
             @else
-                <div class="bg-white rounded-lg shadow p-12 text-center">
-                    <div class="text-4xl mb-4">📦</div>
-                    <h3 class="text-xl font-semibold mb-2">Belum Ada Pesanan</h3>
-                    <p class="text-gray-600 mb-6">Anda belum membuat pesanan apapun</p>
-                    <a href="{{ route('products') }}" class="inline-block px-8 py-3 bg-orange-600 text-white rounded-lg hover:bg-orange-700 font-semibold">
-                        Mulai Berbelanja
+                <div class="kl-card p-12 text-center">
+                    <div class="text-6xl mb-4">📦</div>
+                    <h3 class="kl-section-title">Belum Ada Pesanan</h3>
+                    <p class="text-gray-500 text-sm mb-6">Mulai berbelanja untuk membuat pesanan pertama</p>
+                    <a href="{{ route('products') }}" wire:navigate class="kl-btn-primary text-sm py-2.5">
+                        🛍️ Mulai Berbelanja
                     </a>
                 </div>
             @endif
         </div>
     </div>
-</x-app-layout>
+
+</div>

@@ -22,7 +22,7 @@ enum UserRole: string
         return match ($this) {
             self::Admin => route('admin.dashboard', absolute: false),
             self::Seller => route('seller.dashboard', absolute: false),
-            default => route('dashboard', absolute: false),
+            default => route('home', absolute: false),
         };
     }
 }

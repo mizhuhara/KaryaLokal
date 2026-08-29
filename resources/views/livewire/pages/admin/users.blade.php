@@ -42,84 +42,76 @@ new class extends Component {
 
 ?>
 
-<x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-serif font-semibold text-xl text-neutral-900 leading-tight">
-            Manajemen Users
-        </h2>
-    </x-slot>
+    <div>
+<div class="min-h-screen bg-kl-warm">
+        <div class="bg-white border-b border-kl">
+            <div class="max-w-7xl mx-auto px-6 py-6">
+                <h1 class="kl-section-title mb-1">👥 Manajemen Users</h1>
+                <p class="text-gray-600 text-sm">Total {{ $users->total() }} pengguna</p>
+            </div>
+        </div>
 
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <!-- Search & Filter -->
-            <div class="bg-white overflow-hidden shadow-card sm:rounded-lg p-6 mb-6">
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                    <div>
-                        <input
-                            type="text"
-                            wire:model.live="search"
-                            placeholder="Cari nama atau email..."
-                            class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-400"
-                        />
-                    </div>
-                    <div>
-                        <select
-                            wire:model.live="filterRole"
-                            class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-400"
-                        >
-                            <option value="">Semua Role</option>
-                            <option value="buyer">Buyer</option>
-                            <option value="seller">Seller</option>
-                            <option value="admin">Admin</option>
-                        </select>
-                    </div>
-                    <div class="flex items-center gap-4">
-                        <span class="text-sm text-gray-600">{{ $users->total() }} users</span>
-                    </div>
+        <div class="max-w-7xl mx-auto px-6 py-8">
+            <div class="kl-card p-6 mb-6">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <input
+                        type="text"
+                        wire:model.live="search"
+                        placeholder="Cari nama atau email..."
+                        class="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-kl-primary"
+                    />
+                    <select
+                        wire:model.live="filterRole"
+                        class="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-kl-primary"
+                    >
+                        <option value="">Semua Role</option>
+                        <option value="buyer">Buyer</option>
+                        <option value="seller">Seller</option>
+                        <option value="admin">Admin</option>
+                    </select>
                 </div>
             </div>
 
-            <!-- Users Table -->
-            <div class="bg-white overflow-hidden shadow-card sm:rounded-lg">
+            <div class="kl-card overflow-hidden">
                 <div class="overflow-x-auto">
                     <table class="w-full">
-                        <thead class="bg-gray-50 border-b">
+                        <thead class="bg-gray-50 border-b border-kl">
                             <tr>
-                                <th class="px-6 py-3 text-left text-xs font-semibold text-gray-600">ID</th>
-                                <th class="px-6 py-3 text-left text-xs font-semibold text-gray-600">Nama</th>
-                                <th class="px-6 py-3 text-left text-xs font-semibold text-gray-600">Email</th>
-                                <th class="px-6 py-3 text-left text-xs font-semibold text-gray-600">Role</th>
-                                <th class="px-6 py-3 text-left text-xs font-semibold text-gray-600">Joined</th>
-                                <th class="px-6 py-3 text-left text-xs font-semibold text-gray-600">Aksi</th>
+                                <th class="px-6 py-4 text-left text-xs font-bold text-gray-700 uppercase">Nama</th>
+                                <th class="px-6 py-4 text-left text-xs font-bold text-gray-700 uppercase">Email</th>
+                                <th class="px-6 py-4 text-left text-xs font-bold text-gray-700 uppercase">Role</th>
+                                <th class="px-6 py-4 text-left text-xs font-bold text-gray-700 uppercase">Bergabung</th>
+                                <th class="px-6 py-4 text-center text-xs font-bold text-gray-700 uppercase">Aksi</th>
                             </tr>
                         </thead>
-                        <tbody class="divide-y">
+                        <tbody class="divide-y divide-kl">
                             @foreach ($users as $user)
-                                <tr class="hover:bg-gray-50">
-                                    <td class="px-6 py-4 text-sm">{{ $user->id }}</td>
+                                <tr class="hover:bg-gray-50 transition">
                                     <td class="px-6 py-4">
-                                        <p class="font-semibold">{{ $user->name }}</p>
+                                        <p class="font-semibold text-gray-900">{{ $user->name }}</p>
                                     </td>
                                     <td class="px-6 py-4 text-sm text-gray-600">{{ $user->email }}</td>
                                     <td class="px-6 py-4">
-                                        <span class="px-3 py-1 rounded-full text-xs font-semibold
-                                            {{ $user->role === 'admin' ? 'bg-purple-100 text-purple-800' : '' }}
-                                            {{ $user->role === 'seller' ? 'bg-blue-100 text-blue-800' : '' }}
-                                            {{ $user->role === 'buyer' ? 'bg-green-100 text-green-800' : '' }}
+                                        <span class="px-3 py-1 rounded-full text-xs font-bold
+                                            {{ $user->role === 'admin' ? 'bg-purple-100 text-purple-700' : '' }}
+                                            {{ $user->role === 'seller' ? 'bg-blue-100 text-blue-700' : '' }}
+                                            {{ $user->role === 'buyer' ? 'bg-green-100 text-green-700' : '' }}
                                         ">
                                             {{ ucfirst($user->role) }}
                                         </span>
                                     </td>
                                     <td class="px-6 py-4 text-sm text-gray-600">{{ $user->created_at->format('d M Y') }}</td>
-                                    <td class="px-6 py-4">
+                                    <td class="px-6 py-4 text-center">
                                         @if ($user->id !== auth()->id())
                                             <button
                                                 wire:click="deleteUser({{ $user->id }})"
                                                 wire:confirm="Hapus user {{ $user->name }}?"
-                                                class="text-red-600 hover:text-red-800 text-sm"
+                                                class="text-red-600 hover:text-red-800 font-semibold text-sm transition"
                                             >
                                                 Hapus
                                             </button>
+                                        @else
+                                            <span class="text-gray-400 text-sm">-</span>
                                         @endif
                                     </td>
                                 </tr>
@@ -128,10 +120,11 @@ new class extends Component {
                     </table>
                 </div>
 
-                <div class="p-4">
+                <div class="px-6 py-4 border-t border-kl bg-gray-50">
                     {{ $users->links() }}
                 </div>
             </div>
         </div>
     </div>
-</x-app-layout>
+
+</div>

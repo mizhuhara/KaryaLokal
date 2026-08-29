@@ -105,8 +105,8 @@ new class extends Component {
 
 ?>
 
-<x-app-layout>
-    <div class="min-h-screen flex flex-col">
+    <div>
+<div class="min-h-screen flex flex-col">
         <!-- Header -->
         <div class="bg-white border-b p-4">
             <div class="max-w-7xl mx-auto flex justify-between items-center">
@@ -216,4 +216,5 @@ new class extends Component {
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css" />
         <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
     @endpush
-</x-app-layout>
+
+</div>

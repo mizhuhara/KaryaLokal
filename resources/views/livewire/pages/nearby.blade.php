@@ -107,8 +107,8 @@ new class extends Component {
 
 ?>
 
-<x-app-layout>
-    <div class="min-h-screen bg-gray-50">
+    <div>
+<div class="min-h-screen bg-gray-50">
         <div class="max-w-7xl mx-auto px-6 py-8">
             <h1 class="text-3xl font-bold mb-2">Pengrajin Terdekat</h1>
             <p class="text-gray-600 mb-8">Temukan pengrajin handmade di sekitar Anda</p>
@@ -242,4 +242,5 @@ new class extends Component {
             @endif
         </div>
     </div>
-</x-app-layout>
+
+</div>

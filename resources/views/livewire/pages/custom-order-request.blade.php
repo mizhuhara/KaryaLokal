@@ -18,7 +18,7 @@ new class extends Component {
 
     public function mount($seller)
     {
-        $this->seller_id = $seller->id;
+        $this->seller_id = SellerProfile::findOrFail($seller)->id;
     }
 
     public function submit()
@@ -73,8 +73,8 @@ new class extends Component {
 
 ?>
 
-<x-app-layout>
-    <div class="min-h-screen bg-gray-50">
+    <div>
+<div class="min-h-screen bg-gray-50">
         <div class="max-w-3xl mx-auto px-6 py-8">
             <a href="{{ route('seller-store', $seller->id) }}" class="text-orange-600 hover:text-orange-700 mb-4 inline-block">← Kembali ke Toko</a>
 
@@ -158,4 +158,5 @@ new class extends Component {
             </div>
         </div>
     </div>
-</x-app-layout>
+
+</div>

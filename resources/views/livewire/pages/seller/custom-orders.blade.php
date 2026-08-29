@@ -78,8 +78,8 @@ new class extends Component {
 
 ?>
 
-<x-app-layout>
-    <x-slot name="header">
+    <div>
+<x-slot name="header">
         <h2 class="font-serif font-semibold text-xl text-neutral-900 leading-tight">Custom Order</h2>
     </x-slot>
 
@@ -207,4 +207,5 @@ new class extends Component {
             @endif
         </div>
     </div>
-</x-app-layout>
+
+</div>

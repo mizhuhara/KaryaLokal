@@ -76,22 +76,23 @@ new class extends Component {
 
 ?>
 
-<x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-serif font-semibold text-xl text-neutral-900 leading-tight">
-            Manajemen Sellers
-        </h2>
-    </x-slot>
+    <div>
+<div class="min-h-screen bg-kl-warm">
+        <div class="bg-white border-b border-kl">
+            <div class="max-w-7xl mx-auto px-6 py-6">
+                <h1 class="kl-section-title mb-1">🏪 Manajemen Sellers</h1>
+                <p class="text-gray-600 text-sm">Total {{ $sellers->total() }} seller</p>
+            </div>
+        </div>
 
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+        <div class="max-w-7xl mx-auto px-6 py-8">
             <!-- Filter -->
-            <div class="bg-white overflow-hidden shadow-card sm:rounded-lg p-6 mb-6">
-                <div class="flex gap-4">
+            <div class="kl-card p-4 mb-6">
+                <div class="flex gap-3">
                     @foreach (['all' => 'Semua', 'pending' => 'Menunggu Verifikasi', 'verified' => 'Sudah Verifikasi'] as $value => $label)
                         <button
                             wire:click="$set('filter', '{{ $value }}')"
-                            class="px-4 py-2 rounded-lg font-semibold {{ $filter === $value ? 'bg-orange-600 text-white' : 'bg-gray-200 text-gray-800 hover:bg-gray-300' }}"
+                            class="px-4 py-2 rounded-lg font-semibold transition {{ $filter === $value ? 'bg-kl-primary text-white shadow' : 'bg-gray-100 text-gray-700 hover:bg-gray-200' }}"
                         >
                             {{ $label }}
                         </button>
@@ -102,48 +103,48 @@ new class extends Component {
             <!-- Sellers List -->
             <div class="space-y-4">
                 @foreach ($sellers as $seller)
-                    <div class="bg-white overflow-hidden shadow-card sm:rounded-lg">
-                        <div class="p-6 flex justify-between items-start">
+                    <div class="kl-card overflow-hidden">
+                        <div class="p-6 flex justify-between items-start gap-6">
                             <div class="flex-1">
                                 <div class="flex items-center gap-3 mb-2">
-                                    <h3 class="text-xl font-bold">{{ $seller->shop_name }}</h3>
+                                    <h3 class="text-lg font-bold font-jakarta text-gray-900">{{ $seller->shop_name }}</h3>
                                     @if ($seller->is_verified)
-                                        <span class="px-3 py-1 bg-green-100 text-green-800 rounded-full text-xs font-semibold">Terverifikasi</span>
+                                        <span class="px-3 py-1 bg-green-100 text-green-700 rounded-full text-xs font-bold">Terverifikasi</span>
                                     @else
-                                        <span class="px-3 py-1 bg-yellow-100 text-yellow-800 rounded-full text-xs font-semibold">Menunggu</span>
+                                        <span class="px-3 py-1 bg-yellow-100 text-yellow-700 rounded-full text-xs font-bold">Menunggu</span>
                                     @endif
                                 </div>
-                                <p class="text-gray-600 mb-2">{{ $seller->address }}, {{ $seller->city }}, {{ $seller->province }}</p>
+                                <p class="text-gray-600 text-sm mb-2">{{ $seller->address }}, {{ $seller->city }}, {{ $seller->province }}</p>
                                 <p class="text-sm text-gray-500">
-                                    User: {{ $seller->user->name }} ({{ $seller->user->email }})
+                                    User: <span class="font-semibold text-gray-700">{{ $seller->user->name }}</span> ({{ $seller->user->email }})
                                 </p>
                                 <p class="text-sm text-gray-500 mt-1">
-                                    Produk: {{ $seller->products()->count() }} | Dibuat: {{ $seller->created_at->format('d M Y') }}
+                                    Produk: <span class="font-semibold">{{ $seller->products()->count() }}</span> | Bergabung: {{ $seller->created_at->format('d M Y') }}
                                 </p>
                             </div>
 
-                            <div class="flex gap-2">
-                                <a href="{{ route('seller-store', $seller->id) }}" class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 text-sm">
+                            <div class="flex flex-wrap gap-2 justify-end shrink-0">
+                                <a href="{{ route('seller-store', $seller->id) }}" class="px-4 py-2 bg-sky-600 text-white rounded-lg hover:bg-sky-700 text-sm font-semibold transition">
                                     Lihat
                                 </a>
                                 @if (!$seller->is_verified)
                                     <button
                                         wire:click="verifySeller({{ $seller->id }})"
-                                        class="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 text-sm font-semibold"
+                                        class="px-4 py-2 bg-emerald-600 text-white rounded-lg hover:bg-emerald-700 text-sm font-semibold transition"
                                     >
                                         ✓ Verifikasi
                                     </button>
                                     <button
                                         wire:click="rejectSeller({{ $seller->id }})"
                                         wire:confirm="Tolak seller ini?"
-                                        class="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 text-sm"
+                                        class="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 text-sm transition"
                                     >
                                         Tolak
                                     </button>
                                 @else
                                     <button
                                         wire:click="unverifySeller({{ $seller->id }})"
-                                        class="px-4 py-2 bg-yellow-600 text-white rounded-lg hover:bg-yellow-700 text-sm"
+                                        class="px-4 py-2 bg-yellow-600 text-white rounded-lg hover:bg-yellow-700 text-sm transition"
                                     >
                                         Cabut
                                     </button>
@@ -151,7 +152,7 @@ new class extends Component {
                                 <button
                                     wire:click="deleteSeller({{ $seller->id }})"
                                     wire:confirm="Hapus seller ini? Semua produk juga akan dihapus."
-                                    class="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 text-sm"
+                                    class="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 text-sm transition"
                                 >
                                     Hapus
                                 </button>
@@ -167,4 +168,5 @@ new class extends Component {
             </div>
         </div>
     </div>
-</x-app-layout>
+
+</div>

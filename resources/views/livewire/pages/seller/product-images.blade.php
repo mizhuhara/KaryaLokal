@@ -12,12 +12,18 @@ new class extends Component {
     public $images = [];
     public $uploadedFiles = [];
 
-    public function mount($productId)
+    public function allowEdit($product)
     {
-        $this->product_id = $productId;
-        $product = Product::findOrFail($productId);
+        return auth()->user()->isAdmin()
+            || $product->sellerProfile->user_id === auth()->id();
+    }
 
-        if ($product->sellerProfile->user_id !== auth()->id()) {
+    public function mount($product)
+    {
+        $this->product_id = $product;
+        $product = Product::findOrFail($product);
+
+        if (! $this->allowEdit($product)) {
             abort(403);
         }
     }
@@ -48,7 +54,7 @@ new class extends Component {
     {
         $image = ProductImage::findOrFail($imageId);
 
-        if ($image->product->sellerProfile->user_id !== auth()->id()) {
+        if (! $this->allowEdit($image->product)) {
             abort(403);
         }
 
@@ -64,7 +70,7 @@ new class extends Component {
     {
         $image = ProductImage::findOrFail($imageId);
 
-        if ($image->product->sellerProfile->user_id !== auth()->id()) {
+        if (! $this->allowEdit($image->product)) {
             abort(403);
         }
 

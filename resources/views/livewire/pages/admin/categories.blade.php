@@ -63,75 +63,78 @@ new class extends Component {
 
 ?>
 
-<x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-serif font-semibold text-xl text-neutral-900 leading-tight">
-            Manajemen Kategori
-        </h2>
-    </x-slot>
+    <div>
+<div class="min-h-screen bg-kl-warm">
+        <div class="bg-white border-b border-kl">
+            <div class="max-w-7xl mx-auto px-6 py-6">
+                <h1 class="kl-section-title mb-1">🏷️ Manajemen Kategori</h1>
+                <p class="text-gray-600 text-sm">Total {{ $categories->total() }} kategori</p>
+            </div>
+        </div>
 
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+        <div class="max-w-7xl mx-auto px-6 py-8">
             <!-- Add Button -->
-            <div class="bg-white overflow-hidden shadow-card sm:rounded-lg p-6 mb-6">
+            <div class="kl-card p-6 mb-6 flex justify-end">
                 <button
                     wire:click="openForm"
-                    class="px-6 py-2 bg-orange-600 text-white rounded-lg hover:bg-orange-700 font-semibold"
+                    class="px-6 py-2.5 bg-kl-primary text-white rounded-lg hover:bg-kl-primary-dark font-semibold transition shadow"
                 >
                     + Tambah Kategori
                 </button>
             </div>
 
-            <!-- Form Modal -->
+            <!-- Form -->
             @if ($showForm)
-                <div class="bg-white overflow-hidden shadow-card sm:rounded-lg p-6 mb-6">
-                    <h3 class="text-lg font-bold mb-4">{{ $editingId ? 'Edit Kategori' : 'Tambah Kategori Baru' }}</h3>
-                    <form wire:submit="save" class="flex gap-4">
+                <div class="kl-card p-6 mb-6">
+                    <h3 class="text-lg font-bold font-jakarta mb-4">{{ $editingId ? '✏️ Edit Kategori' : '➕ Tambah Kategori Baru' }}</h3>
+                    <div class="flex flex-col sm:flex-row gap-4">
                         <input
                             type="text"
                             wire:model="name"
                             placeholder="Nama kategori"
-                            class="flex-1 px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-400"
+                            class="flex-1 px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-kl-primary"
                         />
-                        @error('name') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
-                        <button type="submit" class="px-6 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 font-semibold">
-                            Simpan
-                        </button>
-                        <button type="button" wire:click="$set('showForm', false)" class="px-6 py-2 bg-gray-200 rounded-lg hover:bg-gray-300">
-                            Batal
-                        </button>
-                    </form>
+                        @error('name') <span class="text-red-500 text-sm self-center">{{ $message }}</span> @enderror
+                        <div class="flex gap-2">
+                            <button wire:click="save" class="px-6 py-2.5 bg-emerald-600 text-white rounded-lg hover:bg-emerald-700 font-semibold transition">
+                                Simpan
+                            </button>
+                            <button type="button" wire:click="$set('showForm', false)" class="px-6 py-2.5 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 font-semibold transition">
+                                Batal
+                            </button>
+                        </div>
+                    </div>
                 </div>
             @endif
 
             <!-- Categories Table -->
-            <div class="bg-white overflow-hidden shadow-card sm:rounded-lg">
+            <div class="kl-card overflow-hidden">
                 <table class="w-full">
-                    <thead class="bg-gray-50 border-b">
+                    <thead class="bg-gray-50 border-b border-kl">
                         <tr>
-                            <th class="px-6 py-3 text-left text-xs font-semibold">ID</th>
-                            <th class="px-6 py-3 text-left text-xs font-semibold">Nama</th>
-                            <th class="px-6 py-3 text-left text-xs font-semibold">Jumlah Produk</th>
-                            <th class="px-6 py-3 text-left text-xs font-semibold">Aksi</th>
+                            <th class="px-6 py-4 text-left text-xs font-bold text-gray-700 uppercase">Nama</th>
+                            <th class="px-6 py-4 text-left text-xs font-bold text-gray-700 uppercase">Jumlah Produk</th>
+                            <th class="px-6 py-4 text-center text-xs font-bold text-gray-700 uppercase">Aksi</th>
                         </tr>
                     </thead>
-                    <tbody class="divide-y">
+                    <tbody class="divide-y divide-kl">
                         @foreach ($categories as $category)
-                            <tr class="hover:bg-gray-50">
-                                <td class="px-6 py-4 text-sm">{{ $category->id }}</td>
-                                <td class="px-6 py-4 font-semibold">{{ $category->name }}</td>
-                                <td class="px-6 py-4 text-sm">{{ $category->products_count }}</td>
-                                <td class="px-6 py-4 flex gap-2">
+                            <tr class="hover:bg-gray-50 transition">
+                                <td class="px-6 py-4 font-semibold text-gray-900">{{ $category->name }}</td>
+                                <td class="px-6 py-4">
+                                    <span class="inline-flex px-2.5 py-1 bg-kl-warm rounded-full text-xs font-bold text-gray-700">{{ $category->products_count }} produk</span>
+                                </td>
+                                <td class="px-6 py-4 text-center">
                                     <button
                                         wire:click="edit({{ $category->id }})"
-                                        class="text-blue-600 hover:text-blue-800 text-sm"
+                                        class="text-sky-600 hover:text-sky-800 font-semibold text-sm transition mr-3"
                                     >
                                         Edit
                                     </button>
                                     <button
                                         wire:click="deleteCategory({{ $category->id }})"
                                         wire:confirm="Hapus kategori ini?"
-                                        class="text-red-600 hover:text-red-800 text-sm"
+                                        class="text-red-600 hover:text-red-800 font-semibold text-sm transition"
                                     >
                                         Hapus
                                     </button>
@@ -141,10 +144,11 @@ new class extends Component {
                     </tbody>
                 </table>
 
-                <div class="p-4">
+                <div class="px-6 py-4 border-t border-kl bg-gray-50">
                     {{ $categories->links() }}
                 </div>
             </div>
         </div>
     </div>
-</x-app-layout>
+
+</div>
