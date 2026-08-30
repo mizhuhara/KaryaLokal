@@ -46,12 +46,12 @@ new class extends Component
     {
         if (!auth()->check()) {
             return [
-                ['route' => 'products', 'label' => 'Produk', 'icon' => '🛍️'],
-                ['route' => 'nearby', 'label' => 'Terdekat', 'icon' => '📍'],
-                ['route' => 'cart', 'label' => 'Keranjang', 'icon' => '🛒'],
-                ['route' => 'buyer.orders', 'label' => 'Pesanan', 'icon' => '📦'],
-                ['route' => 'wishlist', 'label' => 'Wishlist', 'icon' => '❤️'],
-                ['route' => 'chat', 'label' => 'Chat', 'icon' => '💬'],
+                ['route' => 'products', 'label' => 'Produk', 'icon' => 'shopping-bag'],
+                ['route' => 'nearby', 'label' => 'Terdekat', 'icon' => 'map-pin'],
+                ['route' => 'cart', 'label' => 'Keranjang', 'icon' => 'shopping-cart'],
+                ['route' => 'buyer.orders', 'label' => 'Pesanan', 'icon' => 'cube'],
+                ['route' => 'wishlist', 'label' => 'Wishlist', 'icon' => 'heart'],
+                ['route' => 'chat', 'label' => 'Chat', 'icon' => 'chat-bubble-left-ellipsis'],
             ];
         }
 
@@ -59,33 +59,33 @@ new class extends Component
 
         if ($user->isAdmin()) {
             return [
-                ['route' => 'admin.dashboard', 'label' => 'Dashboard', 'icon' => '⚙️'],
-                ['route' => 'admin.users', 'label' => 'Users', 'icon' => '👥'],
-                ['route' => 'admin.sellers', 'label' => 'Sellers', 'icon' => '🏪'],
-                ['route' => 'admin.products', 'label' => 'Produk', 'icon' => '📦'],
-                ['route' => 'admin.orders', 'label' => 'Pesanan', 'icon' => '🛒'],
-                ['route' => 'home', 'label' => 'Lihat Situs', 'icon' => '🌐'],
+                ['route' => 'admin.dashboard', 'label' => 'Dashboard', 'icon' => 'adjustments-horizontal'],
+                ['route' => 'admin.users', 'label' => 'Users', 'icon' => 'users'],
+                ['route' => 'admin.sellers', 'label' => 'Sellers', 'icon' => 'building-storefront'],
+                ['route' => 'admin.products', 'label' => 'Produk', 'icon' => 'cube'],
+                ['route' => 'admin.orders', 'label' => 'Pesanan', 'icon' => 'shopping-cart'],
+                ['route' => 'home', 'label' => 'Lihat Situs', 'icon' => 'globe-alt'],
             ];
         }
 
         if ($user->isSeller() && $user->sellerProfile && request()->routeIs('seller.*')) {
             return [
-                ['route' => 'seller.dashboard', 'label' => 'Dashboard', 'icon' => '🏠'],
-                ['route' => 'seller.products', 'label' => 'Produk', 'icon' => '📦'],
-                ['route' => 'seller.orders', 'label' => 'Pesanan', 'icon' => '🛒'],
-                ['route' => 'seller.custom-orders', 'label' => 'Custom', 'icon' => '🎨'],
-                ['route' => 'chat', 'label' => 'Chat', 'icon' => '💬'],
-                ['route' => 'home', 'label' => 'Lihat Situs', 'icon' => '🌐'],
+                ['route' => 'seller.dashboard', 'label' => 'Dashboard', 'icon' => 'home'],
+                ['route' => 'seller.products', 'label' => 'Produk', 'icon' => 'cube'],
+                ['route' => 'seller.orders', 'label' => 'Pesanan', 'icon' => 'shopping-cart'],
+                ['route' => 'seller.custom-orders', 'label' => 'Custom', 'icon' => 'sparkles'],
+                ['route' => 'chat', 'label' => 'Chat', 'icon' => 'chat-bubble-left-ellipsis'],
+                ['route' => 'home', 'label' => 'Lihat Situs', 'icon' => 'globe-alt'],
             ];
         }
 
         return [
-            ['route' => 'products', 'label' => 'Produk', 'icon' => '🛍️'],
-            ['route' => 'nearby', 'label' => 'Terdekat', 'icon' => '📍'],
-            ['route' => 'cart', 'label' => 'Keranjang', 'icon' => '🛒'],
-            ['route' => 'buyer.orders', 'label' => 'Pesanan', 'icon' => '📦'],
-            ['route' => 'wishlist', 'label' => 'Wishlist', 'icon' => '❤️'],
-            ['route' => 'chat', 'label' => 'Chat', 'icon' => '💬'],
+            ['route' => 'products', 'label' => 'Produk', 'icon' => 'shopping-bag'],
+            ['route' => 'nearby', 'label' => 'Terdekat', 'icon' => 'map-pin'],
+            ['route' => 'cart', 'label' => 'Keranjang', 'icon' => 'shopping-cart'],
+            ['route' => 'buyer.orders', 'label' => 'Pesanan', 'icon' => 'cube'],
+            ['route' => 'wishlist', 'label' => 'Wishlist', 'icon' => 'heart'],
+            ['route' => 'chat', 'label' => 'Chat', 'icon' => 'chat-bubble-left-ellipsis'],
         ];
     }
 }; ?>
@@ -124,10 +124,7 @@ new class extends Component
                     class="relative p-2.5 rounded-xl transition-all duration-200 {{ request()->routeIs('cart') ? 'bg-orange-50 text-kl-primary' : 'text-gray-500 hover:text-gray-700 hover:bg-gray-100' }}"
                     title="Keranjang"
                 >
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                              d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"/>
-                    </svg>
+                    <x-icon name="shopping-cart" class="w-5 h-5" />
                     @if ($this->cartCount > 0)
                         <span class="absolute -top-0.5 -right-0.5 min-w-[18px] h-[18px] flex items-center justify-center px-1 rounded-full text-white text-[10px] font-bold ring-2 ring-white"
                               style="background: #E8531D">
@@ -142,10 +139,7 @@ new class extends Component
                     <div class="relative" @click.away="notifOpen = false">
                         <button @click="notifOpen = !notifOpen"
                                 class="relative p-2.5 rounded-xl text-gray-500 hover:text-gray-700 hover:bg-gray-100 transition-all duration-200">
-                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                      d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"/>
-                            </svg>
+                            <x-icon name="bell" class="w-5 h-5" />
                             @if ($unreadCount > 0)
                                 <span class="absolute -top-0.5 -right-0.5 flex h-4 w-4 items-center justify-center rounded-full text-white text-[10px] font-bold ring-2 ring-white"
                                       style="background: #E8531D">
@@ -188,7 +182,7 @@ new class extends Component
                                     @endforeach
                                 @else
                                     <div class="py-10 text-center">
-                                        <p class="text-3xl mb-2">🔔</p>
+                                        <x-icon name="bell" class="w-10 h-10 mx-auto mb-2 text-gray-300" />
                                         <p class="text-xs text-gray-500">Tidak ada notifikasi</p>
                                     </div>
                                 @endif
@@ -212,10 +206,9 @@ new class extends Component
                                 {{ strtoupper(substr(auth()->user()->name, 0, 1)) }}
                             </div>
                             <span class="hidden sm:inline text-sm font-semibold text-gray-700 max-w-[100px] truncate">{{ auth()->user()->name }}</span>
-                            <svg class="w-3.5 h-3.5 text-gray-400 transition-transform duration-200" :class="{'rotate-180': userOpen}"
-                                 fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"/>
-                            </svg>
+                            <span :class="{'rotate-180': userOpen}" class="transition-transform duration-200 inline-flex text-gray-400">
+                                <x-icon name="chevron-down" class="w-3.5 h-3.5" />
+                            </span>
                         </button>
 
                         <div x-show="userOpen" x-transition:enter="transition ease-out duration-150"
@@ -229,11 +222,11 @@ new class extends Component
                                 <p class="text-[11px] text-gray-500 truncate">{{ auth()->user()->email }}</p>
                                 <div class="mt-1.5">
                                     @if (auth()->user()->isAdmin())
-                                        <span class="inline-flex px-2 py-0.5 rounded-full text-[10px] font-bold" style="background: #5B21B6; color: white">⚙️ Admin</span>
+                                        <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold" style="background: #5B21B6; color: white"><x-icon name="adjustments-horizontal" class="w-3 h-3" /> Admin</span>
                                     @elseif (auth()->user()->isSeller())
-                                        <span class="inline-flex px-2 py-0.5 rounded-full text-[10px] font-bold" style="background: #2D6A4F; color: white">🏪 Seller</span>
+                                        <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold" style="background: #2D6A4F; color: white"><x-icon name="building-storefront" class="w-3 h-3" /> Seller</span>
                                     @else
-                                        <span class="inline-flex px-2 py-0.5 rounded-full text-[10px] font-bold" style="background: #E8531D; color: white">🛍️ Buyer</span>
+                                        <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold" style="background: #E8531D; color: white"><x-icon name="shopping-bag" class="w-3 h-3" /> Buyer</span>
                                     @endif
                                 </div>
                             </div>
@@ -242,37 +235,37 @@ new class extends Component
                                 @if (auth()->user()->isSeller())
                                     <a href="{{ route('seller.dashboard') }}" wire:navigate
                                        class="flex items-center gap-2.5 px-4 py-2 text-sm text-gray-700 hover:bg-orange-50 transition-colors">
-                                        <span>🏪</span> Dashboard Toko
+                                        <x-icon name="building-storefront" class="w-4 h-4 text-gray-400" /> Dashboard Toko
                                     </a>
                                     <a href="{{ route('chat') }}" wire:navigate
                                        class="flex items-center gap-2.5 px-4 py-2 text-sm text-gray-700 hover:bg-orange-50 transition-colors">
-                                        <span>💬</span> Chat Pembeli
+                                        <x-icon name="chat-bubble-left-ellipsis" class="w-4 h-4 text-gray-400" /> Chat Pembeli
                                     </a>
                                     <a href="{{ route('home') }}" wire:navigate
                                        class="flex items-center gap-2.5 px-4 py-2 text-sm text-gray-700 hover:bg-orange-50 transition-colors">
-                                        <span>🌐</span> Mode Pembeli
+                                        <x-icon name="globe-alt" class="w-4 h-4 text-gray-400" /> Mode Pembeli
                                     </a>
                                 @endif
                                 @if (auth()->user()->isAdmin())
                                     <a href="{{ route('admin.dashboard') }}" wire:navigate
                                        class="flex items-center gap-2.5 px-4 py-2 text-sm text-gray-700 hover:bg-orange-50 transition-colors">
-                                        <span>⚙️</span> Admin Panel
+                                        <x-icon name="adjustments-horizontal" class="w-4 h-4 text-gray-400" /> Admin Panel
                                     </a>
                                     <a href="{{ route('home') }}" wire:navigate
                                        class="flex items-center gap-2.5 px-4 py-2 text-sm text-gray-700 hover:bg-orange-50 transition-colors">
-                                        <span>🌐</span> Lihat Situs
+                                        <x-icon name="globe-alt" class="w-4 h-4 text-gray-400" /> Lihat Situs
                                     </a>
                                 @endif
                                 <a href="{{ route('profile') }}" wire:navigate
                                    class="flex items-center gap-2.5 px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 transition-colors">
-                                    <span>👤</span> Profile Saya
+                                    <x-icon name="user" class="w-4 h-4 text-gray-400" /> Profile Saya
                                 </a>
                             </div>
 
                             <div class="border-t pt-1" style="border-color: #F9F5F2">
                                 <button wire:click="logout"
                                         class="flex items-center gap-2.5 w-full px-4 py-2 text-sm text-red-600 hover:bg-red-50 transition-colors text-left font-semibold">
-                                    <span>🚪</span> Keluar
+                                    <x-icon name="arrow-right-start-on-rectangle" class="w-4 h-4" /> Keluar
                                 </button>
                             </div>
                         </div>
@@ -291,19 +284,15 @@ new class extends Component
                     </div>
                     <a href="{{ route('login') }}" wire:navigate
                        class="sm:hidden p-2 rounded-lg text-gray-500 hover:bg-gray-100">
-                        👤
+                        <x-icon name="user" class="w-5 h-5" />
                     </a>
                 @endauth
 
                 <!-- Mobile Menu Button -->
                 <button @click="open = !open"
                         class="lg:hidden p-2 rounded-xl text-gray-500 hover:bg-gray-100 transition-all duration-200">
-                    <svg x-show="!open" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
-                    </svg>
-                    <svg x-show="open" x-cloak class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
-                    </svg>
+                    <x-icon x-show="!open" name="bars-3" class="w-6 h-6" />
+                    <x-icon x-show="open" x-cloak name="x-mark" class="w-6 h-6" />
                 </button>
             </div>
         </div>
@@ -321,7 +310,7 @@ new class extends Component
                 <a href="{{ route($link['route']) }}" wire:navigate
                    @click="open = false"
                    class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium {{ request()->routeIs($link['route']) ? 'bg-orange-50 text-kl-primary' : 'text-gray-700 hover:bg-gray-50' }}">
-                    <span>{{ $link['icon'] }}</span>
+                    <x-icon :name="$link['icon']" class="w-5 h-5" />
                     <span>{{ $link['label'] }}</span>
                 </a>
             @endforeach
@@ -330,7 +319,7 @@ new class extends Component
                 <a href="{{ route('notifications') }}" wire:navigate
                    @click="open = false"
                    class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium text-gray-700 hover:bg-gray-50">
-                    <span>🔔</span>
+                    <x-icon name="bell" class="w-5 h-5" />
                     <span>Notifikasi</span>
                     @if ($unreadCount > 0)
                         <span class="ml-auto px-2 py-0.5 rounded-full text-[10px] font-bold text-white" style="background: var(--kl-primary)">
@@ -358,3 +347,5 @@ new class extends Component
         @endguest
     </div>
 </nav>
+
+

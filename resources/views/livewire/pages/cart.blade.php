@@ -95,7 +95,9 @@ new class extends Component {
         <!-- Header -->
         <div class="bg-white border-b border-kl">
             <div class="max-w-7xl mx-auto px-6 py-6">
-                <h1 class="kl-section-title mb-1">🛒 Keranjang Belanja</h1>
+                <h1 class="kl-section-title mb-1 flex items-center gap-2">
+                    <x-icon name="shopping-cart" class="w-7 h-7" style="color: var(--kl-primary)" /> Keranjang Belanja
+                </h1>
                 <p class="text-gray-600 text-sm">{{ $cartCount }} item di keranjang</p>
             </div>
         </div>
@@ -109,7 +111,7 @@ new class extends Component {
                             <div class="kl-card overflow-hidden">
                                 <!-- Store Header -->
                                 <div class="px-5 py-3 flex items-center gap-2 border-b border-kl" style="background: #FFF8F5">
-                                    <span class="text-sm">🏪</span>
+                                    <x-icon name="building-storefront" class="w-5 h-5" style="color: var(--kl-primary)" />
                                     <span class="text-sm font-semibold font-jakarta text-gray-700">Toko ({{ $items->count() }} produk)</span>
                                 </div>
 
@@ -125,7 +127,9 @@ new class extends Component {
                                                         class="w-20 h-20 object-cover rounded-xl"
                                                     />
                                                 @else
-                                                    <div class="w-20 h-20 bg-gradient-to-br from-orange-50 to-amber-50 rounded-xl flex items-center justify-center text-3xl opacity-30">🎨</div>
+                                                    <div class="w-20 h-20 bg-gradient-to-br from-orange-50 to-amber-50 rounded-xl flex items-center justify-center">
+                                                        <x-icon name="cube" class="w-8 h-8 opacity-20" />
+                                                    </div>
                                                 @endif
                                             </a>
 
@@ -198,7 +202,7 @@ new class extends Component {
                             </div>
 
                             <a href="{{ route('checkout') }}" wire:navigate class="kl-btn-primary w-full py-3 justify-center text-center mb-3">
-                                Lanjut ke Checkout →
+                                Lanjut ke Checkout <x-icon name="arrow-right" class="w-4 h-4" />
                             </a>
 
                             <button
@@ -210,18 +214,21 @@ new class extends Component {
                             </button>
 
                             <a href="{{ route('products') }}" wire:navigate class="block text-center mt-4 text-sm font-medium hover:underline" style="color: var(--kl-primary)">
-                                ← Lanjut Belanja
+                                <x-icon name="arrow-left" class="w-4 h-4 inline-block align-middle" /> Lanjut Belanja
                             </a>
                         </div>
                     </div>
                 </div>
             @else
                 <div class="kl-card p-12 text-center">
-                    <div class="text-6xl mb-4">🛒</div>
+                    <div class="w-20 h-20 mx-auto mb-4 rounded-full flex items-center justify-center"
+                         style="background: linear-gradient(135deg, #FFF5F2, #FFE8E0)">
+                        <x-icon name="shopping-cart" class="w-10 h-10" style="color: var(--kl-primary)" />
+                    </div>
                     <h3 class="kl-section-title">Keranjang Kosong</h3>
                     <p class="text-gray-500 text-sm mb-6">Mulai berbelanja untuk menambahkan produk ke keranjang</p>
                     <a href="{{ route('products') }}" wire:navigate class="kl-btn-primary text-sm py-2.5">
-                        Jelajahi Produk
+                        <x-icon name="shopping-bag" class="w-4 h-4" /> Jelajahi Produk
                     </a>
                 </div>
             @endif

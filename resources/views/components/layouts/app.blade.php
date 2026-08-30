@@ -33,5 +33,7 @@
                 <p class="px-5 py-3 rounded-xl bg-gray-900 text-white text-sm font-semibold shadow-xl" x-text="toast"></p>
             </div>
         </div>
+
+        @stack('scripts')
     </body>
 </html>

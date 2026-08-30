@@ -6,6 +6,10 @@
         <meta name="csrf-token" content="{{ csrf_token() }}">
         <meta name="description" content="KaryaLokal — Masuk atau daftar untuk menemukan dan mendukung pengrajin handmade lokal Indonesia.">
 
+        <link rel="icon" href="{{ asset('favicon.ico') }}" sizes="16x16 32x32 48x48">
+        <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('favicon-32x32.png') }}">
+        <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('apple-touch-icon.png') }}">
+
         <title>{{ config('app.name', 'KaryaLokal') }}</title>
 
         <!-- Scripts -->

@@ -125,7 +125,7 @@ new class extends Component {
         <div class="bg-white border-b border-kl">
             <div class="max-w-7xl mx-auto px-6 py-3">
                 <a href="{{ route('products') }}" wire:navigate class="text-kl-primary hover:underline text-sm font-medium inline-flex items-center gap-1">
-                    ← Kembali ke Katalog
+                    <x-icon name="arrow-left" class="w-4 h-4" /> Kembali ke Katalog
                 </a>
             </div>
         </div>
@@ -158,8 +158,8 @@ new class extends Component {
                                 </div>
                             @endif
                         @else
-                            <div class="w-full h-96 md:h-[500px] bg-gradient-to-br from-orange-50 to-amber-50 flex items-center justify-center text-6xl opacity-30">
-                                🎨
+                            <div class="w-full h-96 md:h-[500px] bg-gradient-to-br from-orange-50 to-amber-50 flex items-center justify-center">
+                                <x-icon name="cube" class="w-24 h-24 opacity-20" />
                             </div>
                         @endif
                     </div>
@@ -181,23 +181,23 @@ new class extends Component {
                             <p class="text-3xl font-bold" style="color: var(--kl-primary)">
                                 Rp {{ number_format($product->price, 0, ',', '.') }}
                             </p>
-                            <p class="text-sm text-gray-600 mt-1">💰 Harga tetap</p>
+                            <p class="text-sm text-gray-600 mt-1 flex items-center gap-1"><x-icon name="banknotes" class="w-4 h-4" /> Harga tetap</p>
                         </div>
 
                         <!-- Status Badges -->
                         <div class="mb-6 space-y-2">
                             @if ($product->is_ready_stock)
                                 <div class="kl-badge kl-badge-green w-full justify-center py-2">
-                                    ✅ Stok Siap
+                                    <x-icon name="check-circle" class="w-4 h-4" /> Stok Siap
                                 </div>
                             @else
                                 <div class="kl-badge kl-badge-blue w-full justify-center py-2">
-                                    ⏱️ Pre-order
+                                    <x-icon name="clock" class="w-4 h-4" /> Pre-order
                                 </div>
                             @endif
                             @if ($product->is_customizable)
                                 <div class="kl-badge kl-badge-purple w-full justify-center py-2">
-                                    🎨 Bisa Custom
+                                    <x-icon name="sparkles" class="w-4 h-4" /> Bisa Custom
                                 </div>
                             @endif
                         </div>
@@ -233,23 +233,24 @@ new class extends Component {
                                 wire:click="addToCart"
                                 class="kl-btn-primary w-full py-3 justify-center text-base"
                             >
-                                🛒 Tambah ke Keranjang
+                                <x-icon name="shopping-cart" class="w-5 h-5" /> Tambah ke Keranjang
                             </button>
                             <button
                                 wire:click="toggleWishlist"
-                                class="w-full py-3 rounded-xl font-semibold transition border-2 {{ $isInWishlist ? 'border-red-500 text-red-500 bg-red-50 hover:bg-red-100' : 'border-kl-primary text-kl-primary hover:bg-orange-50' }}"
+                                class="w-full py-3 rounded-xl font-semibold transition border-2 inline-flex items-center justify-center gap-2 {{ $isInWishlist ? 'border-red-500 text-red-500 bg-red-50 hover:bg-red-100' : 'border-kl-primary text-kl-primary hover:bg-orange-50' }}"
                             >
-                                {{ $isInWishlist ? '❤️ Di Wishlist' : '♡ Tambah Wishlist' }}
+                                <x-icon :name="$isInWishlist ? 'heart' : 'heart'" :solid="$isInWishlist" class="w-5 h-5" />
+                                {{ $isInWishlist ? 'Di Wishlist' : 'Tambah Wishlist' }}
                             </button>
                         </div>
 
                         <!-- Chat Button -->
                         <a
                             href="{{ route('chat.user', $product->sellerProfile->user_id) }}" wire:navigate
-                            class="w-full py-3 rounded-xl font-semibold transition text-center block"
+                            class="w-full py-3 rounded-xl font-semibold transition text-center block inline-flex items-center justify-center gap-2"
                             style="background: var(--kl-secondary); color: white"
                         >
-                            💬 Chat Penjual
+                            <x-icon name="chat-bubble-left" class="w-5 h-5" /> Chat Penjual
                         </a>
                     </div>
                 </div>
@@ -257,7 +258,9 @@ new class extends Component {
 
             <!-- Seller Card -->
             <div class="kl-card p-6 mb-12">
-                <h3 class="font-bold text-lg font-jakarta mb-4">👤 Informasi Penjual</h3>
+                <h3 class="font-bold text-lg font-jakarta mb-4 flex items-center gap-2">
+                    <x-icon name="user" class="w-5 h-5" style="color: var(--kl-primary)" /> Informasi Penjual
+                </h3>
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                     <!-- Seller Basic Info -->
                     <div>
@@ -268,9 +271,9 @@ new class extends Component {
                             </div>
                             <div>
                                 <h3 class="font-bold text-lg font-jakarta">{{ $product->sellerProfile->shop_name }}</h3>
-                                <p class="text-sm text-gray-600">📍 {{ $product->sellerProfile->city }}, {{ $product->sellerProfile->province }}</p>
+                                <p class="text-sm text-gray-600 flex items-center gap-1"><x-icon name="map-pin" class="w-4 h-4" /> {{ $product->sellerProfile->city }}, {{ $product->sellerProfile->province }}</p>
                                 @if ($product->sellerProfile->is_verified)
-                                    <p class="text-xs font-semibold text-green-600 mt-1">✅ Terverifikasi</p>
+                                    <p class="text-xs font-semibold text-green-600 mt-1 flex items-center gap-1"><x-icon name="shield-check" class="w-4 h-4" /> Terverifikasi</p>
                                 @endif
                             </div>
                         </div>
@@ -281,13 +284,13 @@ new class extends Component {
                         <p class="text-sm font-semibold text-gray-600 mb-3">Layanan Tersedia:</p>
                         <div class="flex flex-wrap gap-2">
                             @if ($product->sellerProfile->pickup_available)
-                                <span class="kl-badge kl-badge-blue">🏠 Pickup</span>
+                                <span class="kl-badge kl-badge-blue"><x-icon name="home-modern" class="w-3.5 h-3.5" /> Pickup</span>
                             @endif
                             @if ($product->sellerProfile->delivery_available)
-                                <span class="kl-badge kl-badge-blue">🚚 Delivery</span>
+                                <span class="kl-badge kl-badge-blue"><x-icon name="truck" class="w-3.5 h-3.5" /> Delivery</span>
                             @endif
                             @if ($product->sellerProfile->custom_order_available)
-                                <span class="kl-badge kl-badge-purple">🎨 Custom</span>
+                                <span class="kl-badge kl-badge-purple"><x-icon name="sparkles" class="w-3.5 h-3.5" /> Custom</span>
                             @endif
                         </div>
                     </div>
@@ -296,16 +299,17 @@ new class extends Component {
                     <div class="flex flex-col gap-2">
                         <button
                             wire:click="toggleFavorite"
-                            class="w-full py-2.5 rounded-xl font-semibold transition text-sm {{ $isFavorited ? 'bg-red-500 text-white hover:bg-red-600' : 'border-2 border-red-300 text-red-600 hover:bg-red-50' }}"
+                            class="w-full py-2.5 rounded-xl font-semibold transition text-sm inline-flex items-center justify-center gap-2 {{ $isFavorited ? 'bg-red-500 text-white hover:bg-red-600' : 'border-2 border-red-300 text-red-600 hover:bg-red-50' }}"
                         >
-                            {{ $isFavorited ? '💖 Toko Favorit' : '♡ Favorit' }}
+                            <x-icon name="heart" :solid="$isFavorited" class="w-4 h-4" />
+                            {{ $isFavorited ? 'Toko Favorit' : 'Favorit' }}
                         </button>
                         <a
                             href="{{ route('seller-store', $product->sellerProfile->id) }}" wire:navigate
-                            class="w-full py-2.5 rounded-xl font-semibold transition text-center text-sm"
+                            class="w-full py-2.5 rounded-xl font-semibold transition text-center text-sm inline-flex items-center justify-center gap-2"
                             style="background: var(--kl-primary); color: white"
                         >
-                            Kunjungi Toko →
+                            Kunjungi Toko <x-icon name="arrow-right" class="w-4 h-4" />
                         </a>
                     </div>
                 </div>
@@ -313,7 +317,9 @@ new class extends Component {
 
             <!-- Description Section -->
             <div class="kl-card p-8 mb-12">
-                <h3 class="kl-section-title mb-4">📝 Deskripsi Produk</h3>
+                <h3 class="kl-section-title mb-4 flex items-center gap-2">
+                    <x-icon name="document-text" class="w-6 h-6" style="color: var(--kl-primary)" /> Deskripsi Produk
+                </h3>
                 <div class="prose prose-sm max-w-none">
                     <p class="text-gray-700 whitespace-pre-wrap leading-relaxed">{{ $product->description }}</p>
                 </div>
@@ -327,7 +333,9 @@ new class extends Component {
             <!-- Same Seller Products -->
             @if ($sameSellerProducts->count() > 0)
                 <div class="mb-12">
-                    <h3 class="kl-section-title mb-6">🏪 Produk Lain dari {{ $product->sellerProfile->shop_name }}</h3>
+                    <h3 class="kl-section-title mb-6 flex items-center gap-2">
+                        <x-icon name="building-storefront" class="w-6 h-6" style="color: var(--kl-primary)" /> Produk Lain dari {{ $product->sellerProfile->shop_name }}
+                    </h3>
                     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
                         @foreach ($sameSellerProducts as $item)
                             <a href="{{ route('product-detail', $item->id) }}" wire:navigate class="kl-product-card group">
@@ -335,7 +343,7 @@ new class extends Component {
                                     @if ($item->primaryImage)
                                         <img src="{{ asset('storage/' . $item->primaryImage->image_path) }}" alt="{{ $item->name }}" class="kl-product-img w-full h-full" />
                                     @else
-                                        <div class="w-full h-full flex items-center justify-center text-4xl opacity-20">🎨</div>
+                                        <div class="w-full h-full flex items-center justify-center"><x-icon name="cube" class="w-12 h-12 opacity-20" /></div>
                                     @endif
                                 </div>
                                 <div class="p-3">
@@ -352,7 +360,9 @@ new class extends Component {
             <!-- Similar Products -->
             @if ($similarProducts->count() > 0)
                 <div>
-                    <h3 class="kl-section-title mb-6">💡 Produk Serupa</h3>
+                    <h3 class="kl-section-title mb-6 flex items-center gap-2">
+                        <x-icon name="light-bulb" class="w-6 h-6" style="color: var(--kl-primary)" /> Produk Serupa
+                    </h3>
                     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
                         @foreach ($similarProducts as $item)
                             <a href="{{ route('product-detail', $item->id) }}" wire:navigate class="kl-product-card group">
@@ -360,7 +370,7 @@ new class extends Component {
                                     @if ($item->primaryImage)
                                         <img src="{{ asset('storage/' . $item->primaryImage->image_path) }}" alt="{{ $item->name }}" class="kl-product-img w-full h-full" />
                                     @else
-                                        <div class="w-full h-full flex items-center justify-center text-4xl opacity-20">💡</div>
+                                        <div class="w-full h-full flex items-center justify-center"><x-icon name="cube" class="w-12 h-12 opacity-20" /></div>
                                     @endif
                                 </div>
                                 <div class="p-3">

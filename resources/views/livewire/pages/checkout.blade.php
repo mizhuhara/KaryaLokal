@@ -110,7 +110,9 @@ new class extends Component {
         <!-- Header -->
         <div class="bg-white border-b border-kl">
             <div class="max-w-7xl mx-auto px-6 py-6">
-                <h1 class="kl-section-title mb-1">💳 Checkout</h1>
+                <h1 class="kl-section-title mb-1 flex items-center gap-2">
+                    <x-icon name="credit-card" class="w-7 h-7" style="color: var(--kl-primary)" /> Checkout
+                </h1>
                 <p class="text-gray-600 text-sm">Selesaikan pesanan Anda</p>
             </div>
         </div>
@@ -122,21 +124,25 @@ new class extends Component {
                     <div class="lg:col-span-2 space-y-5">
                         <!-- Delivery Type -->
                         <div class="kl-card p-6">
-                            <h3 class="text-lg font-bold mb-4 font-jakarta">📦 Metode Pengiriman</h3>
+                            <h3 class="text-lg font-bold mb-4 font-jakarta flex items-center gap-2">
+                                <x-icon name="truck" class="w-5 h-5" style="color: var(--kl-primary)" /> Metode Pengiriman
+                            </h3>
                             <div class="grid grid-cols-1 sm:grid-cols-2 gap-3" x-data>
                                 <label class="flex items-center gap-3 p-4 rounded-xl cursor-pointer transition-all duration-200 border-2"
                                        :class="$wire.delivery_type === 'pickup' ? 'border-kl-primary bg-orange-50' : 'border-kl hover:border-gray-300'">
                                     <input type="radio" wire:model="delivery_type" value="pickup" class="w-4 h-4" style="accent-color: var(--kl-primary)" />
+                                    <x-icon name="home-modern" class="w-6 h-6 shrink-0" style="color: var(--kl-primary)" />
                                     <div>
-                                        <p class="font-semibold text-sm">🏠 Ambil di Toko</p>
+                                        <p class="font-semibold text-sm">Ambil di Toko</p>
                                         <p class="text-xs text-gray-500 mt-0.5">Ambil langsung ke penjual</p>
                                     </div>
                                 </label>
                                 <label class="flex items-center gap-3 p-4 rounded-xl cursor-pointer transition-all duration-200 border-2"
                                        :class="$wire.delivery_type === 'delivery' ? 'border-kl-primary bg-orange-50' : 'border-kl hover:border-gray-300'">
                                     <input type="radio" wire:model="delivery_type" value="delivery" class="w-4 h-4" style="accent-color: var(--kl-primary)" />
+                                    <x-icon name="truck" class="w-6 h-6 shrink-0" style="color: var(--kl-primary)" />
                                     <div>
-                                        <p class="font-semibold text-sm">🚚 Pengiriman ke Alamat</p>
+                                        <p class="font-semibold text-sm">Pengiriman ke Alamat</p>
                                         <p class="text-xs text-gray-500 mt-0.5">Dikirim ke alamat Anda</p>
                                     </div>
                                 </label>
@@ -146,7 +152,9 @@ new class extends Component {
                         <!-- Delivery Address -->
                         @if ($delivery_type === 'delivery')
                             <div class="kl-card p-6">
-                                <h3 class="text-lg font-bold mb-4 font-jakarta">📍 Alamat Pengiriman</h3>
+                                <h3 class="text-lg font-bold mb-4 font-jakarta flex items-center gap-2">
+                                    <x-icon name="map-pin" class="w-5 h-5" style="color: var(--kl-primary)" /> Alamat Pengiriman
+                                </h3>
                                 <textarea
                                     wire:model="delivery_address"
                                     rows="4"
@@ -159,7 +167,9 @@ new class extends Component {
 
                         <!-- Notes -->
                         <div class="kl-card p-6">
-                            <h3 class="text-lg font-bold mb-4 font-jakarta">📝 Catatan untuk Penjual</h3>
+                            <h3 class="text-lg font-bold mb-4 font-jakarta flex items-center gap-2">
+                                <x-icon name="clipboard-document-list" class="w-5 h-5" style="color: var(--kl-primary)" /> Catatan untuk Penjual
+                            </h3>
                             <textarea
                                 wire:model="notes"
                                 rows="3"
@@ -183,7 +193,9 @@ new class extends Component {
                     <!-- Order Summary -->
                     <div class="lg:col-span-1">
                         <div class="kl-card p-6 sticky top-24">
-                            <h3 class="text-lg font-bold mb-5 font-jakarta">🧾 Ringkasan Pesanan</h3>
+                            <h3 class="text-lg font-bold mb-5 font-jakarta flex items-center gap-2">
+                                <x-icon name="receipt-percent" class="w-5 h-5" style="color: var(--kl-primary)" /> Ringkasan Pesanan
+                            </h3>
 
                             <div class="space-y-3 mb-5 pb-5 border-b border-kl">
                                 @foreach ($cartItems as $item)
@@ -191,7 +203,9 @@ new class extends Component {
                                         @if ($item['image'])
                                             <img src="{{ asset('storage/' . $item['image']) }}" alt="" class="w-10 h-10 rounded-lg object-cover shrink-0" />
                                         @else
-                                            <div class="w-10 h-10 bg-gradient-to-br from-orange-50 to-amber-50 rounded-lg flex items-center justify-center text-lg shrink-0">🎨</div>
+                                            <div class="w-10 h-10 bg-gradient-to-br from-orange-50 to-amber-50 rounded-lg flex items-center justify-center shrink-0">
+                                                <x-icon name="cube" class="w-5 h-5 opacity-30" />
+                                            </div>
                                         @endif
                                         <div class="flex-1 min-w-0">
                                             <p class="text-xs font-medium text-gray-800 line-clamp-1">{{ $item['name'] }}</p>
@@ -222,7 +236,7 @@ new class extends Component {
                                 type="submit"
                                 class="kl-btn-primary w-full py-3 justify-center text-base"
                             >
-                                💳 Buat Pesanan
+                                <x-icon name="credit-card" class="w-5 h-5" /> Buat Pesanan
                             </button>
 
                             <p class="text-center text-[11px] text-gray-400 mt-3">Pembayaran akan diproses melalui Midtrans</p>

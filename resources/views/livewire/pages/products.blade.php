@@ -236,37 +236,37 @@ new class extends Component {
                     @endif
                     @if ($minRating)
                         <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold bg-yellow-50 text-yellow-700 border border-yellow-200">
-                            ⭐ {{ $minRating }}+ Bintang
+                            <x-icon name="star" solid class="w-3 h-3" /> {{ $minRating }}+ Bintang
                             <button wire:click="$set('minRating', '')" class="hover:text-yellow-900 ml-0.5">&times;</button>
                         </span>
                     @endif
                     @if ($isCustomizable)
                         <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold bg-purple-50 text-purple-700 border border-purple-200">
-                            🎨 Custom
+                            <x-icon name="sparkles" class="w-3 h-3" /> Custom
                             <button wire:click="$set('isCustomizable', null)" class="hover:text-purple-900 ml-0.5">&times;</button>
                         </span>
                     @endif
                     @if ($readyStock)
                         <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold bg-green-50 text-green-700 border border-green-200">
-                            ✅ Ready Stock
+                            <x-icon name="check-circle" class="w-3 h-3" /> Ready Stock
                             <button wire:click="$set('readyStock', null)" class="hover:text-green-900 ml-0.5">&times;</button>
                         </span>
                     @endif
                     @if ($preOrder)
                         <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold bg-blue-50 text-blue-700 border border-blue-200">
-                            ⏱️ Pre-order
+                            <x-icon name="clock" class="w-3 h-3" /> Pre-order
                             <button wire:click="$set('preOrder', null)" class="hover:text-blue-900 ml-0.5">&times;</button>
                         </span>
                     @endif
                     @if ($pickupAvailable)
                         <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold bg-indigo-50 text-indigo-700 border border-indigo-200">
-                            🏠 Pickup
+                            <x-icon name="home-modern" class="w-3 h-3" /> Pickup
                             <button wire:click="$set('pickupAvailable', null)" class="hover:text-indigo-900 ml-0.5">&times;</button>
                         </span>
                     @endif
                     @if ($deliveryAvailable)
                         <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold bg-cyan-50 text-cyan-700 border border-cyan-200">
-                            🚚 Delivery
+                            <x-icon name="truck" class="w-3 h-3" /> Delivery
                             <button wire:click="$set('deliveryAvailable', null)" class="hover:text-cyan-900 ml-0.5">&times;</button>
                         </span>
                     @endif
@@ -278,7 +278,9 @@ new class extends Component {
                 <div class="lg:col-span-1">
                     <div class="kl-card p-6 sticky top-20 max-h-screen overflow-y-auto kl-scroll">
                         <div class="flex items-center justify-between mb-6">
-                            <h3 class="text-lg font-bold font-jakarta">🔍 Filter</h3>
+                            <h3 class="text-lg font-bold font-jakarta flex items-center gap-2">
+                                <x-icon name="adjustments-horizontal" class="w-5 h-5" style="color: var(--kl-primary)" /> Filter
+                            </h3>
                             @if ($search || $category_id || $minPrice || $maxPrice || $minRating || $isCustomizable || $readyStock || $preOrder || $pickupAvailable || $deliveryAvailable)
                                 <button wire:click="$set('search', ''); $set('category_id', ''); $set('minPrice', ''); $set('maxPrice', ''); $set('minRating', ''); $set('isCustomizable', null); $set('readyStock', null); $set('preOrder', null); $set('pickupAvailable', null); $set('deliveryAvailable', null)"
                                         class="text-xs font-semibold text-red-500 hover:text-red-700 transition">
@@ -291,9 +293,7 @@ new class extends Component {
                         <div class="mb-6">
                             <label class="kl-label">Cari Produk</label>
                             <div class="relative">
-                                <svg class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
-                                </svg>
+                                <x-icon name="magnifying-glass" class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
                                 <input
                                     type="text"
                                     wire:model.live="search"
@@ -366,15 +366,15 @@ new class extends Component {
                             <div class="space-y-2.5">
                                 <label class="flex items-center gap-2.5 cursor-pointer group">
                                     <input type="checkbox" wire:model.live="isCustomizable" class="w-4 h-4 rounded" style="accent-color: var(--kl-primary)">
-                                    <span class="text-sm text-gray-600 group-hover:text-gray-900 transition">🎨 Bisa Custom</span>
+                                    <span class="text-sm text-gray-600 group-hover:text-gray-900 transition"><x-icon name="sparkles" class="w-4 h-4 inline-block align-text-bottom" /> Bisa Custom</span>
                                 </label>
                                 <label class="flex items-center gap-2.5 cursor-pointer group">
                                     <input type="checkbox" wire:model.live="readyStock" class="w-4 h-4 rounded" style="accent-color: var(--kl-primary)">
-                                    <span class="text-sm text-gray-600 group-hover:text-gray-900 transition">✅ Stok Siap</span>
+                                    <span class="text-sm text-gray-600 group-hover:text-gray-900 transition"><x-icon name="check-circle" class="w-4 h-4 inline-block align-text-bottom" /> Stok Siap</span>
                                 </label>
                                 <label class="flex items-center gap-2.5 cursor-pointer group">
                                     <input type="checkbox" wire:model.live="preOrder" class="w-4 h-4 rounded" style="accent-color: var(--kl-primary)">
-                                    <span class="text-sm text-gray-600 group-hover:text-gray-900 transition">⏱️ Pre-order</span>
+                                    <span class="text-sm text-gray-600 group-hover:text-gray-900 transition"><x-icon name="clock" class="w-4 h-4 inline-block align-text-bottom" /> Pre-order</span>
                                 </label>
                             </div>
                         </div>
@@ -385,11 +385,11 @@ new class extends Component {
                             <div class="space-y-2.5">
                                 <label class="flex items-center gap-2.5 cursor-pointer group">
                                     <input type="checkbox" wire:model.live="pickupAvailable" class="w-4 h-4 rounded" style="accent-color: var(--kl-primary)">
-                                    <span class="text-sm text-gray-600 group-hover:text-gray-900 transition">🏠 Pickup</span>
+                                    <span class="text-sm text-gray-600 group-hover:text-gray-900 transition"><x-icon name="home-modern" class="w-4 h-4 inline-block align-text-bottom" /> Pickup</span>
                                 </label>
                                 <label class="flex items-center gap-2.5 cursor-pointer group">
                                     <input type="checkbox" wire:model.live="deliveryAvailable" class="w-4 h-4 rounded" style="accent-color: var(--kl-primary)">
-                                    <span class="text-sm text-gray-600 group-hover:text-gray-900 transition">🚚 Delivery</span>
+                                    <span class="text-sm text-gray-600 group-hover:text-gray-900 transition"><x-icon name="truck" class="w-4 h-4 inline-block align-text-bottom" /> Delivery</span>
                                 </label>
                             </div>
                         </div>
@@ -441,11 +441,11 @@ new class extends Component {
                                     )"
                                     class="kl-btn-primary w-full text-sm py-2.5 justify-center"
                                 >
-                                    📍 Aktifkan Lokasi
+                                    <x-icon name="map-pin" class="w-4 h-4" /> Aktifkan Lokasi
                                 </button>
                             @else
                                 <div class="flex items-center justify-between bg-green-50 p-3 rounded-xl border border-green-200">
-                                    <span class="text-sm font-medium text-green-800">✓ Lokasi aktif</span>
+                                    <span class="text-sm font-medium text-green-800 flex items-center gap-1.5"><x-icon name="check-circle" class="w-4 h-4" /> Lokasi aktif</span>
                                     <button
                                         wire:click="$set('buyerLat', null); $set('buyerLng', null)"
                                         class="text-xs font-semibold text-red-600 hover:text-red-700 transition"
@@ -473,13 +473,15 @@ new class extends Component {
                                                 class="kl-product-img w-full h-full transition-transform duration-500 group-hover:scale-110"
                                             />
                                         @else
-                                            <div class="w-full h-full flex items-center justify-center text-5xl opacity-20">🎨</div>
+                                            <div class="w-full h-full flex items-center justify-center">
+                                                <x-icon name="cube" class="w-16 h-16 opacity-20" />
+                                            </div>
                                         @endif
 
                                         <!-- Hover Overlay -->
                                         <div class="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end justify-center pb-4">
-                                            <span class="px-5 py-2 bg-white rounded-xl text-sm font-bold shadow-lg" style="color: #E8531D">
-                                                Lihat Detail →
+                                            <span class="px-5 py-2 bg-white rounded-xl text-sm font-bold shadow-lg inline-flex items-center gap-1.5" style="color: #E8531D">
+                                                Lihat Detail <x-icon name="arrow-right" class="w-4 h-4" />
                                             </span>
                                         </div>
 
@@ -487,10 +489,10 @@ new class extends Component {
                                         @if ($product->is_customizable || $product->is_ready_stock)
                                         <div class="absolute top-3 right-3 flex flex-col gap-2">
                                             @if ($product->is_customizable)
-                                                <span class="kl-badge kl-badge-purple text-xs">🎨 Custom</span>
+                                                <span class="kl-badge kl-badge-purple text-xs"><x-icon name="sparkles" class="w-3 h-3" /> Custom</span>
                                             @endif
                                             @if ($product->is_ready_stock)
-                                                <span class="kl-badge kl-badge-green text-xs">✅ Ready</span>
+                                                <span class="kl-badge kl-badge-green text-xs"><x-icon name="check" class="w-3 h-3" /> Ready</span>
                                             @endif
                                         </div>
                                         @endif
@@ -498,7 +500,7 @@ new class extends Component {
                                         <!-- Distance Badge -->
                                         @if (isset($product->distance) && $product->distance !== null)
                                         <div class="absolute bottom-3 left-3">
-                                            <span class="kl-badge kl-badge-orange text-xs">📍 {{ number_format($product->distance, 1) }} km</span>
+                                            <span class="kl-badge kl-badge-orange text-xs"><x-icon name="map-pin" class="w-3 h-3" /> {{ number_format($product->distance, 1) }} km</span>
                                         </div>
                                         @endif
                                     </div>
@@ -521,7 +523,7 @@ new class extends Component {
                                             @if (isset($product->avg_rating) && $product->avg_rating > 0)
                                                 <div class="flex items-center gap-0.5">
                                                     <span class="text-xs font-semibold">{{ number_format($product->avg_rating, 1) }}</span>
-                                                    <span class="text-xs">⭐</span>
+                                                    <x-icon name="star" solid class="w-3 h-3" style="color: #F59E0B" />
                                                 </div>
                                             @endif
                                         </div>
@@ -536,11 +538,14 @@ new class extends Component {
                         </div>
                     @else
                         <div class="kl-card p-12 text-center">
-                            <div class="text-6xl mb-4">🔍</div>
+                            <div class="w-20 h-20 mx-auto mb-4 rounded-full flex items-center justify-center"
+                                 style="background: linear-gradient(135deg, #FFF5F2, #FFE8E0)">
+                                <x-icon name="magnifying-glass" class="w-10 h-10" style="color: var(--kl-primary)" />
+                            </div>
                             <h3 class="kl-section-title">Produk Tidak Ditemukan</h3>
                             <p class="text-gray-600 mb-6">Coba ubah filter atau cari dengan kata kunci berbeda</p>
                             <a href="{{ route('home') }}" wire:navigate class="kl-btn-primary text-sm py-2.5">
-                                ← Kembali ke Beranda
+                                <x-icon name="arrow-left" class="w-4 h-4" /> Kembali ke Beranda
                             </a>
                         </div>
                     @endif

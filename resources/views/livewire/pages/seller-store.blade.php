@@ -78,10 +78,12 @@ new class extends Component {
                         @endif
                         <div>
                             <h1 class="text-3xl md:text-4xl font-bold text-white mb-1 font-jakarta">{{ $seller->shop_name }}</h1>
-                            <p class="text-white/70 text-sm">📍 {{ $seller->city }}, {{ $seller->province }}</p>
+                            <p class="text-white/70 text-sm flex items-center gap-1">
+                                <x-icon name="map-pin" class="w-4 h-4" /> {{ $seller->city }}, {{ $seller->province }}
+                            </p>
                             @if ($seller->is_verified)
                                 <div class="inline-flex items-center gap-1 mt-2 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-green-500/20 text-green-300 border border-green-400/30">
-                                    ✅ Toko Terverifikasi
+                                    <x-icon name="shield-check" class="w-3.5 h-3.5" /> Toko Terverifikasi
                                 </div>
                             @endif
                         </div>
@@ -98,17 +100,17 @@ new class extends Component {
                             <div class="flex gap-2 flex-wrap">
                                 @if ($seller->pickup_available)
                                     <span class="inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-medium bg-white/10 text-white border border-white/20">
-                                        🏠 Pickup
+                                        <x-icon name="home-modern" class="w-3.5 h-3.5" /> Pickup
                                     </span>
                                 @endif
                                 @if ($seller->delivery_available)
                                     <span class="inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-medium bg-white/10 text-white border border-white/20">
-                                        🚚 Delivery
+                                        <x-icon name="truck" class="w-3.5 h-3.5" /> Delivery
                                     </span>
                                 @endif
                                 @if ($seller->custom_order_available)
                                     <span class="inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-medium bg-white/10 text-white border border-white/20">
-                                        🎨 Custom Order
+                                        <x-icon name="sparkles" class="w-3.5 h-3.5" /> Custom Order
                                     </span>
                                 @endif
                             </div>
@@ -164,7 +166,9 @@ new class extends Component {
                                         class="kl-product-img w-full h-full"
                                     />
                                 @else
-                                    <div class="w-full h-full flex items-center justify-center text-4xl opacity-20">🎨</div>
+                                    <div class="w-full h-full flex items-center justify-center">
+                                        <x-icon name="cube" class="w-16 h-16 opacity-20" />
+                                    </div>
                                 @endif
 
                                 @if ($product->is_customizable || $product->is_ready_stock)
@@ -194,7 +198,10 @@ new class extends Component {
                 </div>
             @else
                 <div class="kl-card p-12 text-center">
-                    <div class="text-5xl mb-3">📦</div>
+                    <div class="w-20 h-20 mx-auto mb-3 rounded-full flex items-center justify-center"
+                         style="background: linear-gradient(135deg, #FFF5F2, #FFE8E0)">
+                        <x-icon name="cube" class="w-10 h-10 opacity-30" style="color: var(--kl-primary)" />
+                    </div>
                     <h3 class="kl-section-title">Belum Ada Produk</h3>
                     <p class="text-gray-500 text-sm">Toko ini belum menambahkan produk ke katalog</p>
                 </div>
@@ -206,7 +213,9 @@ new class extends Component {
             <div class="max-w-7xl mx-auto px-6 py-12">
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                     <div>
-                        <h3 class="text-lg font-bold font-jakarta mb-4 text-gray-800">📍 Lokasi Toko</h3>
+                        <h3 class="text-lg font-bold font-jakarta mb-4 text-gray-800 flex items-center gap-2">
+                            <x-icon name="map-pin" class="w-5 h-5" style="color: var(--kl-primary)" /> Lokasi Toko
+                        </h3>
                         <p class="text-gray-600 leading-relaxed text-sm">
                             {{ $seller->address }}<br/>
                             {{ $seller->district }}, {{ $seller->city }}<br/>
@@ -214,16 +223,18 @@ new class extends Component {
                         </p>
                     </div>
                     <div>
-                        <h3 class="text-lg font-bold font-jakarta mb-4 text-gray-800">💬 Hubungi Penjual</h3>
+                        <h3 class="text-lg font-bold font-jakarta mb-4 text-gray-800 flex items-center gap-2">
+                            <x-icon name="chat-bubble-left" class="w-5 h-5" style="color: var(--kl-primary)" /> Hubungi Penjual
+                        </h3>
                         <div class="flex flex-col gap-3">
                             <a href="{{ route('chat.user', $seller->user_id) }}" wire:navigate
                                class="kl-btn-primary justify-center text-sm py-3">
-                                💬 Mulai Chat Sekarang
+                                <x-icon name="chat-bubble-left" class="w-4 h-4" /> Mulai Chat Sekarang
                             </a>
                             @if ($seller->phone)
                                 <a href="https://wa.me/{{ preg_replace('/[^0-9]/', '', $seller->phone) }}" target="_blank"
                                    class="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl font-semibold text-sm transition text-white bg-green-600 hover:bg-green-700">
-                                    📱 Hubungi via WhatsApp
+                                    <x-icon name="phone" class="w-4 h-4" /> Hubungi via WhatsApp
                                 </a>
                             @endif
                         </div>

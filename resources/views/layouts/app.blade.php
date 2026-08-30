@@ -6,6 +6,10 @@
         <meta name="csrf-token" content="{{ csrf_token() }}">
         <meta name="description" content="KaryaLokal — Temukan kerajinan tangan lokal berkualitas dari pengrajin Indonesia. Dukung UMKM handmade di sekitar Anda.">
 
+        <link rel="icon" href="{{ asset('favicon.ico') }}" sizes="16x16 32x32 48x48">
+        <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('favicon-32x32.png') }}">
+        <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('apple-touch-icon.png') }}">
+
         <title>{{ config('app.name', 'KaryaLokal') }} — Temukan Kerajinan Tangan Lokal</title>
 
         <!-- Scripts -->
@@ -45,5 +49,7 @@
                 <p class="px-5 py-3 rounded-xl bg-gray-900 text-white text-sm font-semibold shadow-xl" x-text="toast"></p>
             </div>
         </div>
+
+        @stack('scripts')
     </body>
 </html>

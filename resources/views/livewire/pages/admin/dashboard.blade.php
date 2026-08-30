@@ -7,6 +7,7 @@ use App\Models\Product;
 use App\Models\Order;
 use App\Models\Review;
 use App\Models\Report;
+use App\Models\SellerVisit;
 
 new class extends Component {
     public function with()
@@ -23,6 +24,9 @@ new class extends Component {
             'revenue' => Order::where('status', 'completed')->sum('total_amount'),
             'monthlyOrders' => Order::where('created_at', '>=', now()->subDays(30))->count(),
             'monthlyRevenue' => Order::where('status', 'completed')->where('created_at', '>=', now()->subDays(30))->sum('total_amount'),
+            'totalVisitors' => SellerVisit::count(),
+            'uniqueVisitors' => SellerVisit::whereNotNull('user_id')->distinct('user_id')->count('user_id'),
+            'recentVisitors' => SellerVisit::with('user', 'sellerProfile')->latest()->limit(8)->get(),
         ];
     }
 };
@@ -136,6 +140,53 @@ new class extends Component {
                     </div>
                 @else
                     <div class="px-6 py-8 text-center text-gray-500 text-sm">Belum ada pesanan</div>
+                @endif
+            </div>
+
+            <!-- Recent Visitors -->
+            <div class="kl-card mb-8">
+                <div class="px-6 py-4 border-b border-kl flex items-center justify-between">
+                    <h3 class="text-lg font-bold font-jakarta flex items-center gap-2">
+                        <x-icon name="users" class="w-5 h-5" style="color: var(--kl-primary)" /> Pengunjung Terbaru
+                    </h3>
+                    <span class="text-xs text-gray-500">{{ $uniqueVisitors }} user unik · {{ $totalVisitors }} total kunjungan</span>
+                </div>
+                @if ($recentVisitors->count() > 0)
+                    <div class="divide-y divide-kl">
+                        @foreach ($recentVisitors as $visit)
+                            <div class="px-6 py-3 flex items-center justify-between hover:bg-gray-50 transition">
+                                <div class="flex items-center gap-3 min-w-0">
+                                    <div class="w-9 h-9 rounded-full flex items-center justify-center text-xs font-bold text-white shrink-0"
+                                         style="background: linear-gradient(135deg, {{ $visit->user_id ? 'var(--kl-primary), var(--kl-primary-light)' : '#6B7280, #9CA3AF' }})">
+                                        {{ $visit->user_id ? strtoupper(substr($visit->user->name ?? '?', 0, 1)) : 'G' }}
+                                    </div>
+                                    <div class="min-w-0">
+                                        <p class="font-semibold text-sm text-gray-800 truncate">
+                                            {{ $visit->user_id ? $visit->user->name : 'Pengunjung (Guest)' }}
+                                            @if (!$visit->user_id) 
+                                                <span class="text-[10px] font-medium bg-gray-100 text-gray-500 px-1.5 py-0.5 rounded-full ml-1">IP: {{ $visit->ip_address }}</span>
+                                            @endif
+                                        </p>
+                                        <p class="text-xs text-gray-500 truncate">
+                                            {{ $visit->sellerProfile->shop_name ?? '—' }}
+                                            @if ($visit->user_agent)
+                                                <span class="text-gray-400"> · {{ substr($visit->user_agent, 0, 60) }}{{ strlen($visit->user_agent) > 60 ? '...' : '' }}</span>
+                                            @endif
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="text-right shrink-0 ml-4">
+                                    <p class="text-xs text-gray-500">{{ $visit->created_at->format('d M H:i') }}</p>
+                                    <span class="inline-flex px-2 py-0.5 rounded-full text-[10px] font-medium bg-orange-50 text-kl-primary border border-orange-100">{{ $visit->page }}</span>
+                                </div>
+                            </div>
+                        @endforeach
+                    </div>
+                @else
+                    <div class="px-6 py-8 text-center">
+                        <x-icon name="users" class="w-10 h-10 mx-auto mb-2 text-gray-300" />
+                        <p class="text-sm text-gray-500">Belum ada kunjungan</p>
+                    </div>
                 @endif
             </div>
 
