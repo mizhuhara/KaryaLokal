@@ -55,12 +55,12 @@ new class extends Component {
         <div class="max-w-7xl mx-auto px-6 py-8">
             <!-- Filter Tabs -->
             <div class="flex gap-2 mb-8 overflow-x-auto pb-2 kl-scroll -mx-2 px-2">
-                @foreach (['all' => '🛒 Semua', 'pending' => '⏳ Menunggu', 'confirmed' => '✅ Dikonfirmasi', 'processing' => '🔄 Diproses', 'ready' => '📦 Siap', 'completed' => '🎉 Selesai', 'cancelled' => '❌ Dibatalkan'] as $status => $label)
+                @foreach (['all' => ['🛒', 'Semua'], 'pending' => ['⏳', 'Menunggu'], 'confirmed' => ['✅', 'Dikonfirmasi'], 'processing' => ['🔄', 'Diproses'], 'ready' => ['📦', 'Siap'], 'completed' => ['🎉', 'Selesai'], 'cancelled' => ['❌', 'Dibatalkan']] as $status => [$icon, $label])
                     <button
                         wire:click="$set('filter', '{{ $status }}')"
                         class="shrink-0 px-4 py-2 rounded-xl text-sm font-semibold transition-all duration-200 border {{ $filter === $status ? 'border-kl-primary bg-orange-50 text-kl-primary' : 'border-kl bg-white text-gray-600 hover:border-gray-300' }}"
                     >
-                        {{ $label }}
+                        {{ $icon }} {{ $label }}
                     </button>
                 @endforeach
             </div>
@@ -161,7 +161,7 @@ new class extends Component {
 
                                 @if ($order->isCompleted())
                                     <span class="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-semibold transition" style="background: var(--kl-secondary); color: white">
-                                        ⭐ Selesai
+                                        <x-icon name="star" solid class="w-3.5 h-3.5" style="color: #F59E0B" /> Selesai
                                     </span>
                                 @endif
                             </div>

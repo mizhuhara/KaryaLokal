@@ -60,14 +60,18 @@
                         <div class="flex items-center justify-between">
                             <div>
                                 <p class="text-xs font-semibold text-gray-500 uppercase tracking-wide">Rating Rata-rata</p>
-                                <p class="text-2xl font-bold mt-1 font-jakarta">{{ number_format($avgRating, 1) }} ⭐</p>
-                                <div class="flex gap-0.5 mt-1">
-                                    @for ($i = 1; $i <= 5; $i++)
-                                        <span class="text-[10px] {{ $i <= round($avgRating) ? 'opacity-100' : 'opacity-30' }}">⭐</span>
-                                    @endfor
-                                </div>
-                            </div>
-                            <div class="w-12 h-12 rounded-2xl flex items-center justify-center text-xl" style="background: linear-gradient(135deg, #F4A261, #FFD166)">⭐</div>
+                                <p class="text-2xl font-bold mt-1 font-jakarta flex items-center gap-1">
+                                                                    <x-icon name="star" solid class="w-5 h-5" style="color: #F59E0B" /> {{ number_format($avgRating, 1) }}
+                                                                </p>
+                                                                <div class="flex gap-0.5 mt-1">
+                                                                    @for ($i = 1; $i <= 5; $i++)
+                                                                        <x-icon name="star" solid class="w-3 h-3" style="color: {{ $i <= round($avgRating) ? '#F59E0B' : '#E5E7EB' }}" />
+                                                                    @endfor
+                                                                </div>
+                                                            </div>
+                                                            <div class="w-12 h-12 rounded-2xl flex items-center justify-center" style="background: linear-gradient(135deg, #F4A261, #FFD166)">
+                                                                <x-icon name="star" solid class="w-6 h-6" style="color: white" />
+                                                            </div>
                         </div>
                     </div>
 

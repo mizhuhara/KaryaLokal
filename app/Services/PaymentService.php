@@ -27,6 +27,13 @@ class PaymentService
 
     public function createTransaction(Order $order): array
     {
+        if (blank($this->serverKey) || blank($this->clientKey)) {
+            return [
+                'success' => false,
+                'error' => ['Payment gateway belum dikonfigurasi. Hubungi admin.'],
+            ];
+        }
+
         $orderId = $order->order_number;
 
         $params = [

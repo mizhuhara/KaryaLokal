@@ -30,7 +30,9 @@ new class extends Component {
         <!-- Header -->
         <div class="bg-white border-b border-kl">
             <div class="max-w-7xl mx-auto px-6 py-6">
-                <h1 class="kl-section-title mb-1">❤️ Wishlist Saya</h1>
+                <h1 class="kl-section-title mb-1 flex items-center gap-2">
+                    <x-icon name="heart" solid class="w-7 h-7" style="color: var(--kl-primary)" /> Wishlist Saya
+                </h1>
                 <p class="text-gray-600 text-sm">{{ $wishlists->total() }} produk yang Anda simpan</p>
             </div>
         </div>

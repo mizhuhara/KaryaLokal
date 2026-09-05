@@ -129,17 +129,40 @@ new class extends Component {
                         )"
                         class="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 font-semibold"
                     >
-                        📍 Gunakan Lokasi Saya
+                        <x-icon name="map-pin" class="w-4 h-4 inline-block align-text-bottom" /> Gunakan Lokasi Saya
                     </button>
                 </div>
 
                 @if ($locationDenied)
                     <div class="bg-yellow-50 border-l-4 border-yellow-500 p-6 mb-8 rounded">
-                        <p class="text-yellow-800">
-                            Akses lokasi ditolak. Coba lagi atau masukkan lokasi manual.
+                        <p class="text-yellow-800 text-sm font-medium flex items-center gap-2">
+                            <x-icon name="map-pin" class="w-4 h-4" /> Akses lokasi ditolak. Masukkan lokasi secara manual di bawah:
                         </p>
                     </div>
                 @endif
+            @endif
+
+            <!-- Manual Location Input -->
+            @if (!$hasLocation)
+                <div class="bg-white rounded-2xl shadow p-6 mb-8" style="border: 1px solid #F0E8E0">
+                    <div class="flex items-center gap-2 mb-3">
+                        <x-icon name="pencil-square" class="w-5 h-5" style="color: var(--kl-primary)" />
+                        <h3 class="font-semibold font-jakarta text-gray-800">Atau masukkan lokasi manual</h3>
+                    </div>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                        <input type="number" step="any" wire:model="latitude" placeholder="Latitude (contoh: -6.2088)"
+                               class="kl-input text-sm" />
+                        <div class="flex gap-2">
+                            <input type="number" step="any" wire:model="longitude" placeholder="Longitude (contoh: 106.8456)"
+                                   class="kl-input text-sm" />
+                            <button wire:click="loadNearby"
+                                    class="kl-btn-primary py-2.5 px-5 text-sm whitespace-nowrap shrink-0">
+                                Cari
+                            </button>
+                        </div>
+                    </div>
+                    <p class="text-xs text-gray-400 mt-2">Contoh: Jakarta Selatan = -6.2088, 106.8456 · Bandung = -6.9175, 107.6191</p>
+                </div>
             @endif
 
             <!-- Results -->
@@ -165,7 +188,9 @@ new class extends Component {
                                                 <p class="text-sm text-gray-600">{{ $item['seller']->city }}, {{ $item['seller']->province }}</p>
                                             </div>
                                             @if ($item['seller']->is_verified)
-                                                <span class="text-2xl">✅</span>
+                                                <span class="kl-badge kl-badge-green">
+                                                    <x-icon name="shield-check" class="w-3.5 h-3.5" /> Verified
+                                                </span>
                                             @endif
                                         </div>
 
@@ -215,16 +240,20 @@ new class extends Component {
                     </div>
                 @else
                     <div class="bg-white rounded-lg shadow p-12 text-center">
-                        <div class="text-4xl mb-4">🔍</div>
+                        <div class="flex items-center justify-center mb-4">
+                            <x-icon name="map-pin" class="w-10 h-10 mx-auto" style="color: #D4C5BC" />
+                        </div>
                         <h3 class="text-xl font-semibold mb-2">Belum Ada Pengrajin</h3>
-                        <p class="text-gray-600">Maaf, belum ada pengrajin terverifikasi di area Anda. Coba area lain atau kembali lagi nanti.</p>
+                        <p class="text-gray-600 text-sm">Maaf, belum ada pengrajin terverifikasi di area Anda. Coba area lain atau kembali lagi nanti.</p>
                     </div>
                 @endif
             @else
                 <div class="bg-white rounded-lg shadow p-12 text-center">
-                    <div class="text-4xl mb-4">📍</div>
+                    <div class="flex items-center justify-center mb-4">
+                        <x-icon name="map-pin" class="w-10 h-10" style="color: #D4C5BC" />
+                    </div>
                     <h3 class="text-xl font-semibold mb-2">Bagikan Lokasi Anda</h3>
-                    <p class="text-gray-600 mb-6">Aktifkan akses lokasi untuk menemukan pengrajin terdekat</p>
+                    <p class="text-gray-600 text-sm mb-6">Aktifkan akses lokasi untuk menemukan pengrajin terdekat</p>
                     <button
                         onclick="navigator.geolocation.getCurrentPosition(
                             pos => {
@@ -236,7 +265,7 @@ new class extends Component {
                         )"
                         class="px-8 py-3 bg-orange-600 text-white rounded-lg hover:bg-orange-700 font-semibold"
                     >
-                        📍 Aktifkan Lokasi
+                        <x-icon name="map-pin" class="w-4 h-4 inline-block align-text-bottom" /> Aktifkan Lokasi
                     </button>
                 </div>
             @endif

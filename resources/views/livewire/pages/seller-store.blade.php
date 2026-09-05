@@ -125,7 +125,9 @@ new class extends Component {
                         <p class="text-white/50 text-xs">Produk Aktif</p>
                     </div>
                     <div class="text-center md:text-left border-x border-white/15 px-4">
-                        <p class="text-2xl font-bold text-white font-jakarta">4.8 ⭐</p>
+                        <p class="text-2xl font-bold text-white font-jakarta flex items-center justify-center md:justify-start gap-1">
+                            <x-icon name="star" solid class="w-5 h-5" style="color: #F59E0B" /> 4.8
+                        </p>
                         <p class="text-white/50 text-xs">Rating Toko</p>
                     </div>
                     <div class="text-center md:text-left">

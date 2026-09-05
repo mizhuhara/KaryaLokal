@@ -76,6 +76,8 @@ new class extends Component {
             $paymentResult = $paymentService->createTransaction($order);
             if ($paymentResult['success'] && $paymentResult['payment_url']) {
                 $paymentUrl = $paymentResult['payment_url'];
+            } elseif (!$paymentResult['success'] && !empty($paymentResult['error'])) {
+                $paymentGatewaysNotConfigured = true;
             }
         }
 
@@ -84,6 +86,9 @@ new class extends Component {
         if ($paymentUrl) {
             $this->dispatch('notify', message: 'Pesanan dibuat! Silakan bayar.');
             return redirect()->away($paymentUrl);
+        } elseif (!empty($paymentGatewaysNotConfigured)) {
+            $this->dispatch('notify', message: 'Pesanan dibuat, tapi pembayaran belum aktif (gateway belum dikonfigurasi).');
+            return redirect()->route('buyer.orders');
         } else {
             $this->dispatch('notify', message: 'Pesanan berhasil dibuat!');
             return redirect()->route('buyer.orders');

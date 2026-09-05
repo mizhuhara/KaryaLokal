@@ -10,6 +10,7 @@ new class extends Component
 {
     public string $name = '';
     public string $email = '';
+    public $avatar;
 
     /**
      * Mount the component.
@@ -30,15 +31,23 @@ new class extends Component
         $validated = $this->validate([
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', Rule::unique(User::class)->ignore($user->id)],
+            'avatar' => ['nullable', 'image', 'max:2048'],
         ]);
 
         $user->fill($validated);
+
+        if ($this->avatar) {
+            $path = $this->avatar->store('avatars', 'public');
+            $user->avatar = $path;
+        }
 
         if ($user->isDirty('email')) {
             $user->email_verified_at = null;
         }
 
         $user->save();
+
+        $this->avatar = null;
 
         $this->dispatch('profile-updated', name: $user->name);
     }
@@ -74,6 +83,31 @@ new class extends Component
     </header>
 
     <form wire:submit="updateProfileInformation" class="mt-6 space-y-6">
+        <div x-data="{ previewUrl: null }">
+            <x-input-label for="avatar" :value="__('Foto Profil')" />
+            <div class="mt-2 flex items-center gap-4">
+                <div class="w-20 h-20 rounded-full overflow-hidden shrink-0 bg-orange-100 flex items-center justify-center">
+                    @if (auth()->user()->avatar)
+                        <img x-show="!previewUrl" src="{{ asset('storage/' . auth()->user()->avatar) }}" alt="" class="w-full h-full object-cover" />
+                    @else
+                        <div x-show="!previewUrl" class="w-full h-full flex items-center justify-center text-2xl font-bold text-orange-500">
+                            {{ strtoupper(substr(auth()->user()->name, 0, 1)) }}
+                        </div>
+                    @endif
+                    <template x-if="previewUrl">
+                        <img :src="previewUrl" alt="" class="w-full h-full object-cover" />
+                    </template>
+                </div>
+                <div class="flex-1">
+                    <input type="file" wire:model="avatar" accept="image/*"
+                           @change="previewUrl = URL.createObjectURL($event.target.files[0])"
+                           class="block w-full text-sm text-gray-600 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-sm file:font-semibold file:bg-orange-50 file:text-orange-700 hover:file:bg-orange-100 transition" />
+                    <p class="text-xs text-gray-400 mt-1">JPG/PNG maksimal 2MB</p>
+                    <x-input-error class="mt-2" :messages="$errors->get('avatar')" />
+                </div>
+            </div>
+        </div>
+
         <div>
             <x-input-label for="name" :value="__('Name')" />
             <x-text-input wire:model="name" id="name" name="name" type="text" class="mt-1 block w-full" required autofocus autocomplete="name" />
