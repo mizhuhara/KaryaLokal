@@ -894,6 +894,37 @@ Status: COMPLETED / IN PROGRESS / BLOCKED
 
 ### Project Changelog
 
+## 2026-09-05 — Live Data Seeding + User Avatar
+
+Status: COMPLETED
+
+### Changed
+- Seeded product images (SVG placeholders) for all 14 products so catalog looks alive.
+- Added 5 new products to `toko kazu` (crochet, resin, clay, wood, custom hamper).
+- Filled seller locations: Toko Test (Jakarta -6.2, 106.8167), toko kazu (Depok -6.3, 106.9) + city/province/district/address.
+- Verified `toko kazu` + enabled custom order + operating hours.
+- Added `avatar` column to `users` (migration `2026_09_05_050000_add_avatar_to_users_table`), fillable in User model.
+- Seeded avatar SVGs for all 4 users; navbar now renders user avatar with initial fallback.
+- Note: DB data + storage files are local (not in git); code changes committed.
+
+### Why
+- User asked for a "living" app: photo accounts, product images, location data.
+
+### Files
+- `database/migrations/2026_09_05_050000_add_avatar_to_users_table.php`
+- `app/Models/User.php`
+- `resources/views/livewire/layout/navigation.blade.php`
+- `storage/app/public/products/product-*.svg`
+- `storage/app/public/avatars/avatar-*.svg`
+
+### Testing
+- `curl /storage/avatars/avatar-2.svg` → 200
+- `curl /storage/products/product-10.svg` → 200
+- Homepage renders products, verified sellers with location, recommendations (verified in browser).
+- `vendor/bin/phpunit tests/Feature/` → 36/36 pass.
+
+---
+
 ## 2026-09-04 — Fix: Missing testimonials/subscribers tables (live DB)
 
 Status: COMPLETED
