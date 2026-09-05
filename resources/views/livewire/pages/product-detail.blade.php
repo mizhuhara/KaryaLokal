@@ -137,9 +137,10 @@ new class extends Component {
                 <div class="lg:col-span-2">
                     <div class="kl-card overflow-hidden">
                         @if ($product->images->count() > 0)
-                            <div class="bg-white">
+                            <div class="bg-white" x-data="{ activeImg: 0 }">
                                 <img
                                     id="mainImage"
+                                    :src="'{{ asset('storage') }}/' + {{ json_encode($product->images->pluck('image_path')->toArray()) }}[activeImg]"
                                     src="{{ asset('storage/' . $product->images->first()->image_path) }}"
                                     alt="{{ $product->name }}"
                                     class="w-full h-96 md:h-[500px] object-cover"
@@ -147,10 +148,11 @@ new class extends Component {
                             </div>
                             @if ($product->images->count() > 1)
                                 <div class="p-4 bg-gray-50 border-t border-kl flex gap-2 overflow-x-auto">
-                                    @foreach ($product->images as $img)
+                                    @foreach ($product->images as $i => $img)
                                         <button
-                                            onclick="document.getElementById('mainImage').src = '{{ asset('storage/' . $img->image_path) }}'"
-                                            class="shrink-0 h-20 w-20 rounded-lg overflow-hidden border-2 border-transparent hover:border-kl-primary transition"
+                                            @click="activeImg = {{ $i }}"
+                                            :class="{ 'border-kl-primary': activeImg === {{ $i }}, 'border-transparent': activeImg !== {{ $i }} }"
+                                            class="shrink-0 h-20 w-20 rounded-lg overflow-hidden border-2 transition"
                                         >
                                             <img src="{{ asset('storage/' . $img->image_path) }}" alt="" class="w-full h-full object-cover" />
                                         </button>

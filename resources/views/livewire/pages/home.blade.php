@@ -551,65 +551,30 @@ new class extends Component {
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <!-- Testimonial 1 -->
+                @forelse ($testimonials as $testimonial)
                 <div class="kl-card p-6 relative">
                     <div class="flex gap-1 mb-3">
-                        @for ($i = 0; $i < 5; $i++)
+                        @for ($i = 0; $i < $testimonial->rating; $i++)
                             <svg class="w-4 h-4" fill="#F59E0B" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
                         @endfor
                     </div>
                     <p class="text-gray-600 text-sm leading-relaxed mb-4">
-                        "Produknya unik-unik, beda dari yang di marketplace lain. Pengrajinnya juga ramah dan bisa custom. Recommended banget!"
+                        "{{ $testimonial->quote }}"
                     </p>
                     <div class="flex items-center gap-3">
                         <div class="w-10 h-10 rounded-full flex items-center justify-center text-sm font-bold text-white"
-                             style="background: linear-gradient(135deg, #E8531D, #FF7043)">SA</div>
+                             style="background: linear-gradient(135deg, #E8531D, #FF7043)">{{ strtoupper(substr($testimonial->name, 0, 2)) }}</div>
                         <div>
-                            <p class="font-semibold text-sm text-gray-800">Siti A.</p>
-                            <p class="text-xs text-gray-400">Jakarta · 3 minggu lalu</p>
+                            <p class="font-semibold text-sm text-gray-800">{{ $testimonial->name }}</p>
+                            <p class="text-xs text-gray-400">{{ $testimonial->location }}</p>
                         </div>
                     </div>
                 </div>
-
-                <!-- Testimonial 2 -->
-                <div class="kl-card p-6 relative">
-                    <div class="flex gap-1 mb-3">
-                        @for ($i = 0; $i < 5; $i++)
-                            <svg class="w-4 h-4" fill="#F59E0B" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
-                        @endfor
+                @empty
+                    <div class="md:col-span-3 text-center py-12">
+                        <p class="text-gray-500 text-sm">Belum ada testimoni. Jadilah yang pertama!</p>
                     </div>
-                    <p class="text-gray-600 text-sm leading-relaxed mb-4">
-                        "Pertama kali beli crochet di sini, kualitasnya juara! Pengiriman juga cepat. Sekarang udah langganan sama 3 pengrajin berbeda."
-                    </p>
-                    <div class="flex items-center gap-3">
-                        <div class="w-10 h-10 rounded-full flex items-center justify-center text-sm font-bold text-white"
-                             style="background: linear-gradient(135deg, #2D6A4F, #40916C)">RP</div>
-                        <div>
-                            <p class="font-semibold text-sm text-gray-800">Rina P.</p>
-                            <p class="text-xs text-gray-400">Bandung · 1 minggu lalu</p>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Testimonial 3 -->
-                <div class="kl-card p-6 relative">
-                    <div class="flex gap-1 mb-3">
-                        @for ($i = 0; $i < 5; $i++)
-                            <svg class="w-4 h-4" fill="#F59E0B" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
-                        @endfor
-                    </div>
-                    <p class="text-gray-600 text-sm leading-relaxed mb-4">
-                        "Suka banget fitur terdekatnya, jadi bisa ketemu pengrajin langsung. Hadiah ulang tahun jadi lebih personal dan berkesan!"
-                    </p>
-                    <div class="flex items-center gap-3">
-                        <div class="w-10 h-10 rounded-full flex items-center justify-center text-sm font-bold text-white"
-                             style="background: linear-gradient(135deg, #7C3AED, #A78BFA)">DW</div>
-                        <div>
-                            <p class="font-semibold text-sm text-gray-800">Dewi W.</p>
-                            <p class="text-xs text-gray-400">Surabaya · 5 hari lalu</p>
-                        </div>
-                    </div>
-                </div>
+                @endforelse
             </div>
         </div>
     </div>

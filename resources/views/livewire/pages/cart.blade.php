@@ -79,11 +79,15 @@ new class extends Component {
 
         $groupedByStore = collect($cart)->groupBy('seller_id');
 
+        $sellerIds = collect($cart)->pluck('seller_id')->unique()->filter();
+        $sellers = \App\Models\SellerProfile::whereIn('id', $sellerIds)->pluck('shop_name', 'id');
+
         return [
             'cartItems' => $cart,
             'cartCount' => count($cart),
             'total' => $total,
             'groupedByStore' => $groupedByStore,
+            'sellers' => $sellers,
         ];
     }
 };
@@ -112,7 +116,7 @@ new class extends Component {
                                 <!-- Store Header -->
                                 <div class="px-5 py-3 flex items-center gap-2 border-b border-kl" style="background: #FFF8F5">
                                     <x-icon name="building-storefront" class="w-5 h-5" style="color: var(--kl-primary)" />
-                                    <span class="text-sm font-semibold font-jakarta text-gray-700">Toko ({{ $items->count() }} produk)</span>
+                                    <span class="text-sm font-semibold font-jakarta text-gray-700">{{ $sellers[$sellerId] ?? 'Toko' }} ({{ $items->count() }} produk)</span>
                                 </div>
 
                                 <div class="divide-y divide-kl">

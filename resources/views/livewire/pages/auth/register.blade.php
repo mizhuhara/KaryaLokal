@@ -92,8 +92,6 @@ new #[Layout('layouts.guest')] class extends Component
                     <x-icon x-show="showPwd" x-cloak name="eye-slash" class="w-4 h-4" />
                 </button>
             </div>
-                </button>
-            </div>
             @error('password')
                 <p class="text-red-500 text-xs mt-1.5">{{ $message }}</p>
             @enderror

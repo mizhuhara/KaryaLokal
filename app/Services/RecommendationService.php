@@ -84,6 +84,30 @@ class RecommendationService
             ->get();
     }
 
+    public static function getRecommendedProducts(int $limit = 8, ?float $lat = null, ?float $lng = null): \Illuminate\Support\Collection
+    {
+        $query = Product::where('is_active', true)
+            ->with('primaryImage', 'sellerProfile');
+
+        if ($lat && $lng) {
+            $query->join('seller_profiles as sp', 'products.seller_profile_id', '=', 'sp.id')
+                ->selectRaw('products.*, (
+                    6371 * acos(
+                        cos(radians(?)) * cos(radians(sp.latitude)) *
+                        cos(radians(sp.longitude) - radians(?)) +
+                        sin(radians(?)) * sin(radians(sp.latitude))
+                    )
+                ) as distance', [$lat, $lng, $lat])
+                ->whereNotNull('sp.latitude')
+                ->whereNotNull('sp.longitude')
+                ->orderBy('distance');
+        } else {
+            $query->latest();
+        }
+
+        return $query->limit($limit)->get();
+    }
+
     public static function getFromSameSeller(Product $product, int $limit = 4): \Illuminate\Support\Collection
     {
         return Product::where('seller_profile_id', $product->seller_profile_id)

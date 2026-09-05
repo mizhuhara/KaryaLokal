@@ -10,8 +10,12 @@
     
     if (file_exists($iconPath)) {
         $svg = file_get_contents($iconPath);
-        $svg = preg_replace('/<svg/', '<svg class="' . e($class) . '"', $svg, 1);
-        $svg = preg_replace('/class="[^"]*"/', 'class="' . e($class) . '"', $svg, 1);
+        // Only replace class on root <svg> element, preserve internal classes (e.g. <path class="...">)
+        $svg = preg_replace('/<svg([^>]*)class="[^"]*"/', '<svg$1class="' . e($class) . '"', $svg, 1);
+        // If no class attribute existed on root svg, add it
+        if (strpos($svg, 'class="' . e($class) . '"') === false) {
+            $svg = preg_replace('/<svg/', '<svg class="' . e($class) . '"', $svg, 1);
+        }
     } else {
         $svg = '<svg class="' . e($class) . '" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="10"/></svg>';
     }
