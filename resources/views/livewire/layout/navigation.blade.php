@@ -100,7 +100,7 @@ new class extends Component
             <!-- Left: Logo + Main Nav -->
             <div class="flex items-center gap-6">
                 <a href="{{ route('home') }}" wire:navigate class="flex items-center gap-2 shrink-0">
-                    <img src="{{ asset('storage/images/logo/logo-karyalokal.svg') }}" alt="KaryaLokal" class="h-10 w-auto">
+                    <img src="{{ asset('storage/images/logo/logo-karyalokal.png') }}" alt="KaryaLokal" class="h-10 w-auto">
                 </a>
 
                 <!-- Desktop Nav Links (exclude cart) -->

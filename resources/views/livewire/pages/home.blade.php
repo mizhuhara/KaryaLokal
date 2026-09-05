@@ -650,7 +650,7 @@ new class extends Component {
                 <!-- Brand -->
                 <div class="md:col-span-2">
                     <div class="flex items-center gap-2 mb-4">
-                        <img src="{{ asset('storage/images/logo/logo-karyalokal.svg') }}" alt="KaryaLokal" class="h-10 w-auto brightness-0 invert">
+                        <img src="{{ asset('storage/images/logo/logo-karyalokal.png') }}" alt="KaryaLokal" class="h-10 w-auto brightness-0 invert">
                     </div>
                     <p class="text-white/50 text-sm leading-relaxed mb-4">
                         Platform marketplace kerajinan tangan Indonesia. Menghubungkan pembeli dengan pengrajin lokal terdekat.

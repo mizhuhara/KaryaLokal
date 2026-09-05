@@ -28,7 +28,7 @@
                 <!-- Logo -->
                 <div class="relative z-10">
                     <a href="{{ route('home') }}" class="inline-flex items-center gap-3">
-                        <img src="{{ asset('storage/images/logo/logo-karyalokal.svg') }}" alt="KaryaLokal" class="h-12 w-auto brightness-0 invert">
+                        <img src="{{ asset('storage/images/logo/logo-karyalokal.png') }}" alt="KaryaLokal" class="h-12 w-auto brightness-0 invert">
                     </a>
                 </div>
 
@@ -78,7 +78,7 @@
                 <!-- Mobile logo -->
                 <div class="lg:hidden mb-8 text-center">
                     <a href="{{ route('home') }}" class="inline-flex items-center gap-2">
-                        <img src="{{ asset('storage/images/logo/logo-karyalokal.svg') }}" alt="KaryaLokal" class="h-10 w-auto">
+                        <img src="{{ asset('storage/images/logo/logo-karyalokal.png') }}" alt="KaryaLokal" class="h-10 w-auto">
                     </a>
                 </div>
 
