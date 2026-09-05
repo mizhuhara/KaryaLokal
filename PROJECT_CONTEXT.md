@@ -894,6 +894,27 @@ Status: COMPLETED / IN PROGRESS / BLOCKED
 
 ### Project Changelog
 
+## 2026-09-04 — Fix: Missing testimonials/subscribers tables (live DB)
+
+Status: COMPLETED
+
+### Changed
+- Ran `php artisan migrate --force` to apply `create_subscribers_table` and `create_testimonials_table` migrations on the live MySQL DB.
+- Live homepage `/` was returning 500 (`Table 'karyalokal.testimonials' doesn't exist`) because the migration for the new Testimonial/Subscriber models was never applied outside the test DB (SQLite in-memory + RefreshDatabase masked it).
+
+### Why
+- Homepage queries `Testimonial::where('is_active', true)` at `resources/views/livewire/pages/home.blade.php:115`; table missing in real DB.
+
+### Files
+- `database/migrations/2026_09_04_120001_create_testimonials_table.php`
+- `database/migrations/2026_09_04_120000_create_subscribers_table.php`
+
+### Testing
+- `curl http://karyalokal.test/` → HTTP 200.
+- `vendor/bin/phpunit tests/Feature/` → 37/37 pass.
+
+---
+
 ## 2026-09-04 — Test Suite & Form Fixes
 
 Status: COMPLETED
