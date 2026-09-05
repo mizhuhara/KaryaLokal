@@ -19,7 +19,7 @@ class User extends Authenticatable
     /** @use HasFactory<UserFactory> */
     use HasFactory, Notifiable;
 
-    protected $fillable = ['name', 'email', 'password', 'phone', 'role', 'latitude', 'longitude', 'saved_location_name'];
+    protected $fillable = ['name', 'email', 'password', 'phone', 'avatar', 'role', 'latitude', 'longitude', 'saved_location_name'];
 
     protected static function booted(): void
     {

@@ -201,10 +201,15 @@ new class extends Component
                         <button @click="userOpen = !userOpen"
                                 class="flex items-center gap-2 px-2 py-1.5 rounded-xl border transition-all duration-200 hover:shadow-sm hover:border-orange-200"
                                 style="border-color: #F0E8E0; background: white">
-                            <div class="w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold text-white"
-                                 style="background: linear-gradient(135deg, #E8531D, #FF7043)">
-                                {{ strtoupper(substr(auth()->user()->name, 0, 1)) }}
-                            </div>
+                            @if (auth()->user()->avatar)
+                                <img src="{{ asset('storage/' . auth()->user()->avatar) }}" alt="{{ auth()->user()->name }}"
+                                     class="w-7 h-7 rounded-full object-cover">
+                            @else
+                                <div class="w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold text-white"
+                                     style="background: linear-gradient(135deg, #E8531D, #FF7043)">
+                                    {{ strtoupper(substr(auth()->user()->name, 0, 1)) }}
+                                </div>
+                            @endif
                             <span class="hidden sm:inline text-sm font-semibold text-gray-700 max-w-[100px] truncate">{{ auth()->user()->name }}</span>
                             <span :class="{'rotate-180': userOpen}" class="transition-transform duration-200 inline-flex text-gray-400">
                                 <x-icon name="chevron-down" class="w-3.5 h-3.5" />
