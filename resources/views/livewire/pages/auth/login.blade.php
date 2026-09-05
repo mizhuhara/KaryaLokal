@@ -1,5 +1,6 @@
 <?php
 
+use App\Enums\UserRole;
 use App\Livewire\Forms\LoginForm;
 use Illuminate\Support\Facades\Session;
 use Livewire\Attributes\Layout;
@@ -20,7 +21,14 @@ new #[Layout('layouts.guest')] class extends Component
 
         Session::regenerate();
 
-        $this->redirect(route('home'), navigate: false);
+        $user = auth()->user();
+        $redirect = match ($user->role) {
+            UserRole::Seller => route('seller.dashboard', absolute: false),
+            UserRole::Admin => route('admin.dashboard', absolute: false),
+            default => route('home', absolute: false),
+        };
+
+        $this->redirect($redirect, navigate: false);
     }
 }; ?>
 

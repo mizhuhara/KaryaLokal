@@ -8,13 +8,16 @@ use App\Models\SellerProfile;
 use App\Models\Product;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Livewire\Livewire;
+use Livewire\Volt\Volt;
 
 class ProductManagementTest extends TestCase
 {
     use RefreshDatabase;
+
     public function test_seller_can_create_product()
     {
-        $user = User::factory()->create(['role' => 'seller']);
+        $user = User::factory()->seller()->create();
         $seller = SellerProfile::create([
             'user_id' => $user->id,
             'shop_name' => 'Test Shop',
@@ -28,14 +31,14 @@ class ProductManagementTest extends TestCase
 
         $this->actingAs($user);
 
-        $response = $this->post(route('seller.products'), [
-            'name' => 'Bucket Bunga',
-            'description' => 'Bucket bunga segar',
-            'price' => 150000,
-            'stock' => 10,
-            'is_customizable' => true,
-            'is_ready_stock' => true,
-        ]);
+        Livewire::test('pages.seller.products')
+            ->set('name', 'Bucket Bunga')
+            ->set('description', 'Bucket bunga segar')
+            ->set('price', 150000)
+            ->set('stock', 10)
+            ->set('is_customizable', true)
+            ->set('is_ready_stock', true)
+            ->call('save');
 
         $this->assertDatabaseHas('products', [
             'seller_profile_id' => $seller->id,
@@ -46,7 +49,7 @@ class ProductManagementTest extends TestCase
 
     public function test_seller_can_view_products()
     {
-        $user = User::factory()->create(['role' => 'seller']);
+        $user = User::factory()->seller()->create();
         $seller = SellerProfile::create([
             'user_id' => $user->id,
             'shop_name' => 'Test Shop',
@@ -74,8 +77,8 @@ class ProductManagementTest extends TestCase
 
     public function test_seller_cannot_edit_other_seller_product()
     {
-        $seller1 = User::factory()->create(['role' => 'seller']);
-        $seller2 = User::factory()->create(['role' => 'seller']);
+        $seller1 = User::factory()->seller()->create();
+        $seller2 = User::factory()->seller()->create();
 
         $profile1 = SellerProfile::create([
             'user_id' => $seller1->id,

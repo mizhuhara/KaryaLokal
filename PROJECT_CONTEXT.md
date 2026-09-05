@@ -894,6 +894,36 @@ Status: COMPLETED / IN PROGRESS / BLOCKED
 
 ### Project Changelog
 
+## 2026-09-04 — Test Suite & Form Fixes
+
+Status: COMPLETED
+
+### Changed
+- Fixed `pages.auth.login`: Changed relative redirects to `absolute: false` so test assertions work.
+- Fixed `home.blade.php`: Replaced unbound `$buyerLat`/`$buyerLng` with `$this->buyerLat`/`$this->buyerLng`.
+- Fixed `pages.seller.products`: Added null-coalescing check for empty string `category_id` before database insert to prevent SQLite foreign key constraint failures.
+- Fixed `ExampleTest`: Added `RefreshDatabase` trait for in-memory SQLite schema migration.
+- Fixed `AuthenticationTest`: Updated redirect assertion to `home` route instead of `dashboard`.
+- Fixed `RegistrationTest`: Updated redirect assertion to `home` route instead of `dashboard`.
+- Fixed `ProductManagementTest`: Refactored to use `Livewire::test()` with `actingAs()` correctly chained, verified database insert.
+
+### Why
+- Fix 7 broken tests across auth, product management, and homepage views.
+
+### Files
+- `resources/views/livewire/pages/auth/login.blade.php`
+- `resources/views/livewire/pages/home.blade.php`
+- `resources/views/livewire/pages/seller/products.blade.php`
+- `tests/Feature/ExampleTest.php`
+- `tests/Feature/Auth/AuthenticationTest.php`
+- `tests/Feature/Auth/RegistrationTest.php`
+- `tests/Feature/ProductManagementTest.php`
+
+### Testing
+- `vendor/bin/phpunit tests/Feature/` & `tests/Unit/` — 37/37 tests pass (100%).
+
+---
+
 ## 2026-08-26 — Phase 5: Complete Order System
 
 Status: COMPLETED

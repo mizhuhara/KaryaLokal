@@ -12,6 +12,7 @@ new class extends Component {
     public $buyerLng = null;
     public $nearbyProducts = [];
     public $locationRequested = false;
+    public $newsletterEmail = '';
 
     public function mount()
     {
@@ -22,6 +23,21 @@ new class extends Component {
             $this->locationRequested = true;
             $this->loadNearbyProducts();
         }
+    }
+
+    public function subscribe()
+    {
+        $this->validate([
+            'newsletterEmail' => 'required|email|max:255',
+        ]);
+
+        \App\Models\Subscriber::firstOrCreate(
+            ['email' => $this->newsletterEmail],
+            ['subscribed_at' => now()]
+        );
+
+        $this->newsletterEmail = '';
+        $this->dispatch('notify', message: 'Terima kasih telah berlangganan!');
     }
 
     public function setBuyerLocation($lat, $lng)
@@ -81,17 +97,21 @@ new class extends Component {
         return [
             'categories' => Category::orderBy('name')->limit(8)->get(),
             'featuredProducts' => Product::where('is_active', true)
-                ->with('primaryImage')
+                ->with('primaryImage', 'sellerProfile')
                 ->orderBy('created_at', 'desc')
                 ->limit(6)
                 ->get(),
             'trendingProducts' => RecommendationService::getTrendingProducts(6),
-            'recommendedProducts' => RecommendationService::getTrendingProducts(8),
+            'recommendedProducts' => RecommendationService::getRecommendedProducts(8, $this->buyerLat, $this->buyerLng),
             'featuredSellers' => SellerProfile::where('is_verified', true)
                 ->whereNotNull('latitude')
                 ->whereNotNull('longitude')
                 ->with('products')
                 ->limit(6)
+                ->get(),
+            'testimonials' => \App\Models\Testimonial::where('is_active', true)
+                ->inRandomOrder()
+                ->limit(3)
                 ->get(),
         ];
     }
@@ -300,7 +320,7 @@ new class extends Component {
                         <x-icon name="fire" class="w-4 h-4" /> PROMO SPESIAL
                     </div>
                     <h2 class="text-3xl md:text-4xl font-bold text-white mb-3 font-jakarta leading-tight">
-                        Gratis Ongkir<br>Sepanjang Agustus!
+                        Gratis Ongkir<br>Sepanjang {{ \Carbon\Carbon::now()->translatedFormat('F') }}!
                     </h2>
                     <p class="text-white/70 text-base mb-6 max-w-md">
                         Berlaku untuk semua produk dari pengrajin terverifikasi. Minimum belanja Rp50.000.
@@ -644,13 +664,13 @@ new class extends Component {
                 </div>
                 <h3 class="text-2xl font-bold text-gray-800 mb-2 font-jakarta">Dapatkan Info Promo & Produk Baru</h3>
                 <p class="text-gray-500 mb-6 max-w-md mx-auto">Berlangganan newsletter kami untuk mendapatkan diskon eksklusif dan update produk terbaru.</p>
-                <div class="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
-                    <input type="email" placeholder="Masukkan email Anda..."
-                           class="kl-input flex-1 text-sm" />
-                    <button class="kl-btn-primary py-3 px-6 text-sm whitespace-nowrap justify-center">
+                <form wire:submit="subscribe" class="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
+                    <input type="email" wire:model="newsletterEmail" placeholder="Masukkan email Anda..."
+                           class="kl-input flex-1 text-sm" required />
+                    <button type="submit" class="kl-btn-primary py-3 px-6 text-sm whitespace-nowrap justify-center">
                         Berlangganan →
                     </button>
-                </div>
+                </form>
                 <p class="text-xs text-gray-400 mt-3">Kami hormati privasi Anda. Unsubscribe kapan saja.</p>
             </div>
         </div>

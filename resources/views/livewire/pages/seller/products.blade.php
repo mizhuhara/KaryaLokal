@@ -64,10 +64,12 @@ new class extends Component {
             'description'   => 'nullable|string',
             'price'         => 'required|numeric|min:0',
             'stock'         => 'required|integer|min:0',
-            'category_id'   => 'nullable|exists:categories,id',
+            'category_id'   => 'nullable|integer|exists:categories,id',
             'is_customizable' => 'boolean',
             'is_ready_stock'  => 'boolean',
         ]);
+
+        $validated['category_id'] = $validated['category_id'] ?: null;
 
         if ($this->editingId) {
             $product = Product::findOrFail($this->editingId);
